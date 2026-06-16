@@ -1,9 +1,9 @@
 'use client'
 
 import { useId, useState } from 'react'
-import { chartColorVar, linearScale, niceTicks } from '@/lib/chartUtils'
 import { useReducedMotion } from '@/lib/useReducedMotion'
 import { cn } from '@/lib/utils'
+import { chartColorVar, linearScale, niceTicks } from '../../lib/chartUtils'
 
 // ---------------------------------------------------------------------------
 // Types

@@ -1,6 +1,8 @@
 'use client'
 
 import { useId, useState } from 'react'
+import { useReducedMotion } from '@/lib/useReducedMotion'
+import { cn } from '@/lib/utils'
 import {
   buildAreaPath,
   buildLinePath,
@@ -8,9 +10,7 @@ import {
   linearScale,
   nearestIndex,
   niceTicks,
-} from '@/lib/chartUtils'
-import { useReducedMotion } from '@/lib/useReducedMotion'
-import { cn } from '@/lib/utils'
+} from '../../lib/chartUtils'
 
 // ---------------------------------------------------------------------------
 // Types

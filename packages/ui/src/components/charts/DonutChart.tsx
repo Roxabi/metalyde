@@ -1,9 +1,9 @@
 'use client'
 
 import { useId } from 'react'
-import { chartColorVar, donutArcPath } from '@/lib/chartUtils'
 import { useReducedMotion } from '@/lib/useReducedMotion'
 import { cn } from '@/lib/utils'
+import { chartColorVar, donutArcPath } from '../../lib/chartUtils'
 
 // ---------------------------------------------------------------------------
 // Types

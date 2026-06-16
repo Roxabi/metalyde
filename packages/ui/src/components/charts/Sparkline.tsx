@@ -1,9 +1,9 @@
 'use client'
 
 import { useId } from 'react'
-import { buildLinePath, linearScale } from '@/lib/chartUtils'
 import { useReducedMotion } from '@/lib/useReducedMotion'
 import { cn } from '@/lib/utils'
+import { buildLinePath, linearScale } from '../../lib/chartUtils'
 
 type SparklineProps = {
   /** Data series — raw numeric values. */
