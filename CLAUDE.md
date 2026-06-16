@@ -100,7 +100,7 @@ MUST read [code-review.mdx](docs/standards/code-review.mdx). Conventional Commen
 | Product & vision | [product/index.mdx](docs/product/index.mdx) |
 | Frames / Analyses / Specs / Plans | [artifacts/frames/](artifacts/frames/) / [artifacts/analyses/](artifacts/analyses/) / [artifacts/specs/](artifacts/specs/) / [artifacts/plans/](artifacts/plans/) |
 
-**Deploy:** `main` → Vercel prod. `staging` → preview for **web + API** only; the **docs** site publishes from `main` only (no staging preview). Details in [apps/web/CLAUDE.md](apps/web/CLAUDE.md) and [apps/api/CLAUDE.md](apps/api/CLAUDE.md).
+**Deploy:** `main` → Vercel prod. **Only `main` auto-deploys** — preview/branch deploys are disabled via `git.deploymentEnabled` (`{"**": false, "main": true}`) in each `vercel.json`, keeping the 3 git-connected projects under the shared Vercel Hobby quota (100 deploys/day, account-wide). `ignoreCommand` alone did **not** suffice: a build it cancels still counts as a deployment. On-demand preview = run the manual `deploy-preview.yml` workflow (`workflow_dispatch`, CLI deploy, bypasses `git.deploymentEnabled`). Details in [apps/web/CLAUDE.md](apps/web/CLAUDE.md) and [apps/api/CLAUDE.md](apps/api/CLAUDE.md).
 
 **Hooks (Claude Code):** Biome auto-format (PostToolUse) | Security block (PreToolUse) | `bun test` blocker (PreToolUse)
 **Hooks (Git/Lefthook):** pre-commit (Biome + TruffleHog) | commit-msg (Commitlint) | pre-push (lint+typecheck+tests+i18n+license+lint:custom)

@@ -65,7 +65,7 @@ Read [backend-patterns.mdx](../../docs/standards/backend-patterns.mdx) before wr
 
 ## Deploy
 
-Vercel — `main` = prod, `staging` = preview.
+Vercel. Only `main` auto-deploys to prod; preview/branch deploys are disabled via `git.deploymentEnabled` in `vercel.json` (Hobby 100/day quota, shared across projects). On-demand preview: manual `deploy-preview.yml` workflow.
 
 ## Gotchas
 
