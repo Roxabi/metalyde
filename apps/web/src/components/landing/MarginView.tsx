@@ -81,10 +81,10 @@ export function MarginView() {
       className="border-b border-border bg-card px-7 py-14 md:px-14"
     >
       {/* Head */}
-      <p className="mb-3 font-mono text-xs font-bold uppercase tracking-[0.2em] text-brand">
+      <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.12em] text-foreground/70">
         {m.landing_margin_tag()}
       </p>
-      <h2 className="max-w-[24ch] text-2xl font-bold tracking-tight sm:text-3xl">
+      <h2 className="max-w-[24ch] font-display text-2xl font-bold tracking-tight sm:text-3xl">
         {m.landing_margin_title()}
       </h2>
       <p className="mt-3 max-w-[54ch] leading-relaxed text-muted-foreground">
@@ -129,7 +129,7 @@ export function MarginView() {
           </thead>
           <tbody className="[&_tr:last-child_td]:border-b-0">
             {ROWS.map((row) => (
-              <tr key={row.account}>
+              <tr key={row.account} className="transition-colors ease-control hover:bg-muted/40">
                 <td className="border-b border-border px-5 py-3.5 font-semibold">{row.account}</td>
                 <td className="border-b border-border px-5 py-3.5 text-right tabular-nums">
                   {row.retainer}

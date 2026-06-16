@@ -2,6 +2,7 @@
  * Shared theme variables for @repo/ui components
  * Swiss Control Room — Metalyde brand palette
  * Light is primary; dark is a rebranded variant.
+ * dials: V6 M5 D4 · macrostructure: Stat-Led→Feature-Stack
  */
 
 :root {
@@ -12,6 +13,10 @@
   --card-foreground: #1a1a1a;
   --popover: #ffffff;
   --popover-foreground: #1a1a1a;
+
+  /* ── Display font (Bricolage Grotesque; mapped to font-display utility in @theme inline) ── */
+  /* requires '@fontsource-variable/bricolage-grotesque' to be imported by the consuming app (apps/web/src/styles.css) — falls back to system-ui otherwise */
+  --font-display: 'Bricolage Grotesque Variable', 'Bricolage Grotesque', system-ui, sans-serif;
 
   /* ── Mono font stack (cascade var; mapped to the font-mono utility in @theme inline) ── */
   --font-mono: 'SF Mono', 'Fira Code', 'Cascadia Code', Consolas, 'Courier New', monospace;
@@ -163,8 +168,12 @@
   --color-brand: var(--brand);
   --color-brand-foreground: var(--brand-foreground);
   --color-brand-dim: var(--brand-dim);
+  /* ── Display font (maps the font-display utility to the :root cascade var) ── */
+  --font-display: var(--font-display);
   /* ── Mono font (maps the font-mono utility to the :root cascade var) ── */
   --font-mono: var(--font-mono);
+  /* ── Brand easing — control-room spring curve ── */
+  --ease-control: cubic-bezier(0.16, 1, 0.3, 1);
   /* ── Radius scale ── */
   --radius-sm: calc(var(--radius) - 2px);
   --radius-md: var(--radius);

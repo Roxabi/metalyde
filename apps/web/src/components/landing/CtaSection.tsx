@@ -10,7 +10,7 @@ export function CtaSection() {
       aria-label="Request access"
       className="border-b border-border bg-background px-7 py-20 text-center md:px-14"
     >
-      <h2 className="mx-auto max-w-[18ch] text-3xl font-bold tracking-tight sm:text-4xl">
+      <h2 className="mx-auto max-w-[18ch] font-display text-3xl font-bold tracking-tight [text-wrap:balance] sm:text-4xl">
         {m.landing_cta_title_a()}
         <span className="text-brand">{m.landing_cta_title_em()}</span>
         {m.landing_cta_title_b()}
@@ -21,7 +21,7 @@ export function CtaSection() {
           e.preventDefault()
           setSubmitted(true)
         }}
-        className="mx-auto mt-8 flex max-w-[460px] border border-border bg-card"
+        className="mx-auto mt-8 flex max-w-[460px] border border-border bg-card focus-within:ring-1 focus-within:ring-brand"
       >
         <input
           type="email"
@@ -34,7 +34,7 @@ export function CtaSection() {
         <button
           type="submit"
           disabled={submitted}
-          className="cursor-pointer border-none bg-primary px-6 font-mono text-xs font-bold uppercase tracking-wider text-primary-foreground transition-colors hover:bg-brand disabled:cursor-default"
+          className="cursor-pointer border-none bg-primary px-6 font-mono text-xs font-bold uppercase tracking-wider text-primary-foreground transition-colors duration-normal ease-control hover:bg-brand disabled:cursor-default"
         >
           {submitted ? m.landing_cta_submitted() : m.landing_cta_button()}
         </button>
