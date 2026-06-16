@@ -108,7 +108,7 @@ Import session transcripts from the Claude Code sessions directory into the data
 bun run .claude/skills/retro/scripts/parse-sessions.ts
 ```
 
-The sessions directory defaults to `~/.claude/projects/-home-mickael-projects-roxabi-boilerplate`. Override with `RETRO_SESSIONS_DIR` environment variable.
+The sessions directory defaults to `~/.claude/projects/-home-mickael-projects-metalyde`. Override with `RETRO_SESSIONS_DIR` environment variable.
 
 ### Analyze (`--analyze`)
 

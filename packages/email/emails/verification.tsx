@@ -4,7 +4,7 @@ import { en } from '../src/translations/en'
 export default function Preview() {
   return (
     <VerificationEmail
-      url="https://app.roxabi.com/verify?token=abc123"
+      url="https://metalyde.roxabi.dev/verify?token=abc123"
       translations={en.verification}
       locale="en"
     />

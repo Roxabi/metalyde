@@ -1,7 +1,7 @@
 export const meta = {
   name: 'fix-audit-findings',
   description:
-    'Multi-phase correction workflow for roxabi-boilerplate quality audit — follows dev-core F-full process (frame → spec → plan → implement → verify → ship) across 5 systemic phases',
+    'Multi-phase correction workflow for metalyde quality audit — follows dev-core F-full process (frame → spec → plan → implement → verify → ship) across 5 systemic phases',
   phases: [
     { title: 'Frame', detail: 'Root-cause analysis + scope framing for all 5 phases' },
     { title: 'Spec', detail: 'Detailed specs per phase with acceptance criteria' },
@@ -28,7 +28,7 @@ log('Reading audit reports for framing...')
 
 const frame = await agent(
   `
-You are a product-lead + architect agent framing the correction work for the roxabi-boilerplate audit.
+You are a product-lead + architect agent framing the correction work for the metalyde audit.
 
 ## Input
 Read these audit reports:

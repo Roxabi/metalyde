@@ -10,7 +10,7 @@
 services:
   api:
     image: ghcr.io/mickaelv0/roxabi/api:latest
-    container_name: roxabi-api
+    container_name: metalyde-api
     restart: unless-stopped
     ports:
       - "127.0.0.1:4000:4000"

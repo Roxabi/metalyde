@@ -5,8 +5,8 @@
 **Prerequisites:** Node ≥ 24, Bun 1.3.9+, Docker
 
 ```bash
-git clone https://github.com/Roxabi/roxabi-boilerplate.git
-cd roxabi-boilerplate
+git clone https://github.com/Roxabi/metalyde.git
+cd metalyde
 cp .env.example .env
 bun install          # installs deps + registers Lefthook hooks
 bun run db:up        # start Postgres 16 via Docker

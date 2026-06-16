@@ -17,7 +17,7 @@ staging → PR to main → CI runs → Vercel auto-deploys to production
 |-----------|----------|---------|
 | Web (TanStack Start + Nitro) | Vercel | SSR, edge caching, Fluid compute |
 | API (NestJS + Fastify) | Vercel | Zero-config NestJS, Fluid compute, auto-scaling |
-| Docs (Fumadocs + Next.js) | Vercel | Static/ISR — deployed to `docs.app.roxabi.com` |
+| Docs (Fumadocs + Next.js) | Vercel | Static/ISR — deployed to `docs.metalyde.roxabi.dev` |
 | Database | Neon | Serverless PostgreSQL, not managed by Vercel |
 
 No Docker is needed for deployment. Docker configurations (Dockerfiles, `docker-compose.prod.yml`, Nginx configs, `deploy/`) remain in the repo for local development only.
@@ -60,13 +60,13 @@ The workflow builds and deploys a Vercel preview. The preview URL appears in the
 
 ### Custom domain mapping
 
-By default, preview deploys compute `APP_URL` from the Vercel branch alias (e.g., `roxabi-app-git-staging-roxabi.vercel.app`). Branches with a custom domain alias (e.g., `app.staging.roxabi.com`) need `APP_URL` set to the custom domain so better-auth's CSRF origin check passes.
+By default, preview deploys compute `APP_URL` from the Vercel branch alias (e.g., `metalyde-app-git-staging-roxabi.vercel.app`). Branches with a custom domain alias (e.g., `staging.metalyde.roxabi.dev`) need `APP_URL` set to the custom domain so better-auth's CSRF origin check passes.
 
 The workflow handles this automatically for known branches:
 
 | Branch | `APP_URL` | `CORS_ORIGIN` |
 |--------|-----------|---------------|
-| `staging` | `https://app.staging.roxabi.com` | `https://app.staging.roxabi.com,https://roxabi-app-git-staging-roxabi.vercel.app` |
+| `staging` | `https://staging.metalyde.roxabi.dev` | `https://staging.metalyde.roxabi.dev,https://metalyde-app-git-staging-roxabi.vercel.app` |
 | Other branches | Branch alias | Branch alias |
 
 To add a custom domain for a new branch, add a `case` entry in the `deploy-preview.yml` workflow's "Deploy API preview" step.
@@ -252,7 +252,7 @@ Rate limiting is **enabled by default** (`RATE_LIMIT_ENABLED=true`) and requires
    - **Name:** e.g. `roxabi-redis`
    - **Region:** choose the closest to your Neon database region
    - **Plan:** Free tier is sufficient for development
-5. Link the database to your **API project** (e.g. `roxabi-api`)
+5. Link the database to your **API project** (e.g. `metalyde-api`)
 6. Vercel auto-creates `KV_REST_API_URL` and `KV_REST_API_TOKEN` as environment variables on the API project
 7. **Redeploy** the API project for the new env vars to take effect
 
@@ -672,7 +672,7 @@ Both Vercel projects have SSO deployment protection enabled by default:
 }
 ```
 
-This requires **Vercel team SSO authentication** to access any deployment URL that is not a custom domain. The `staging` branch has custom domains (`app.staging.roxabi.com`, `api.staging.roxabi.com`) which bypass SSO. Other preview deployments use Vercel-generated URLs and are gated behind SSO login.
+This requires **Vercel team SSO authentication** to access any deployment URL that is not a custom domain. The `staging` branch has custom domains (`staging.metalyde.roxabi.dev`, `api.staging.roxabi.com`) which bypass SSO. Other preview deployments use Vercel-generated URLs and are gated behind SSO login.
 
 ### Options for Preview Access
 

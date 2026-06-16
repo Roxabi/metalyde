@@ -10,7 +10,7 @@ import path from 'node:path'
 
 /** Path to Claude Code session transcripts */
 const SESSIONS_DIR =
-  process.env.RETRO_SESSIONS_DIR || '~/.claude/projects/-home-mickael-projects-roxabi-boilerplate'
+  process.env.RETRO_SESSIONS_DIR || '~/.claude/projects/-home-mickael-projects-metalyde'
 
 /** Parsed session metadata before DB insertion */
 export interface ParsedSession {

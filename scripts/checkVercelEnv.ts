@@ -7,14 +7,14 @@
  * Required env:
  *   VERCEL_TOKEN       — Vercel API token with project read access
  *   VERCEL_TEAM_SLUG   — team slug (default: "roxabi")
- *   VERCEL_API_PROJECT — project name (default: "roxabi-api")
+ *   VERCEL_API_PROJECT — project name (default: "metalyde-api")
  */
 
 const target = (process.argv[2] ?? 'production') as 'production' | 'preview'
 
 const VERCEL_TOKEN = process.env.VERCEL_TOKEN
 const TEAM_SLUG = process.env.VERCEL_TEAM_SLUG ?? 'roxabi'
-const PROJECT = process.env.VERCEL_API_PROJECT ?? 'roxabi-api'
+const PROJECT = process.env.VERCEL_API_PROJECT ?? 'metalyde-api'
 
 if (!VERCEL_TOKEN) {
   console.error('Error: VERCEL_TOKEN is not set.')

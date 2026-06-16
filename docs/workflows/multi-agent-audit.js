@@ -1,6 +1,6 @@
 export const meta = {
   name: 'multi-agent-audit',
-  description: 'Multi-agent code quality audit for roxabi-boilerplate (Bun/TS monorepo)',
+  description: 'Multi-agent code quality audit for metalyde (Bun/TS monorepo)',
   phases: [
     { title: 'Structural Checks', detail: 'Boundaries, custom lint, typecheck' },
     { title: 'Domain Audits', detail: '8 domains across API / web / packages partitions' },
@@ -118,7 +118,7 @@ function buildPrompt(domain, partition) {
     partition +
     ' (' +
     part.desc +
-    ') in the roxabi-boilerplate project.\n\n' +
+    ') in the metalyde project.\n\n' +
     '## Files to analyze\n' +
     'Glob patterns: ' +
     part.patterns +
@@ -163,7 +163,7 @@ phase('Structural Checks')
 // Equivalent of the playbook's axial-drift / importlinter step, adapted to this repo:
 // the @repo/types import boundary + Drizzle injection custom lint, plus typecheck.
 const structuralPrompt =
-  'You are an architecture boundary auditor for roxabi-boilerplate (Bun/TS monorepo).\n\n' +
+  'You are an architecture boundary auditor for metalyde (Bun/TS monorepo).\n\n' +
   '## Tasks\n' +
   '1. Run `bun run lint:custom` (checks DRIZZLE injection + @repo/types import boundary). Capture the output.\n' +
   '2. Run `bun run typecheck` and capture any errors (summarize counts per package, do not paste thousands of lines).\n' +
@@ -216,7 +216,7 @@ for (let i = 0; i < domains.length; i++) {
 }
 
 const synthPrompt =
-  'You are the audit synthesis lead for roxabi-boilerplate. Read ALL domain audit reports in artifacts/analyses/quality-audit/ and produce a comprehensive AUDIT-SUMMARY.md.\n\n' +
+  'You are the audit synthesis lead for metalyde. Read ALL domain audit reports in artifacts/analyses/quality-audit/ and produce a comprehensive AUDIT-SUMMARY.md.\n\n' +
   '## Reports to read\n' +
   reportsList +
   '- artifacts/analyses/quality-audit/structural/boundaries-report.md\n\n' +

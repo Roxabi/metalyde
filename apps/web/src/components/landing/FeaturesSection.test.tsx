@@ -123,7 +123,7 @@ describe('FeaturesSection — docs links (VITE_DOCS_URL)', () => {
 
   it('should render feature cards with docs hrefs as anchor links when VITE_DOCS_URL is set', () => {
     // Arrange
-    const docsBase = 'https://docs.app.roxabi.com'
+    const docsBase = 'https://docs.metalyde.roxabi.dev'
     mockClientEnv.VITE_DOCS_URL = docsBase
 
     // Act

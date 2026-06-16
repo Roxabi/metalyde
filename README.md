@@ -33,8 +33,8 @@ It pairs a modern TypeScript monorepo with an integrated AI agent team (Claude) 
 
 ```bash
 # 1. Clone and install
-git clone https://github.com/Roxabi/roxabi-next16-fumadocs.git
-cd roxabi-next16-fumadocs
+git clone https://github.com/Roxabi/metalyde.git
+cd metalyde
 cp .env.example .env
 bun install
 
@@ -58,7 +58,7 @@ bun run test          # Vitest (not `bun test`)
 ## Structure
 
 ```
-roxabi-next16-fumadocs/
+metalyde/
 ├── apps/
 │   ├── web/          # Frontend (TanStack Start)
 │   ├── api/          # Backend (NestJS + Fastify)

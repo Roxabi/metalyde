@@ -26,7 +26,7 @@ env:
   NODE_VERSION: "24"
   # Vercel project/team identifiers used to compute the stable web branch alias URL.
   # Update if the Vercel project or team is renamed.
-  VERCEL_WEB_PROJECT_NAME: "roxabi-app"
+  VERCEL_WEB_PROJECT_NAME: "metalyde-app"
   VERCEL_TEAM_SLUG: "roxabi"
 
 jobs:
@@ -236,8 +236,8 @@ jobs:
         # deployment URL isn't known yet, but the branch alias is predictable.
         run: |
           # Strip \n/\r first to prevent newline injection into --env args.
-          # Slug limit: 63 (DNS label max) - 15 ("roxabi-app-git-") - 7 ("-roxabi") = 41.
-          BRANCH_SLUG=$(printf '%s' "${GITHUB_REF_NAME}" | tr -d '\n\r' | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g' | sed 's/-\{2,\}/-/g' | sed 's/^-//;s/-$//' | cut -c1-41 | sed 's/-$//')
+          # Slug limit: 63 (DNS label max) - 17 ("metalyde-app-git-") - 7 ("-roxabi") = 39.
+          BRANCH_SLUG=$(printf '%s' "${GITHUB_REF_NAME}" | tr -d '\n\r' | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g' | sed 's/-\{2,\}/-/g' | sed 's/^-//;s/-$//' | cut -c1-39 | sed 's/-$//')
           WEB_PREVIEW_URL="https://${VERCEL_WEB_PROJECT_NAME}-git-${BRANCH_SLUG}-${VERCEL_TEAM_SLUG}.vercel.app"
           # Branches with custom domain aliases need APP_URL set to the custom
           # domain so better-auth's CSRF origin check passes. The branch alias
@@ -246,7 +246,7 @@ jobs:
           case "$GITHUB_REF_NAME" in
             staging)
               CORS_EXTRA=",$WEB_PREVIEW_URL"
-              WEB_PREVIEW_URL="https://app.staging.roxabi.com"
+              WEB_PREVIEW_URL="https://staging.metalyde.roxabi.dev"
               ;;
           esac
           echo "Web preview URL: $WEB_PREVIEW_URL"

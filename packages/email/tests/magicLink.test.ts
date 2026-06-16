@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { renderMagicLinkEmail } from '../src/index'
 
 describe('renderMagicLinkEmail', () => {
-  const url = 'https://app.roxabi.com/api/auth/magic-link/verify?token=abc123'
+  const url = 'https://metalyde.roxabi.dev/api/auth/magic-link/verify?token=abc123'
 
   it('should render branded HTML with CTA button in English', async () => {
     const result = await renderMagicLinkEmail(url, 'en')

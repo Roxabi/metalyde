@@ -11,7 +11,7 @@
 Please **do not** open a public GitHub issue for security vulnerabilities.
 
 **Option 1 — GitHub Security Advisories (preferred):**
-[Report a vulnerability](https://github.com/Roxabi/roxabi-boilerplate/security/advisories/new)
+[Report a vulnerability](https://github.com/Roxabi/metalyde/security/advisories/new)
 
 **Option 2 — Email:**
 mickael@bouly.io

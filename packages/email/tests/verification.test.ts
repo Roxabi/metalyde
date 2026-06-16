@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { renderVerificationEmail } from '../src/index'
 
 describe('renderVerificationEmail', () => {
-  const url = 'https://app.roxabi.com/verify-email?token=abc123'
+  const url = 'https://metalyde.roxabi.dev/verify-email?token=abc123'
 
   it('should render branded HTML with CTA button in English', async () => {
     const result = await renderVerificationEmail(url, 'en')

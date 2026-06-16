@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { renderResetEmail } from '../src/index'
 
 describe('renderResetEmail', () => {
-  const url = 'https://app.roxabi.com/reset-password/confirm?token=abc123'
+  const url = 'https://metalyde.roxabi.dev/reset-password/confirm?token=abc123'
 
   it('should render branded HTML with CTA button in English', async () => {
     const result = await renderResetEmail(url, 'en')

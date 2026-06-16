@@ -46,10 +46,10 @@ describe('CtaSection', () => {
   })
 
   it('should render the CTA button linking to docs URL when VITE_DOCS_URL is set', () => {
-    mockClientEnv.VITE_DOCS_URL = 'https://docs.app.roxabi.com'
+    mockClientEnv.VITE_DOCS_URL = 'https://docs.metalyde.roxabi.dev'
     render(<CtaSection />)
     const link = screen.getByRole('link', { name: 'Get Started' })
-    expect(link).toHaveAttribute('href', 'https://docs.app.roxabi.com')
+    expect(link).toHaveAttribute('href', 'https://docs.metalyde.roxabi.dev')
     expect(link).toHaveAttribute('target', '_blank')
     expect(link).toHaveAttribute('rel', 'noopener noreferrer')
   })
