@@ -42,7 +42,6 @@ type AreaChartProps = {
 
 const PADDING = { top: 8, right: 4, bottom: 4, left: 40 }
 const LABEL_HEIGHT = 24 // px reserved below chart for x-axis labels
-const _TICK_LABEL_WIDTH = 36 // px for y-axis tick labels (inside PADDING.left)
 
 // ---------------------------------------------------------------------------
 // Component
@@ -62,6 +61,7 @@ export function AreaChart({
   'aria-label': ariaLabel,
 }: AreaChartProps) {
   const id = useId()
+  const safeId = id.replace(/:/g, '')
   const reducedMotion = useReducedMotion()
   const [hoverIdx, setHoverIdx] = useState<number | null>(null)
 
@@ -115,7 +115,7 @@ export function AreaChart({
     : {
         strokeDasharray: '2000',
         strokeDashoffset: '2000',
-        animation: `area-draw-${id} 1s ease-out forwards`,
+        animation: `area-draw-${safeId} 1s ease-out forwards`,
       }
 
   // Area fade-in
@@ -123,9 +123,10 @@ export function AreaChart({
     ? {}
     : {
         opacity: 0,
-        animation: `area-fade-${id} 0.6s ease-out 0.4s forwards`,
+        animation: `area-fade-${safeId} 0.6s ease-out 0.4s forwards`,
       }
 
+  // TODO(a11y): keyboard navigation for hover/tooltip — deferred to app-shell fast-follow (WCAG 2.1.1)
   function handleMouseMove(e: React.MouseEvent<SVGSVGElement>) {
     const rect = e.currentTarget.getBoundingClientRect()
     // Convert client x to percentage-based SVG x (viewBox = 0..100)
@@ -157,8 +158,8 @@ export function AreaChart({
       >
         {!reducedMotion && (
           <style>{`
-            @keyframes area-draw-${id} { to { stroke-dashoffset: 0; } }
-            @keyframes area-fade-${id} { to { opacity: 1; } }
+            @keyframes area-draw-${safeId} { to { stroke-dashoffset: 0; } }
+            @keyframes area-fade-${safeId} { to { opacity: 1; } }
           `}</style>
         )}
 
@@ -226,6 +227,7 @@ export function AreaChart({
             strokeWidth="1.5"
             strokeLinecap="round"
             strokeLinejoin="round"
+            vectorEffect="non-scaling-stroke"
             clipPath={`url(#${clipId})`}
             style={lineAnimStyle}
           />
@@ -289,7 +291,6 @@ export function AreaChart({
             transform: `translateX(${(((hoverX ?? 0) - PADDING.left) / (VIEW_W - PADDING.left - PADDING.right)) * 100}%) translateX(-50%)`,
             marginTop: `${PADDING.top}px`,
           }}
-          aria-live="polite"
         >
           <span className="text-muted-foreground">{data[hoverIdx].label}</span>{' '}
           {fmt(data[hoverIdx].value)}

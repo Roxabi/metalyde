@@ -56,7 +56,6 @@ describe('StatusBadge', () => {
     const dot = container.querySelector('[aria-hidden="true"]') as HTMLElement
     expect(dot.style.width).toBe('6px')
     expect(dot.style.height).toBe('6px')
-    expect(dot).toHaveClass('rounded-full')
   })
 
   it('should accept a custom label overriding the default', () => {

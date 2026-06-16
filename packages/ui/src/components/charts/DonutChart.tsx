@@ -49,6 +49,7 @@ export function DonutChart({
   'aria-label': ariaLabel,
 }: DonutChartProps) {
   const id = useId()
+  const safeId = id.replace(/:/g, '')
   const reducedMotion = useReducedMotion()
 
   const cx = 50
@@ -66,6 +67,7 @@ export function DonutChart({
     color: string
     dashLen: number
     key: string
+    cssKey: string
     animDelay: number
   }
 
@@ -98,6 +100,7 @@ export function DonutChart({
       color,
       dashLen: arcLen,
       key: `${seg.label}-${i}`,
+      cssKey: String(i),
       animDelay: i * 0.12,
     })
 
@@ -127,7 +130,7 @@ export function DonutChart({
             {arcs
               .map(
                 (arc) => `
-              @keyframes donut-draw-${id}-${arc.key} {
+              @keyframes donut-draw-${safeId}-${arc.cssKey} {
                 from { stroke-dashoffset: ${arc.dashLen.toFixed(2)}; }
                 to   { stroke-dashoffset: 0; }
               }
@@ -156,7 +159,7 @@ export function DonutChart({
             : {
                 strokeDasharray: arc.dashLen,
                 strokeDashoffset: arc.dashLen,
-                animation: `donut-draw-${id}-${arc.key} 0.7s ease-out ${arc.animDelay}s forwards`,
+                animation: `donut-draw-${safeId}-${arc.cssKey} 0.7s ease-out ${arc.animDelay}s forwards`,
               }
 
           return (

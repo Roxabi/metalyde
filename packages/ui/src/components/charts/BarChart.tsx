@@ -59,6 +59,7 @@ export function BarChart({
   'aria-label': ariaLabel,
 }: BarChartProps) {
   const id = useId()
+  const safeId = id.replace(/:/g, '')
   const reducedMotion = useReducedMotion()
   const [hoverIdx, setHoverIdx] = useState<number | null>(null)
 
@@ -105,7 +106,7 @@ export function BarChart({
       >
         {!reducedMotion && (
           <style>{`
-            @keyframes bar-grow-${id} {
+            @keyframes bar-grow-${safeId} {
               from { transform-origin: bottom; transform: scaleY(0); }
               to   { transform-origin: bottom; transform: scaleY(1); }
             }
@@ -152,13 +153,15 @@ export function BarChart({
           const animStyle: React.CSSProperties = reducedMotion
             ? {}
             : {
-                animation: `bar-grow-${id} 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) ${i * 0.05}s both`,
+                animation: `bar-grow-${safeId} 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) ${i * 0.05}s both`,
+                transformBox: 'fill-box',
               }
 
           // Rounded-top bar: rect that is clipped to show rounded top corners only.
           // We draw two overlapping shapes: a rounded rect (all corners), then a
           // full rect covering the bottom half to square off the bottom corners.
           return (
+            // TODO(a11y): keyboard navigation for hover/tooltip — deferred to app-shell fast-follow (WCAG 2.1.1)
             // biome-ignore lint/a11y/noStaticElementInteractions: decorative chart hover (opacity emphasis only), not an interactive control
             <g
               key={i}

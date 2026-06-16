@@ -29,6 +29,7 @@ export function Sparkline({
   className,
 }: SparklineProps) {
   const id = useId()
+  const safeId = id.replace(/:/g, '')
   const reducedMotion = useReducedMotion()
 
   if (data.length === 0) {
@@ -66,7 +67,7 @@ export function Sparkline({
     : {
         strokeDasharray: '1000',
         strokeDashoffset: '1000',
-        animation: `sparkline-draw-in-${id} 0.8s ease-out forwards`,
+        animation: `sparkline-draw-in-${safeId} 0.8s ease-out forwards`,
       }
 
   return (
@@ -80,7 +81,7 @@ export function Sparkline({
     >
       {!reducedMotion && (
         <style>{`
-          @keyframes sparkline-draw-in-${id} {
+          @keyframes sparkline-draw-in-${safeId} {
             to { stroke-dashoffset: 0; }
           }
         `}</style>
@@ -92,6 +93,7 @@ export function Sparkline({
         strokeWidth={strokeWidth}
         strokeLinecap="round"
         strokeLinejoin="round"
+        vectorEffect="non-scaling-stroke"
         style={animStyle}
       />
     </svg>

@@ -2,7 +2,7 @@ import { cn } from '@/lib/utils'
 
 import { Skeleton } from './Skeleton'
 
-interface SkeletonTableProps extends React.ComponentProps<'div'> {
+type SkeletonTableProps = React.ComponentProps<'div'> & {
   rows?: number
   cols?: number
 }

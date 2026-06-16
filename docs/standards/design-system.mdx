@@ -85,7 +85,7 @@ background (`bg-status-*`), text (`text-status-*-fg`), and indicator dot (`bg-st
 | `archived` | `bg-status-archived` | `text-status-archived-fg` | `bg-status-archived-dot` | Read-only, fully muted |
 
 Use `StatusBadge` (`packages/ui/src/components/StatusBadge.tsx`) rather than assembling these
-tokens manually. It accepts a discriminated union and resolves `tone` + `label` automatically.
+tokens manually. Pass a `status` value and it resolves colors and label automatically.
 
 ### Surfaces
 
@@ -143,20 +143,20 @@ steps one stop lighter than `--card` (`#242422`).
 
 - `Badge` accepts a `tone` prop (`draft | planned | active | review | ontrack | risk | blocked | done | archived`). When `tone` is set, CVA variants are bypassed and `--status-{tone}` tokens apply directly.
 - Dot sub-element: `<span className="size-1.5 rounded-full bg-status-{tone}-dot" />` rendered inside badge.
-- `StatusBadge` is a discriminated-union adapter: pass `{ kind: 'api-key'; value: string }` etc. — it resolves tone and label. Use `StatusBadge` in product code, never raw `Badge` with hardcoded colors.
+- `StatusBadge` wraps the status-pill tokens: pass `status` (one of the 9 `Status` values) and an optional `label` to override the auto-derived copy (e.g. for i18n). Example: `<StatusBadge status="active" />` or `<StatusBadge status="review" label={t('status.review')} />`. Use `StatusBadge` in product code, never raw `Badge` with hardcoded colors.
 
 ### KpiCard
 
 - Anatomy: label (`text-label` scale, `text-muted-foreground`) → value (`text-mono-kpi` scale, `text-foreground`) → delta pill (`StatTrend`) → optional inline sparkline bleeding to card edges.
 - `KpiMetric` type: `{ label, value, format: 'money' | 'percent' | 'hours' | 'number', delta?, invertDelta?, spark?: number[] }`.
 - Card shadow: `shadow-card`. No custom elevation.
-- Value formatting: `formatValue()` utility from `packages/ui/src/lib/chart-utils.ts`.
+- Value formatting: implement per-format logic inline or in a co-located helper; `packages/ui/src/lib/chartUtils.ts` does not export a `formatValue` function.
 
 ### Charts (AreaChart, BarChart, DonutChart, Sparkline)
 
 - Hand-rolled SVG — no charting library dependency.
 - Color: `--color-chart-1` through `--color-chart-5` CSS vars. Do not hardcode hex values.
-- Primitives from `packages/ui/src/lib/chart-utils.ts`: `linearScale`, `niceTicks`, `buildLinePath`, `buildAreaPath`, `donutArcPath`, `nearestIndex`, `chartColorVar`.
+- Primitives from `packages/ui/src/lib/chartUtils.ts`: `linearScale`, `niceTicks`, `buildLinePath`, `buildAreaPath`, `donutArcPath`, `nearestIndex`, `chartColorVar`.
 - All draw animations guarded by `prefers-reduced-motion`: if `window.matchMedia('(prefers-reduced-motion: reduce)').matches`, skip transition, render final state immediately.
 - `Sparkline` is a minimal inline variant (no axes, no tooltip) used inside `KpiCard`.
 

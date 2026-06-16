@@ -29,7 +29,7 @@ const STATUS_LABELS: Record<Status, string> = {
   archived: 'Archived',
 }
 
-export interface StatusBadgeProps extends Omit<React.ComponentProps<'span'>, 'children'> {
+export type StatusBadgeProps = Omit<React.ComponentProps<'span'>, 'children'> & {
   /** The workflow status to display. Controls bg, fg and dot colours via CSS tokens. */
   status: Status
   /**

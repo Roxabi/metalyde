@@ -63,6 +63,7 @@ export {
   ContextMenuSubTrigger,
   ContextMenuTrigger,
 } from './components/ContextMenu'
+// Charts
 export { AreaChart } from './components/charts/AreaChart'
 export { BarChart } from './components/charts/BarChart'
 export { DonutChart } from './components/charts/DonutChart'
@@ -100,6 +101,7 @@ export {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from './components/DropdownMenu'
+export type { EmptyStateProps } from './components/EmptyState'
 export { EmptyState, emptyStateVariants } from './components/EmptyState'
 export { FormMessage } from './components/FormMessage'
 export { HoverCard, HoverCardContent, HoverCardTrigger } from './components/HoverCard'

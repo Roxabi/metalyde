@@ -36,37 +36,33 @@ describe('StatTrend', () => {
     expect(screen.getByText('+3pp')).toBeInTheDocument()
   })
 
-  it('should apply success classes for upward positive delta', () => {
+  it('should apply success tone for upward positive delta', () => {
     const { container } = render(<StatTrend value={8} />)
 
     const pill = container.querySelector('[data-slot="stat-trend"] span')
-    expect(pill).toHaveClass('bg-success/12')
-    expect(pill).toHaveClass('text-success')
+    expect(pill).toHaveAttribute('data-tone', 'success')
   })
 
-  it('should apply destructive classes for downward delta', () => {
+  it('should apply destructive tone for downward delta', () => {
     const { container } = render(<StatTrend value={-3} />)
 
     const pill = container.querySelector('[data-slot="stat-trend"] span')
-    expect(pill).toHaveClass('bg-destructive/12')
-    expect(pill).toHaveClass('text-destructive')
+    expect(pill).toHaveAttribute('data-tone', 'destructive')
   })
 
-  it('should apply success classes when invertDelta=true and value is negative', () => {
+  it('should apply success tone when invertDelta=true and value is negative', () => {
     // Cost reduction — negative delta is good
     const { container } = render(<StatTrend value={-10} invertDelta />)
 
     const pill = container.querySelector('[data-slot="stat-trend"] span')
-    expect(pill).toHaveClass('bg-success/12')
-    expect(pill).toHaveClass('text-success')
+    expect(pill).toHaveAttribute('data-tone', 'success')
   })
 
-  it('should apply destructive classes when invertDelta=true and value is positive', () => {
+  it('should apply destructive tone when invertDelta=true and value is positive', () => {
     const { container } = render(<StatTrend value={10} invertDelta />)
 
     const pill = container.querySelector('[data-slot="stat-trend"] span')
-    expect(pill).toHaveClass('bg-destructive/12')
-    expect(pill).toHaveClass('text-destructive')
+    expect(pill).toHaveAttribute('data-tone', 'destructive')
   })
 
   it('should allow explicit direction override', () => {
@@ -74,7 +70,7 @@ describe('StatTrend', () => {
     const { container } = render(<StatTrend value={5} direction="down" />)
 
     const pill = container.querySelector('[data-slot="stat-trend"] span')
-    expect(pill).toHaveClass('bg-destructive/12')
+    expect(pill).toHaveAttribute('data-tone', 'destructive')
   })
 
   it('should render the root with data-slot="stat-trend"', () => {

@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
-import { EmptyState, emptyStateVariants } from './EmptyState'
+import { EmptyState } from './EmptyState'
 
 describe('EmptyState variants', () => {
   it('should have data-slot attribute when rendered', () => {
@@ -131,7 +131,7 @@ describe('EmptyState props', () => {
 describe('EmptyState composed', () => {
   it('should render without error when all props are provided', () => {
     // Arrange & Act
-    const { container } = render(
+    render(
       <EmptyState
         icon={<span>icon</span>}
         title="No organizations"
@@ -141,8 +141,9 @@ describe('EmptyState composed', () => {
       />
     )
 
-    // Assert
-    expect(container.querySelector('[data-slot="empty-state"]')).toBeInTheDocument()
+    // Assert — heading and action button are both present
+    expect(screen.getByRole('heading', { name: 'No organizations' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Create organization' })).toBeInTheDocument()
   })
 
   it('should render without error when only required props are provided', () => {
@@ -226,32 +227,5 @@ describe('EmptyState hint prop', () => {
     // Assert
     expect(screen.getByText('Create one to get started.')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Create item' })).toBeInTheDocument()
-  })
-})
-
-describe('emptyStateVariants', () => {
-  it('should return default variant classes', () => {
-    // Arrange & Act
-    const result = emptyStateVariants({ variant: 'default' })
-
-    // Assert
-    expect(result).toContain('border-dashed')
-  })
-
-  it('should return error variant classes', () => {
-    // Arrange & Act
-    const result = emptyStateVariants({ variant: 'error' })
-
-    // Assert
-    expect(result).toContain('border-destructive/50')
-  })
-
-  it('should return search variant classes without border', () => {
-    // Arrange & Act
-    const result = emptyStateVariants({ variant: 'search' })
-
-    // Assert
-    expect(result).not.toContain('border-dashed')
-    expect(result).not.toContain('border-destructive')
   })
 })

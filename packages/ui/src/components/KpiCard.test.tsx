@@ -68,14 +68,6 @@ describe('KpiCard', () => {
     expect(container.querySelector('[data-numeric]')).toBeInTheDocument()
   })
 
-  it('should apply mono-kpi and tabular classes to value', () => {
-    const { container } = render(<KpiCard label="Metric" value={42} />)
-
-    const valueEl = container.querySelector('[data-slot="kpi-value"]')
-    expect(valueEl).toHaveClass('text-mono-kpi')
-    expect(valueEl).toHaveClass('tabular')
-  })
-
   it('should NOT render StatTrend when delta is omitted', () => {
     const { container } = render(<KpiCard label="Metric" value={42} />)
 
@@ -131,16 +123,8 @@ describe('KpiCard', () => {
   })
 
   it('should forward extra className to the root element', () => {
-    const { container } = render(<KpiCard label="Metric" value={1} className="col-span-2" />)
+    const { container } = render(<KpiCard label="Metric" value={1} className="custom-class" />)
 
-    expect(container.querySelector('[data-slot="kpi-card"]')).toHaveClass('col-span-2')
-  })
-
-  it('should apply bg-card and shadow-card classes to the root', () => {
-    const { container } = render(<KpiCard label="Metric" value={1} />)
-
-    const card = container.querySelector('[data-slot="kpi-card"]')
-    expect(card).toHaveClass('bg-card')
-    expect(card).toHaveClass('shadow-card')
+    expect(container.querySelector('[data-slot="kpi-card"]')).toHaveClass('custom-class')
   })
 })

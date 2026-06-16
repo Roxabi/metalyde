@@ -3,6 +3,7 @@ import { Slot } from 'radix-ui'
 import type * as React from 'react'
 
 import { cn } from '@/lib/utils'
+import type { Status } from './StatusBadge'
 
 const badgeVariants = cva(
   'inline-flex items-center justify-center rounded-md border px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-[color,box-shadow] overflow-hidden',
@@ -28,17 +29,10 @@ const badgeVariants = cva(
  * The 9 workflow status tones mapped to the --status-* token family.
  * When `tone` is set the CVA variant is bypassed and token-driven inline
  * styles are applied instead, keeping the variant API fully intact.
+ *
+ * Alias of `Status` from StatusBadge — single source of truth.
  */
-export type StatusTone =
-  | 'draft'
-  | 'planned'
-  | 'active'
-  | 'review'
-  | 'ontrack'
-  | 'risk'
-  | 'blocked'
-  | 'done'
-  | 'archived'
+export type StatusTone = Status
 
 function Badge({
   className,
@@ -77,6 +71,7 @@ function Badge({
   return (
     <Comp
       data-slot="badge"
+      data-variant={variant ?? 'default'}
       className={cn(badgeVariants({ variant }), className)}
       style={style}
       {...props}

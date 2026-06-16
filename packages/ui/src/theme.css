@@ -413,7 +413,11 @@
   --text-mono-kpi--line-height: var(--text-mono-kpi-lh);
   --text-mono-kpi--font-weight: var(--text-mono-kpi-weight);
   --text-mono-kpi--letter-spacing: var(--text-mono-kpi-ls);
-  /* ── Shadow / elevation utilities: shadow-xs … shadow-modal ── */
+  /* ── Shadow / elevation utilities: shadow-xs … shadow-modal ──
+     Intentional self-reference: the utility resolves `var(--shadow-*)` against the
+     UNLAYERED :root / .dark declarations above (which win the cascade over this
+     layered @theme value), giving dark-mode-aware shadows. Do NOT "fix" to distinct
+     names — that breaks the dark-mode switch. Same pattern as --font-* above. */
   --shadow-xs: var(--shadow-xs);
   --shadow-sm: var(--shadow-sm);
   --shadow-md: var(--shadow-md);

@@ -19,41 +19,40 @@ describe('Badge', () => {
     expect(container.querySelector('[data-slot="badge"]')).toBeInTheDocument()
   })
 
-  it('should apply default variant classes when no variant is specified', () => {
+  it('should apply default variant when no variant is specified', () => {
     // Arrange & Act
     const { container } = render(<Badge>Default</Badge>)
 
-    // Assert -- Badge does not expose a data-variant attribute;
-    // CSS class assertion is the only way to verify the variant styling
+    // Assert
     const badge = container.querySelector('[data-slot="badge"]')
-    expect(badge).toHaveClass('bg-primary')
+    expect(badge).toHaveAttribute('data-variant', 'default')
   })
 
-  it('should apply secondary variant classes when variant is secondary', () => {
+  it('should apply secondary variant when variant is secondary', () => {
     // Arrange & Act
     const { container } = render(<Badge variant="secondary">Secondary</Badge>)
 
-    // Assert -- no data-variant attribute; CSS class verifies variant
+    // Assert
     const badge = container.querySelector('[data-slot="badge"]')
-    expect(badge).toHaveClass('bg-secondary')
+    expect(badge).toHaveAttribute('data-variant', 'secondary')
   })
 
-  it('should apply destructive variant classes when variant is destructive', () => {
+  it('should apply destructive variant when variant is destructive', () => {
     // Arrange & Act
     const { container } = render(<Badge variant="destructive">Destructive</Badge>)
 
-    // Assert -- no data-variant attribute; CSS class verifies variant
+    // Assert
     const badge = container.querySelector('[data-slot="badge"]')
-    expect(badge).toHaveClass('bg-destructive')
+    expect(badge).toHaveAttribute('data-variant', 'destructive')
   })
 
-  it('should apply outline variant classes when variant is outline', () => {
+  it('should apply outline variant when variant is outline', () => {
     // Arrange & Act
     const { container } = render(<Badge variant="outline">Outline</Badge>)
 
-    // Assert -- no data-variant attribute; CSS class verifies variant
+    // Assert
     const badge = container.querySelector('[data-slot="badge"]')
-    expect(badge).toHaveClass('border-border')
+    expect(badge).toHaveAttribute('data-variant', 'outline')
   })
 
   it('should apply custom className when provided', () => {

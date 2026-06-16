@@ -90,33 +90,54 @@ describe('niceTicks', () => {
   it('produces round step values for clean data', () => {
     // Arrange & Act
     const ticks = niceTicks(0, 1000, 5)
-    // Assert — every step should be a multiple of 250 or 200
-    const firstStep = (ticks[1] ?? 0) - (ticks[0] ?? 0)
+    // Assert — exact array: rawStep=250, magnitude=100, normalised=2.5 → niceStep=250
+    expect(ticks).toEqual([0, 250, 500, 750, 1000])
+    // Assert — step is a nice number (250 = 2.5 × 10²), not an arbitrary non-nice value
+    const step = (ticks[1] ?? 0) - (ticks[0] ?? 0)
+    expect(step).toBe(250)
+    // Assert — all steps are uniform
     for (let i = 1; i < ticks.length; i++) {
       const curr = ticks[i]
       const prev = ticks[i - 1]
       if (curr === undefined || prev === undefined) continue
-      const step = curr - prev
-      expect(step).toBeGreaterThan(0)
-      // Steps should be uniform
-      expect(step).toBe(firstStep)
+      expect(curr - prev).toBe(step)
     }
   })
 
   it('handles small fractional ranges', () => {
-    // Arrange & Act
-    const ticks = niceTicks(0, 1, 5)
-    // Assert — ticks should be multiples of 0.25 or similar nice step
-    expect(ticks[0]).toBeLessThanOrEqual(0)
-    expect(ticks[ticks.length - 1]).toBeGreaterThanOrEqual(1)
+    // Arrange & Act — rawStep=0.2, magnitude=0.1, normalised=2.0 → niceStep=0.2, niceMin=0, niceMax=1.0
+    const ticks = niceTicks(0.1, 0.9, 5)
+    // Assert — exact array
+    expect(ticks).toEqual([0, 0.2, 0.4, 0.6, 0.8, 1])
+    // Assert — bounds cover original range
+    expect(ticks[0]).toBeLessThanOrEqual(0.1)
+    expect(ticks[ticks.length - 1]).toBeGreaterThanOrEqual(0.9)
+    // Assert — all steps are equal (uniform nice step)
+    const step = (ticks[1] ?? 0) - (ticks[0] ?? 0)
+    for (let i = 1; i < ticks.length; i++) {
+      const curr = ticks[i]
+      const prev = ticks[i - 1]
+      if (curr === undefined || prev === undefined) continue
+      expect(curr - prev).toBeCloseTo(step, 10)
+    }
   })
 
   it('handles large ranges', () => {
-    // Arrange & Act
+    // Arrange & Act — rawStep=250000, magnitude=100000, normalised=2.5 → niceStep=250000
     const ticks = niceTicks(0, 1_000_000, 5)
-    // Assert
+    // Assert — exact array
+    expect(ticks).toEqual([0, 250000, 500000, 750000, 1000000])
+    // Assert — bounds cover original range
     expect(ticks[0]).toBeLessThanOrEqual(0)
     expect(ticks[ticks.length - 1]).toBeGreaterThanOrEqual(1_000_000)
+    // Assert — all steps are equal (uniform nice step)
+    const step = (ticks[1] ?? 0) - (ticks[0] ?? 0)
+    for (let i = 1; i < ticks.length; i++) {
+      const curr = ticks[i]
+      const prev = ticks[i - 1]
+      if (curr === undefined || prev === undefined) continue
+      expect(curr - prev).toBe(step)
+    }
   })
 })
 
@@ -210,17 +231,30 @@ describe('donutArcPath', () => {
   })
 
   it('sets large-arc-flag = 1 for arcs > 180°', () => {
-    // Arrange — full circle minus a sliver → large arc
+    // Arrange — 270° arc (3π/2 > π) → largeArcFlag must be 1
     const result = donutArcPath(50, 50, 40, 0, Math.PI * 1.5)
-    // Assert
-    expect(result).toContain('1 1')
+    // Act — extract flags positionally from the A command: A rx ry x-rot large-arc sweep x y
+    // Path format: "M x1 y1 A r r 0 <largeArcFlag> <sweepFlag> x2 y2"
+    const match = result.match(/A\s[\d.]+\s[\d.]+\s\d+\s([01])\s([01])\s/)
+    expect(match).not.toBeNull()
+    const largeArcFlag = match?.[1]
+    const sweepFlag = match?.[2]
+    // Assert — large-arc-flag = 1 (arc > π), sweep-flag always = 1
+    expect(largeArcFlag).toBe('1')
+    expect(sweepFlag).toBe('1')
   })
 
   it('sets large-arc-flag = 0 for arcs ≤ 180°', () => {
-    // Arrange — quarter circle
+    // Arrange — quarter circle (π/2 < π) → largeArcFlag must be 0
     const result = donutArcPath(50, 50, 40, 0, Math.PI / 2)
-    // Assert
-    expect(result).toContain('0 1')
+    // Act — extract flags positionally from the A command
+    const match = result.match(/A\s[\d.]+\s[\d.]+\s\d+\s([01])\s([01])\s/)
+    expect(match).not.toBeNull()
+    const largeArcFlag = match?.[1]
+    const sweepFlag = match?.[2]
+    // Assert — large-arc-flag = 0 (arc ≤ π), sweep-flag always = 1
+    expect(largeArcFlag).toBe('0')
+    expect(sweepFlag).toBe('1')
   })
 })
 

@@ -15,6 +15,8 @@ type StatTrendProps = {
    * When false (default), up = success, down = destructive.
    */
   invertDelta?: boolean
+  /** Caption rendered after the delta pill. Defaults to 'vs last period'. */
+  caption?: string
   className?: string
 }
 
@@ -33,6 +35,7 @@ function StatTrend({
   suffix = '%',
   direction,
   invertDelta = false,
+  caption = 'vs last period',
   className,
 }: StatTrendProps) {
   const inferredDirection = direction ?? (value >= 0 ? 'up' : 'down')
@@ -48,6 +51,7 @@ function StatTrend({
     <div data-slot="stat-trend" className={cn('flex items-center gap-1.5', className)}>
       {/* Delta pill */}
       <span
+        data-tone={isPositive ? 'success' : 'destructive'}
         className={cn(
           'inline-flex items-center gap-0.5 rounded px-1.5 py-0.5 text-xs font-medium tabular-nums',
           isPositive ? 'bg-success/12 text-success' : 'bg-destructive/12 text-destructive'
@@ -71,7 +75,7 @@ function StatTrend({
       </span>
 
       {/* Caption */}
-      <span className="text-caption text-muted-foreground">vs last period</span>
+      <span className="text-caption text-muted-foreground">{caption}</span>
     </div>
   )
 }
