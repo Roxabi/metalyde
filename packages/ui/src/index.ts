@@ -32,6 +32,7 @@ export {
   AvatarGroupCount,
   AvatarImage,
 } from './components/Avatar'
+export type { StatusTone } from './components/Badge'
 export { Badge, badgeVariants } from './components/Badge'
 export { Button, buttonVariants } from './components/Button'
 export {
@@ -62,6 +63,10 @@ export {
   ContextMenuSubTrigger,
   ContextMenuTrigger,
 } from './components/ContextMenu'
+export { AreaChart } from './components/charts/AreaChart'
+export { BarChart } from './components/charts/BarChart'
+export { DonutChart } from './components/charts/DonutChart'
+export { Sparkline } from './components/charts/Sparkline'
 export {
   DestructiveConfirmDialog,
   type DestructiveConfirmDialogProps,
@@ -99,6 +104,8 @@ export { EmptyState, emptyStateVariants } from './components/EmptyState'
 export { FormMessage } from './components/FormMessage'
 export { HoverCard, HoverCardContent, HoverCardTrigger } from './components/HoverCard'
 export { Input } from './components/Input'
+export type { KpiCardProps, KpiMetric, KpiValueFormat } from './components/KpiCard'
+export { formatKpiValue, KpiCard } from './components/KpiCard'
 export { Label } from './components/Label'
 export {
   NavigationMenu,
@@ -148,11 +155,18 @@ export {
   sheetContentVariants,
 } from './components/Sheet'
 export { Skeleton } from './components/Skeleton'
+export { SkeletonCard } from './components/SkeletonCard'
+export type { SkeletonTableProps } from './components/SkeletonTable'
+export { SkeletonTable } from './components/SkeletonTable'
 export { Slider } from './components/Slider'
 export type { ToasterProps } from './components/Sonner'
 export { Toaster } from './components/Sonner'
 export { Spinner, spinnerVariants } from './components/Spinner'
 export { StatCounter } from './components/StatCounter'
+export type { StatTrendProps } from './components/StatTrend'
+export { StatTrend } from './components/StatTrend'
+export type { Status, StatusBadgeProps } from './components/StatusBadge'
+export { StatusBadge } from './components/StatusBadge'
 export { Switch } from './components/Switch'
 export {
   Table,
@@ -167,6 +181,17 @@ export {
 export { Tabs, TabsContent, TabsList, TabsTrigger } from './components/Tabs'
 export { Textarea } from './components/Textarea'
 export { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './components/Tooltip'
+export type { ChartValueFormat, ScaleFn } from './lib/chartUtils'
+// Utilities
+export {
+  buildAreaPath,
+  buildLinePath,
+  chartColorVar,
+  donutArcPath,
+  linearScale,
+  nearestIndex,
+  niceTicks,
+} from './lib/chartUtils'
 // Theme engine
 export type {
   DerivedTheme,
@@ -186,7 +211,6 @@ export {
   SHADOW_PRESETS,
 } from './lib/theme'
 export { useReducedMotion } from './lib/useReducedMotion'
-// Utilities
 export { cn } from './lib/utils'
 
 // Theme presets

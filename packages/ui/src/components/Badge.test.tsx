@@ -71,4 +71,78 @@ describe('Badge', () => {
     // Assert
     expect(container.querySelector('[data-slot="badge"]')?.tagName).toBe('SPAN')
   })
+
+  // ── tone prop (status token path) ──────────────────────────────────────────
+
+  describe('tone prop', () => {
+    it('should apply data-tone attribute when tone is set', () => {
+      // Arrange & Act
+      const { container } = render(<Badge tone="active">Active</Badge>)
+
+      // Assert
+      const badge = container.querySelector('[data-slot="badge"]')
+      expect(badge).toHaveAttribute('data-tone', 'active')
+    })
+
+    it('should apply status token inline styles when tone is set', () => {
+      // Arrange & Act
+      const { container } = render(<Badge tone="blocked">Blocked</Badge>)
+
+      // Assert -- token-driven inline styles replace CVA variant classes
+      const badge = container.querySelector('[data-slot="badge"]') as HTMLElement
+      expect(badge.style.backgroundColor).toBe('var(--status-blocked)')
+      expect(badge.style.color).toBe('var(--status-blocked-fg)')
+    })
+
+    it('should not apply bg-primary when tone overrides variant', () => {
+      // Arrange & Act
+      const { container } = render(<Badge tone="done">Done</Badge>)
+
+      // Assert -- CVA default variant must be bypassed
+      const badge = container.querySelector('[data-slot="badge"]')
+      expect(badge).not.toHaveClass('bg-primary')
+    })
+
+    it('should still accept className when tone is set', () => {
+      // Arrange & Act
+      const { container } = render(
+        <Badge tone="draft" className="extra-class">
+          Draft
+        </Badge>
+      )
+
+      // Assert
+      const badge = container.querySelector('[data-slot="badge"]')
+      expect(badge).toHaveClass('extra-class')
+    })
+
+    it('should render children inside tone badge', () => {
+      // Arrange & Act
+      render(<Badge tone="planned">Planned</Badge>)
+
+      // Assert
+      expect(screen.getByText('Planned')).toBeInTheDocument()
+    })
+
+    it('should support all 9 status tones without throwing', () => {
+      // Arrange
+      const tones = [
+        'draft',
+        'planned',
+        'active',
+        'review',
+        'ontrack',
+        'risk',
+        'blocked',
+        'done',
+        'archived',
+      ] as const
+
+      // Act & Assert -- each tone must render without error
+      for (const tone of tones) {
+        const { container } = render(<Badge tone={tone}>{tone}</Badge>)
+        expect(container.querySelector(`[data-tone="${tone}"]`)).toBeInTheDocument()
+      }
+    })
+  })
 })

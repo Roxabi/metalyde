@@ -25,6 +25,7 @@ function EmptyState({
   icon,
   title,
   description,
+  hint,
   action,
   variant = 'default',
   className,
@@ -34,6 +35,7 @@ function EmptyState({
     icon: React.ReactNode
     title?: string
     description: string
+    hint?: string
     action?: React.ReactNode
   }) {
   return (
@@ -48,6 +50,11 @@ function EmptyState({
       </div>
       {title && <h3 className="text-lg font-semibold">{title}</h3>}
       <p className="text-sm text-muted-foreground">{description}</p>
+      {hint && (
+        <p data-slot="empty-state-hint" className="text-xs text-muted-foreground/70">
+          {hint}
+        </p>
+      )}
       {action && <div className="mt-2">{action}</div>}
     </div>
   )
