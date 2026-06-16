@@ -1,0 +1,1495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Metalyde — Positioning Exploration</title>
+<style>
+  /* ── RESET ────────────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  /* ── DESIGN TOKENS ────────────────────────────────────── */
+  :root {
+    /* Palette A — Midnight Precision */
+    --pa-bg:        oklch(12% 0.02 260);
+    --pa-surface:   oklch(17% 0.025 260);
+    --pa-border:    oklch(25% 0.03 260);
+    --pa-accent:    oklch(68% 0.22 195);
+    --pa-accent2:   oklch(72% 0.18 280);
+    --pa-text:      oklch(90% 0.01 260);
+    --pa-muted:     oklch(55% 0.02 260);
+
+    /* Palette B — Warm Signal */
+    --pb-bg:        oklch(96% 0.01 60);
+    --pb-surface:   oklch(99% 0.005 60);
+    --pb-border:    oklch(88% 0.02 60);
+    --pb-accent:    oklch(55% 0.21 30);
+    --pb-accent2:   oklch(62% 0.18 50);
+    --pb-text:      oklch(18% 0.02 60);
+    --pb-muted:     oklch(52% 0.04 60);
+
+    /* Palette C — Electric Sage */
+    --pc-bg:        oklch(11% 0.03 145);
+    --pc-surface:   oklch(16% 0.04 145);
+    --pc-border:    oklch(24% 0.05 145);
+    --pc-accent:    oklch(75% 0.22 145);
+    --pc-accent2:   oklch(78% 0.2 200);
+    --pc-text:      oklch(92% 0.01 145);
+    --pc-muted:     oklch(54% 0.04 145);
+
+    /* Active theme — defaults to A */
+    --bg:       var(--pa-bg);
+    --surface:  var(--pa-surface);
+    --border:   var(--pa-border);
+    --accent:   var(--pa-accent);
+    --accent2:  var(--pa-accent2);
+    --text:     var(--pa-text);
+    --muted:    var(--pa-muted);
+
+    /* Type */
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    --font-mono: "SF Mono", "Cascadia Code", "Fira Code", Consolas, monospace;
+    --fs-xs:  0.72rem;
+    --fs-sm:  0.85rem;
+    --fs-base: 1rem;
+    --fs-md:  1.125rem;
+    --fs-lg:  1.35rem;
+    --fs-xl:  1.7rem;
+    --fs-2xl: 2.2rem;
+    --fs-3xl: 3rem;
+    --lh: 1.6;
+    --lh-tight: 1.2;
+
+    /* Space */
+    --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px;
+    --sp-5: 20px; --sp-6: 24px; --sp-8: 32px; --sp-10: 40px;
+    --sp-12: 48px; --sp-16: 64px;
+
+    /* Misc */
+    --radius: 8px;
+    --radius-lg: 14px;
+    --radius-xl: 20px;
+    --shadow: 0 2px 12px oklch(0% 0 0 / 0.3);
+    --shadow-lg: 0 8px 40px oklch(0% 0 0 / 0.5);
+    --transition: 180ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Themes */
+  body.theme-b {
+    --bg: var(--pb-bg); --surface: var(--pb-surface); --border: var(--pb-border);
+    --accent: var(--pb-accent); --accent2: var(--pb-accent2); --text: var(--pb-text); --muted: var(--pb-muted);
+  }
+  body.theme-c {
+    --bg: var(--pc-bg); --surface: var(--pc-surface); --border: var(--pc-border);
+    --accent: var(--pc-accent); --accent2: var(--pc-accent2); --text: var(--pc-text); --muted: var(--pc-muted);
+  }
+
+  /* ── BASE ──────────────────────────────────────────────── */
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font);
+    font-size: var(--fs-base);
+    line-height: var(--lh);
+    color: var(--text);
+    background: var(--bg);
+    min-height: 100vh;
+    transition: background var(--transition), color var(--transition);
+  }
+
+  /* ── LAYOUT ────────────────────────────────────────────── */
+  .wrapper { max-width: 1200px; margin: 0 auto; padding: 0 var(--sp-6); }
+
+  /* ── NAV ───────────────────────────────────────────────── */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: color-mix(in oklch, var(--bg), transparent 10%);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: var(--sp-3) var(--sp-6);
+    display: flex;
+    align-items: center;
+    gap: var(--sp-4);
+  }
+  .nav-brand {
+    font-size: var(--fs-sm);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+  .nav-links {
+    display: flex;
+    gap: var(--sp-1);
+    flex-wrap: wrap;
+    flex: 1;
+    list-style: none;
+  }
+  .nav-links a {
+    display: block;
+    padding: var(--sp-1) var(--sp-3);
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--muted);
+    border-radius: var(--radius);
+    transition: color var(--transition), background var(--transition);
+  }
+  .nav-links a:hover { color: var(--text); background: var(--surface); }
+  .theme-switcher {
+    display: flex;
+    gap: var(--sp-2);
+    margin-left: auto;
+  }
+  .swatch-btn {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: border-color var(--transition), transform var(--transition);
+  }
+  .swatch-btn:hover { transform: scale(1.15); }
+  .swatch-btn.active { border-color: var(--text); }
+  .swatch-a { background: oklch(68% 0.22 195); }
+  .swatch-b { background: oklch(55% 0.21 30); }
+  .swatch-c { background: oklch(75% 0.22 145); }
+
+  /* ── SECTIONS ──────────────────────────────────────────── */
+  section { padding: var(--sp-16) 0; }
+  section + section { border-top: 1px solid var(--border); }
+
+  .section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-2);
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: var(--sp-4);
+  }
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+  h2.section-title {
+    font-size: var(--fs-2xl);
+    font-weight: 800;
+    line-height: var(--lh-tight);
+    color: var(--text);
+    margin-bottom: var(--sp-3);
+    letter-spacing: -0.02em;
+  }
+  .section-sub {
+    font-size: var(--fs-md);
+    color: var(--muted);
+    max-width: 620px;
+    margin-bottom: var(--sp-10);
+  }
+
+  /* ── HERO ──────────────────────────────────────────────── */
+  .hero {
+    padding: var(--sp-16) 0 var(--sp-12);
+    text-align: center;
+  }
+  .hero-eyebrow {
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: var(--sp-5);
+  }
+  .hero h1 {
+    font-size: clamp(2.4rem, 5vw, 4.2rem);
+    font-weight: 900;
+    line-height: 1.08;
+    letter-spacing: -0.035em;
+    color: var(--text);
+    margin-bottom: var(--sp-6);
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--accent);
+  }
+  .hero-sub {
+    font-size: var(--fs-lg);
+    color: var(--muted);
+    max-width: 580px;
+    margin: 0 auto var(--sp-10);
+    line-height: 1.5;
+  }
+  .hero-meta {
+    display: flex;
+    justify-content: center;
+    gap: var(--sp-8);
+    flex-wrap: wrap;
+  }
+  .hero-stat {
+    text-align: center;
+  }
+  .hero-stat-num {
+    font-size: var(--fs-xl);
+    font-weight: 800;
+    color: var(--accent);
+    letter-spacing: -0.03em;
+    display: block;
+  }
+  .hero-stat-label {
+    font-size: var(--fs-xs);
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+  }
+  .hero-divider { width: 40px; height: 1px; background: var(--border); margin: var(--sp-10) auto 0; }
+
+  /* ── TABS ──────────────────────────────────────────────── */
+  .tabs-nav {
+    display: flex;
+    gap: var(--sp-2);
+    border-bottom: 1px solid var(--border);
+    margin-bottom: var(--sp-8);
+    flex-wrap: wrap;
+  }
+  .tab-btn {
+    padding: var(--sp-3) var(--sp-5);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--muted);
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    transition: color var(--transition), border-color var(--transition);
+    margin-bottom: -1px;
+    font-family: var(--font);
+  }
+  .tab-btn:hover { color: var(--text); }
+  .tab-btn.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ── CARDS ─────────────────────────────────────────────── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--sp-6);
+    transition: border-color var(--transition), box-shadow var(--transition);
+  }
+  .card:hover { border-color: var(--accent); box-shadow: var(--shadow); }
+
+  .card-grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: var(--sp-5); }
+  .card-grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: var(--sp-5); }
+
+  .card-label {
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: var(--sp-3);
+  }
+  .card h3 {
+    font-size: var(--fs-lg);
+    font-weight: 800;
+    line-height: var(--lh-tight);
+    letter-spacing: -0.02em;
+    margin-bottom: var(--sp-3);
+  }
+  .card p { font-size: var(--fs-sm); color: var(--muted); margin-bottom: var(--sp-4); }
+
+  .bet-box {
+    background: color-mix(in oklch, var(--accent), transparent 88%);
+    border: 1px solid color-mix(in oklch, var(--accent), transparent 70%);
+    border-radius: var(--radius);
+    padding: var(--sp-3) var(--sp-4);
+    font-size: var(--fs-sm);
+    color: var(--text);
+    margin-top: var(--sp-4);
+  }
+  .bet-box strong { color: var(--accent); }
+
+  .tag {
+    display: inline-block;
+    padding: 2px var(--sp-2);
+    background: color-mix(in oklch, var(--accent), transparent 85%);
+    color: var(--accent);
+    border-radius: 4px;
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-right: var(--sp-1);
+    margin-bottom: var(--sp-1);
+  }
+  .tag.danger { background: color-mix(in oklch, oklch(58% 0.22 25), transparent 82%); color: oklch(70% 0.22 25); }
+  .tag.neutral { background: color-mix(in oklch, var(--muted), transparent 80%); color: var(--muted); }
+
+  /* ── POSITIONING ANGLES ─────────────────────────────────── */
+  .angle-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--sp-8);
+    position: relative;
+    overflow: hidden;
+  }
+  .angle-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--accent);
+    border-radius: 4px 0 0 4px;
+  }
+  .angle-card.alt::before { background: var(--accent2); }
+  .angle-card.alt3::before { background: oklch(72% 0.18 320); }
+
+  .angle-headline {
+    font-size: var(--fs-xl);
+    font-weight: 900;
+    line-height: var(--lh-tight);
+    letter-spacing: -0.025em;
+    margin-bottom: var(--sp-2);
+  }
+  .angle-sub {
+    font-size: var(--fs-md);
+    color: var(--muted);
+    margin-bottom: var(--sp-6);
+    font-style: italic;
+  }
+  .angle-why { font-size: var(--fs-sm); color: var(--text); margin-bottom: var(--sp-4); }
+  .angle-proof {
+    background: color-mix(in oklch, var(--bg), transparent 0%);
+    border-left: 3px solid var(--border);
+    padding: var(--sp-3) var(--sp-4);
+    font-size: var(--fs-xs);
+    color: var(--muted);
+    font-family: var(--font-mono);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    margin-top: var(--sp-4);
+  }
+  .angle-meta { display: flex; gap: var(--sp-3); flex-wrap: wrap; margin-top: var(--sp-5); }
+
+  /* ── SCATTER PLOT ───────────────────────────────────────── */
+  .plot-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    padding: var(--sp-6);
+    overflow: hidden;
+  }
+  .plot-controls {
+    display: flex;
+    gap: var(--sp-2);
+    margin-bottom: var(--sp-5);
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .plot-axis-btn {
+    padding: var(--sp-2) var(--sp-4);
+    font-size: var(--fs-xs);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--bg);
+    color: var(--muted);
+    cursor: pointer;
+    font-family: var(--font);
+    transition: all var(--transition);
+  }
+  .plot-axis-btn.active { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+  .plot-axis-btn:hover:not(.active) { border-color: var(--accent); color: var(--text); }
+  .plot-label { font-size: var(--fs-xs); color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
+  #scatter-svg { width: 100%; display: block; }
+  .plot-legend {
+    display: flex;
+    gap: var(--sp-5);
+    margin-top: var(--sp-4);
+    flex-wrap: wrap;
+  }
+  .legend-item { display: flex; align-items: center; gap: var(--sp-2); font-size: var(--fs-xs); color: var(--muted); }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+  /* ── DIFFERENTIATORS TABLE ──────────────────────────────── */
+  .diff-list { display: flex; flex-direction: column; gap: var(--sp-3); }
+  .diff-item {
+    display: grid;
+    grid-template-columns: 40px 1fr auto;
+    gap: var(--sp-4);
+    align-items: start;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--sp-5) var(--sp-6);
+    transition: border-color var(--transition);
+  }
+  .diff-item:hover { border-color: var(--accent); }
+  .diff-rank {
+    font-size: var(--fs-2xl);
+    font-weight: 900;
+    color: var(--border);
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.04em;
+  }
+  .diff-rank.top { color: var(--accent); }
+  .diff-content h4 { font-size: var(--fs-md); font-weight: 700; margin-bottom: var(--sp-1); }
+  .diff-content p { font-size: var(--fs-sm); color: var(--muted); }
+  .diff-bar-wrap { width: 80px; padding-top: 6px; }
+  .diff-bar-bg { height: 4px; background: var(--border); border-radius: 2px; }
+  .diff-bar-fill { height: 4px; background: var(--accent); border-radius: 2px; transition: width 0.6s ease; }
+
+  /* ── ANTI-POSITIONING ────────────────────────────────────── */
+  .anti-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--sp-4);
+  }
+  .anti-card {
+    background: var(--surface);
+    border: 1px solid color-mix(in oklch, oklch(58% 0.22 25), transparent 70%);
+    border-radius: var(--radius-lg);
+    padding: var(--sp-6);
+    position: relative;
+    overflow: hidden;
+  }
+  .anti-card::after {
+    content: '✕';
+    position: absolute;
+    top: var(--sp-4);
+    right: var(--sp-5);
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: oklch(58% 0.22 25);
+    opacity: 0.4;
+  }
+  .anti-label {
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: oklch(65% 0.2 25);
+    margin-bottom: var(--sp-3);
+  }
+  .anti-card h4 {
+    font-size: var(--fs-md);
+    font-weight: 800;
+    margin-bottom: var(--sp-3);
+    color: var(--text);
+  }
+  .anti-card p { font-size: var(--fs-sm); color: var(--muted); }
+
+  /* ── COLOR PALETTE SECTION ───────────────────────────────── */
+  .palette-section { }
+  .palette-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: var(--sp-6); }
+  .palette-card {
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: transform var(--transition), box-shadow var(--transition);
+  }
+  .palette-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+  .palette-card.selected { box-shadow: 0 0 0 3px var(--accent); }
+  .palette-preview {
+    height: 180px;
+    display: flex;
+    align-items: flex-end;
+    padding: var(--sp-6);
+    position: relative;
+  }
+  .palette-preview-label {
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: oklch(0% 0 0 / 0.5);
+    padding: var(--sp-1) var(--sp-3);
+    border-radius: var(--radius);
+    backdrop-filter: blur(8px);
+  }
+  .palette-info { background: var(--surface); padding: var(--sp-5); }
+  .palette-info h4 { font-size: var(--fs-md); font-weight: 700; margin-bottom: var(--sp-2); }
+  .palette-info p { font-size: var(--fs-sm); color: var(--muted); margin-bottom: var(--sp-4); }
+  .swatches-row { display: flex; gap: var(--sp-2); flex-wrap: wrap; }
+  .swatch-chip {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--sp-1);
+  }
+  .swatch-block {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius);
+    border: 1px solid oklch(0% 0 0 / 0.15);
+  }
+  .swatch-hex {
+    font-size: 9px;
+    font-family: var(--font-mono);
+    color: var(--muted);
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  /* ── DIVIDER ─────────────────────────────────────────────── */
+  hr { border: none; border-top: 1px solid var(--border); }
+
+  /* ── QUOTE ──────────────────────────────────────────────── */
+  .blockquote {
+    border-left: 3px solid var(--accent);
+    padding: var(--sp-4) var(--sp-5);
+    background: color-mix(in oklch, var(--accent), transparent 92%);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    font-size: var(--fs-sm);
+    font-style: italic;
+    color: var(--text);
+    margin: var(--sp-4) 0;
+  }
+  .blockquote cite {
+    display: block;
+    margin-top: var(--sp-2);
+    font-size: var(--fs-xs);
+    color: var(--muted);
+    font-style: normal;
+    font-weight: 600;
+  }
+
+  /* ── TOOLTIP ─────────────────────────────────────────────── */
+  .has-tooltip { position: relative; cursor: pointer; }
+  .tooltip {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: oklch(18% 0.02 260);
+    color: oklch(92% 0.01 260);
+    padding: var(--sp-2) var(--sp-3);
+    border-radius: var(--radius);
+    font-size: var(--fs-xs);
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity var(--transition);
+    z-index: 50;
+    border: 1px solid oklch(30% 0.03 260);
+    max-width: 240px;
+    white-space: normal;
+    text-align: center;
+  }
+  .has-tooltip:hover .tooltip { opacity: 1; }
+
+  /* ── FOOTER ──────────────────────────────────────────────── */
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: var(--sp-8) var(--sp-6);
+    text-align: center;
+    font-size: var(--fs-xs);
+    color: var(--muted);
+  }
+
+  /* ── PRINT ───────────────────────────────────────────────── */
+  @media print {
+    .nav, .theme-switcher { display: none; }
+    .tab-panel { display: block !important; }
+  }
+</style>
+</head>
+<body class="theme-a" id="body-root">
+
+<!-- ── NAV ──────────────────────────────────────────────────── -->
+<nav class="nav">
+  <div class="nav-brand">Metalyde</div>
+  <ul class="nav-links">
+    <li><a href="#categories">Categories</a></li>
+    <li><a href="#angles">Angles</a></li>
+    <li><a href="#landscape">Landscape</a></li>
+    <li><a href="#differentiators">Differentiators</a></li>
+    <li><a href="#anti">Anti-Positioning</a></li>
+    <li><a href="#palettes">Palettes</a></li>
+  </ul>
+  <div class="theme-switcher">
+    <button class="swatch-btn swatch-a active" data-theme="a" title="Midnight Precision"></button>
+    <button class="swatch-btn swatch-b" data-theme="b" title="Warm Signal"></button>
+    <button class="swatch-btn swatch-c" data-theme="c" title="Electric Sage"></button>
+  </div>
+</nav>
+
+<!-- ── HERO ──────────────────────────────────────────────────── -->
+<header class="hero wrapper">
+  <div class="hero-eyebrow">Phase 2 · Positioning Exploration · 2026-06-16</div>
+  <h1>Where does Metalyde<br>belong in the <em>world</em>?</h1>
+  <p class="hero-sub">Divergent exploration — 3 category bets, 3 positioning angles, a competitive landscape, ranked differentiators, and anti-positioning. React, don't converge yet.</p>
+  <div class="hero-meta">
+    <div class="hero-stat">
+      <span class="hero-stat-num">57%</span>
+      <span class="hero-stat-label">agencies losing $1–5K/mo</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-num">$32K</span>
+      <span class="hero-stat-label">avg annual time-tracking loss</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-num">4–6h</span>
+      <span class="hero-stat-label">per week bridging two tools</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-num">60%</span>
+      <span class="hero-stat-label">avg utilization vs 65–80% healthy</span>
+    </div>
+  </div>
+  <div class="hero-divider"></div>
+</header>
+
+<!-- ── 01 CATEGORY DEFINITIONS ────────────────────────────────── -->
+<section id="categories">
+  <div class="wrapper">
+    <div class="section-label">01</div>
+    <h2 class="section-title">Category Definitions</h2>
+    <p class="section-sub">What market does Metalyde create or enter? Each category makes a different philosophical bet on who the buyer is and how they think about buying.</p>
+
+    <div class="card-grid-3">
+
+      <!-- CAT A -->
+      <div class="card">
+        <div class="card-label">Category A · Most Ambitious</div>
+        <h3>"The Marketing Agency OS"</h3>
+        <p>A purpose-built operating layer for how marketing agencies run their business — not a PM tool, not a CRM, not a PSA. A vertical OS that touches every operating surface: briefs, delivery, billing, reporting, AI execution.</p>
+        <div class="bet-box">
+          <strong>The bet:</strong> "Agency OS" language is in market but unclaimed vertically. Metalyde plants the flag as the first AI-native, marketing-specific OS before a funded competitor does. Window: 6–12 months. Win = category creator. Lose = wrong timing or execution too slow.
+        </div>
+        <div style="margin-top: var(--sp-5)">
+          <span class="tag">Category create</span>
+          <span class="tag">High upside</span>
+          <span class="tag">High risk</span>
+        </div>
+        <div class="blockquote" style="margin-top:var(--sp-4)">
+          "Built an operating system for agencies."
+          <cite>— @polsia, 10 Jun 2026 (the language is live; not yet owned vertically)</cite>
+        </div>
+      </div>
+
+      <!-- CAT B -->
+      <div class="card">
+        <div class="card-label">Category B · Most Defensible</div>
+        <h3>"AI-Native Agency Profitability Platform"</h3>
+        <p>The financial nerve center of an AI-native agency — where utilization, scope creep, retainer health, and margin are the primary surfaces, not tasks. Everything else is a feed into the profitability engine.</p>
+        <div class="bet-box">
+          <strong>The bet:</strong> Profitability is the sharpest measurable pain ($1–5K/month lost; $32K/yr) and the least served. "Platform" is less bold than "OS" but lands with a CFO/owner who sees a financial management problem, not a workflow problem. Win = become the margin layer every AI agency installs. Lose = perceived as a niche finance SaaS.
+        </div>
+        <div style="margin-top: var(--sp-5)">
+          <span class="tag">Problem-led</span>
+          <span class="tag">ROI clear</span>
+          <span class="tag">Narrower</span>
+        </div>
+        <div class="blockquote" style="margin-top:var(--sp-4)">
+          "If your agency logged 500 billable hours last month but still lost money, you're not alone."
+          <cite>— bennettfinancials.com (the pain is felt but under-diagnosed)</cite>
+        </div>
+      </div>
+
+      <!-- CAT C -->
+      <div class="card">
+        <div class="card-label">Category C · Most Pragmatic</div>
+        <h3>"The Unified Agency Workspace"</h3>
+        <p>The single place where brief meets delivery meets billing meets client — replacing the 4–6 tool stack agencies currently stitch together. Positioned against tool sprawl, not against a specific PSA competitor.</p>
+        <div class="bet-box">
+          <strong>The bet:</strong> Agencies buy on consolidation ROI — they already feel the 4–6 hours/week bridging tools. "Workspace" is familiar, low-friction, but increasingly commoditized. Win = large total addressable market, easy onboarding narrative. Lose = competing with Monday/ClickUp positioning in buyers' minds (even if better executed).
+        </div>
+        <div style="margin-top: var(--sp-5)">
+          <span class="tag">High TAM</span>
+          <span class="tag">Easy pitch</span>
+          <span class="tag">Crowded shelf</span>
+        </div>
+        <div class="blockquote" style="margin-top:var(--sp-4)">
+          "Tired of juggling 5+ tools?"
+          <cite>— @prism_ops, 15 Mar 2026 (the hook is real but the answer field is noisy)</cite>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Category decision matrix -->
+    <div style="margin-top: var(--sp-10)">
+      <div class="section-label" style="margin-bottom: var(--sp-5)">Decision matrix</div>
+      <div style="overflow-x: auto;">
+        <table style="width:100%; border-collapse:collapse; font-size: var(--fs-sm);">
+          <thead>
+            <tr style="border-bottom: 2px solid var(--border);">
+              <th style="padding: var(--sp-3) var(--sp-4); text-align:left; color:var(--muted); font-weight:700; text-transform:uppercase; font-size:var(--fs-xs); letter-spacing:0.08em;">Signal</th>
+              <th style="padding: var(--sp-3) var(--sp-4); text-align:center; color:var(--accent);">A — Agency OS</th>
+              <th style="padding: var(--sp-3) var(--sp-4); text-align:center; color:var(--accent2);">B — Profitability</th>
+              <th style="padding: var(--sp-3) var(--sp-4); text-align:center; color:oklch(72% 0.18 320);">C — Workspace</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid var(--border);">
+              <td style="padding: var(--sp-3) var(--sp-4); color:var(--text);">Naming momentum (Jun 2026)</td>
+              <td style="padding: var(--sp-3) var(--sp-4); text-align:center;">★★★★☆</td>
+              <td style="padding: var(--sp-3) var(--sp-4); text-align:center;">★★★☆☆</td>
+              <td style="padding: var(--sp-3) var(--sp-4); text-align:center;">★★☆☆☆</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border);">
+              <td style="padding: var(--sp-3) var(--sp-4); color:var(--text);">Pain sharpness / measurability</td>
+              <td style="padding: var(--sp-3) var(--sp-4); text-align:center;">★★★☆☆</td>
+              <td style="padding: var(--sp-3) var(--sp-4); text-align:center;">★★★★★</td>
+              <td style="padding: var(--sp-3) var(--sp-4); text-align:center;">★★★★☆</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border);">
+              <td style="padding: var(--sp-3) var(--sp-4); color:var(--text);">Competitor whitespace</td>
+              <td style="padding: var(--sp-3) var(--sp-4); text-align:center;">★★★★★</td>
+              <td style="padding: var(--sp-3) var(--sp-4); text-align:center;">★★★★☆</td>
+              <td style="padding: var(--sp-3) var(--sp-4); text-align:center;">★★☆☆☆</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border);">
+              <td style="padding: var(--sp-3) var(--sp-4); color:var(--text);">Buyer identity alignment</td>
+              <td style="padding: var(--sp-3) var(--sp-4); text-align:center;">★★★★★</td>
+              <td style="padding: var(--sp-3) var(--sp-4); text-align:center;">★★★★☆</td>
+              <td style="padding: var(--sp-3) var(--sp-4); text-align:center;">★★★☆☆</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border);">
+              <td style="padding: var(--sp-3) var(--sp-4); color:var(--text);">Execution risk (solo builder)</td>
+              <td style="padding: var(--sp-3) var(--sp-4); text-align:center; color:oklch(65% 0.2 25);">High</td>
+              <td style="padding: var(--sp-3) var(--sp-4); text-align:center; color:oklch(72% 0.18 80);">Medium</td>
+              <td style="padding: var(--sp-3) var(--sp-4); text-align:center; color:oklch(65% 0.2 145);">Lower</td>
+            </tr>
+            <tr>
+              <td style="padding: var(--sp-3) var(--sp-4); color:var(--text);">Pricing model flexibility</td>
+              <td style="padding: var(--sp-3) var(--sp-4); text-align:center;">★★★★★</td>
+              <td style="padding: var(--sp-3) var(--sp-4); text-align:center;">★★★★☆</td>
+              <td style="padding: var(--sp-3) var(--sp-4); text-align:center;">★★★☆☆</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 02 POSITIONING ANGLES ────────────────────────────────────── -->
+<section id="angles">
+  <div class="wrapper">
+    <div class="section-label">02</div>
+    <h2 class="section-title">Positioning Angles</h2>
+    <p class="section-sub">Three distinct lead differentiators — each one emphasizes a different primary claim. These are not mutually exclusive but each changes who you attract first and what you charge for.</p>
+
+    <div class="tabs-nav" id="angles-tabs">
+      <button class="tab-btn active" data-tab="angle-1">A: Profitability First</button>
+      <button class="tab-btn" data-tab="angle-2">B: Identity Sell</button>
+      <button class="tab-btn" data-tab="angle-3">C: Anti-Bloat</button>
+    </div>
+
+    <!-- ANGLE 1 -->
+    <div class="tab-panel active" id="angle-1">
+      <div class="angle-card">
+        <div class="card-label" style="margin-bottom:var(--sp-4)">Angle A — Lead with the number that hurts</div>
+        <div class="angle-headline">"Stop losing $1,000–$5,000 a month<br>to scope creep you can't see."</div>
+        <div class="angle-sub">Sub-line: "Metalyde is the operating system that turns every client relationship into a margin you can measure."</div>
+        <div class="angle-why">
+          <strong>Why this wins:</strong> The profitability pain is quantified (57% of agencies, Ignition 2025), emotionally real (scope creep feels personal), and completely under-served by the incumbent stack. No tool makes "which clients made money this week and why" the first screen. Metalyde can. This angle runs straight into a CFO/owner's P&amp;L anxiety — the sharpest buying trigger in professional services.
+        </div>
+        <div class="blockquote">
+          "ecom guys deal with thin margins… Agency guys deal with client churn and scope creep."
+          <cite>— @monk_wire, 21 May 2026</cite>
+        </div>
+        <div class="angle-proof">
+          57% lose $1–5K/mo · 30% lose &gt;$5K/mo · $32K avg annual time-tracking loss
+          Only 1% of agencies bill for all out-of-scope work (Ignition 2025 State of Billing)
+        </div>
+        <div class="angle-meta">
+          <span class="tag">Primary stat: $1–5K/mo</span>
+          <span class="tag">Target: agency owners seeing P&amp;L</span>
+          <span class="tag">Anti-foil: Scoro's buried reports</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ANGLE 2 -->
+    <div class="tab-panel" id="angle-2">
+      <div class="angle-card alt">
+        <div class="card-label" style="margin-bottom:var(--sp-4)">Angle B — Sell the transformation, not the software</div>
+        <div class="angle-headline">"You're not running an agency anymore.<br>You're running a leverage business."</div>
+        <div class="angle-sub">Sub-line: "Metalyde is built for the agency that replaced a team with AI — and needs ops to match."</div>
+        <div class="angle-why">
+          <strong>Why this wins:</strong> The buyer's identity is already shifting. YC is recruiting AI-native agencies. Jacobsklug's "labor → leverage" thesis got high engagement (Feb 2026). McLewisson10 frames it as "a senior manager with 3 custom AI agents does the work of 5 juniors." This buyer doesn't want a PSA — they want validation that they're building a different kind of business. Metalyde sells that identity upgrade. This is the highest-loyalty angle: buyers who self-identify as AI-native agencies will defend the tool.
+        </div>
+        <div class="blockquote">
+          "YC just announced they're looking for AI-Native agencies. The agency model is about to split… A) Agencies that sell labor B) Agencies that sell leverage."
+          <cite>— @Jacobsklug, 10 Feb 2026</cite>
+        </div>
+        <div class="angle-proof">
+          YC explicitly recruiting AI-native agencies · @rileycx running "AI-native sprints" (Feb 2026)
+          @MLewisson10: 1 manager + 3 agents = 5-person junior team capability
+        </div>
+        <div class="angle-meta">
+          <span class="tag">Primary hook: identity</span>
+          <span class="tag">Target: Lean Agency 2.0 segment</span>
+          <span class="tag">Anti-foil: GHL + Monday for "normal" agencies</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ANGLE 3 -->
+    <div class="tab-panel" id="angle-3">
+      <div class="angle-card alt3">
+        <div class="card-label" style="margin-bottom:var(--sp-4)">Angle C — Name the enemy explicitly</div>
+        <div class="angle-headline">"Not another bloated all-in-one.<br>An opinionated OS for how agencies actually work."</div>
+        <div class="angle-sub">Sub-line: "Five tools duct-taped together or one tool that knows your business. You decide."</div>
+        <div class="angle-why">
+          <strong>Why this wins:</strong> Buyer hostility to horizontal bloat is explicit and quoted. The @anothercohen quote — "a worse version of Google Sheets with integrations you'll never use" — is a gift. This angle lets Metalyde win as the anti-Monday/ClickUp without naming names. The "opinionated" framing signals taste and focus. Risk: buyers who don't feel the bloat pain may hear "limited." Mitigation: pair with the "agency-shaped" specificity claim.
+        </div>
+        <div class="blockquote">
+          "There's nothing I hate more than the all-in-one SaaS super apps. Monday, ClickUp, etc. — basically a worse version of Google Sheets with integrations you'll never use and a more confusing UI."
+          <cite>— @anothercohen, 1 May 2025 · "We felt the exact same pain with the Monday/ClickUp bloat." — @Onlyson00, 11 Jun 2026</cite>
+        </div>
+        <div class="angle-proof">
+          ClickUp/Monday = "reporting graveyards" (teams abandon structured data entry within weeks — discury.io)
+          4–6 hrs/week bridging tools manually (@convoeai, 15 Jun 2026 — quantified ROI hook)
+        </div>
+        <div class="angle-meta">
+          <span class="tag">Primary hook: anti-bloat</span>
+          <span class="tag">Target: Bonsai migrants + ex-Monday users</span>
+          <span class="tag">Risk: sounds narrow to non-bloat-burned buyers</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── 03 COMPETITIVE LANDSCAPE ────────────────────────────────── -->
+<section id="landscape">
+  <div class="wrapper">
+    <div class="section-label">03</div>
+    <h2 class="section-title">Competitive Landscape</h2>
+    <p class="section-sub">Interactive scatter plot. Hover each point for context. Switch axes to see different strategic surfaces.</p>
+
+    <div class="plot-wrap">
+      <div class="plot-controls">
+        <span class="plot-label">X axis:</span>
+        <button class="plot-axis-btn active" data-axis="x" data-value="generic-specific">Generic ↔ Agency-Specific</button>
+        <button class="plot-axis-btn" data-axis="x" data-value="simple-complex">Simple ↔ Complex</button>
+        <span class="plot-label" style="margin-left: var(--sp-4)">Y axis:</span>
+        <button class="plot-axis-btn active" data-axis="y" data-value="manual-ai">Manual ↔ AI-Native</button>
+        <button class="plot-axis-btn" data-axis="y" data-value="pm-financial">PM-Led ↔ Financial-Led</button>
+      </div>
+
+      <svg id="scatter-svg" viewBox="0 0 760 480" xmlns="http://www.w3.org/2000/svg" style="font-family: -apple-system, system-ui, sans-serif;">
+
+        <!-- Background quadrants -->
+        <rect x="40" y="20" width="350" height="220" fill="oklch(55% 0.22 25 / 0.04)" rx="6"/>
+        <rect x="390" y="20" width="350" height="220" fill="oklch(68% 0.22 195 / 0.06)" rx="6"/>
+        <rect x="40" y="240" width="350" height="220" fill="oklch(50% 0.05 260 / 0.03)" rx="6"/>
+        <rect x="390" y="240" width="350" height="220" fill="oklch(65% 0.18 145 / 0.04)" rx="6"/>
+
+        <!-- Quadrant labels -->
+        <text x="215" y="44" text-anchor="middle" font-size="10" fill="oklch(65% 0.2 25)" font-weight="700" letter-spacing="0.06em">GENERIC + AI BOLT-ON</text>
+        <text x="565" y="44" text-anchor="middle" font-size="10" fill="oklch(68% 0.22 195)" font-weight="700" letter-spacing="0.06em">AGENCY-SPECIFIC + AI-NATIVE</text>
+        <text x="215" y="450" text-anchor="middle" font-size="10" fill="oklch(52% 0.03 260)" font-weight="700" letter-spacing="0.06em">GENERIC + MANUAL</text>
+        <text x="565" y="450" text-anchor="middle" font-size="10" fill="oklch(65% 0.18 145)" font-weight="700" letter-spacing="0.06em">AGENCY-SPECIFIC + MANUAL</text>
+
+        <!-- Axes -->
+        <line x1="40" y1="240" x2="740" y2="240" stroke="oklch(40% 0.02 260)" stroke-width="1.5" stroke-dasharray="4,3"/>
+        <line x1="390" y1="20" x2="390" y2="460" stroke="oklch(40% 0.02 260)" stroke-width="1.5" stroke-dasharray="4,3"/>
+
+        <!-- Axis labels -->
+        <text x="40" y="237" text-anchor="start" font-size="9.5" fill="oklch(45% 0.02 260)" font-weight="600">GENERIC</text>
+        <text x="740" y="237" text-anchor="end" font-size="9.5" fill="oklch(45% 0.02 260)" font-weight="600">AGENCY-SPECIFIC</text>
+        <text x="393" y="30" font-size="9.5" fill="oklch(45% 0.02 260)" font-weight="600">AI-NATIVE</text>
+        <text x="393" y="458" font-size="9.5" fill="oklch(45% 0.02 260)" font-weight="600">MANUAL</text>
+
+        <!-- ── COMPETITOR DOTS ─────────────────────────────── -->
+
+        <!-- Monday.com: generic, some AI, mostly manual -->
+        <g class="has-tooltip" style="cursor:pointer">
+          <circle cx="110" cy="195" r="9" fill="oklch(60% 0.15 260)" opacity="0.85"/>
+          <text x="110" y="175" text-anchor="middle" font-size="9" fill="oklch(65% 0.02 260)" font-weight="600">Monday.com</text>
+          <text x="110" y="185" text-anchor="middle" font-size="8" fill="oklch(50% 0.02 260)">$10–22/seat</text>
+          <foreignObject x="40" y="155" width="0" height="0" overflow="visible">
+            <div xmlns="http://www.w3.org/1999/xhtml" class="tooltip">Generic work OS. AI features = isolated bolt-on. Agencies config it manually for months. "Reporting graveyard."</div>
+          </foreignObject>
+        </g>
+
+        <!-- ClickUp: generic, some AI -->
+        <g class="has-tooltip" style="cursor:pointer">
+          <circle cx="155" cy="175" r="9" fill="oklch(60% 0.15 260)" opacity="0.85"/>
+          <text x="155" y="158" text-anchor="middle" font-size="9" fill="oklch(65% 0.02 260)" font-weight="600">ClickUp</text>
+          <text x="155" y="168" text-anchor="middle" font-size="8" fill="oklch(50% 0.02 260)">$7–19/seat</text>
+          <foreignObject x="85" y="140" width="0" height="0" overflow="visible">
+            <div xmlns="http://www.w3.org/1999/xhtml" class="tooltip">Extreme customizability, AI features. No agency profitability or billing. Feature bloat is the chief complaint.</div>
+          </foreignObject>
+        </g>
+
+        <!-- Notion: pure generic, manual -->
+        <g class="has-tooltip" style="cursor:pointer">
+          <circle cx="80" cy="390" r="8" fill="oklch(55% 0.05 260)" opacity="0.75"/>
+          <text x="80" y="370" text-anchor="middle" font-size="9" fill="oklch(65% 0.02 260)" font-weight="600">Notion</text>
+          <text x="80" y="380" text-anchor="middle" font-size="8" fill="oklch(50% 0.02 260)">$8–20/seat</text>
+          <foreignObject x="10" y="350" width="0" height="0" overflow="visible">
+            <div xmlns="http://www.w3.org/1999/xhtml" class="tooltip">Flexible docs + databases. No time tracking, invoicing, or profitability. Unmaintainable without dedicated admin.</div>
+          </foreignObject>
+        </g>
+
+        <!-- HubSpot: CRM-first, generic to medium -->
+        <g class="has-tooltip" style="cursor:pointer">
+          <circle cx="220" cy="160" r="8" fill="oklch(62% 0.18 30)" opacity="0.8"/>
+          <text x="220" y="142" text-anchor="middle" font-size="9" fill="oklch(65% 0.02 260)" font-weight="600">HubSpot</text>
+          <text x="220" y="152" text-anchor="middle" font-size="8" fill="oklch(50% 0.02 260)">$15–3200/mo</text>
+          <foreignObject x="150" y="122" width="0" height="0" overflow="visible">
+            <div xmlns="http://www.w3.org/1999/xhtml" class="tooltip">CRM + marketing pipeline. Not an ops or delivery tool. AI features in CRM, not ops. Not a competitor for delivery.</div>
+          </foreignObject>
+        </g>
+
+        <!-- GoHighLevel: semi-agency-specific (SMB marketing), some AI -->
+        <g class="has-tooltip" style="cursor:pointer">
+          <circle cx="530" cy="168" r="10" fill="oklch(65% 0.2 50)" opacity="0.85"/>
+          <text x="530" y="148" text-anchor="middle" font-size="9" fill="oklch(65% 0.02 260)" font-weight="600">GoHighLevel</text>
+          <text x="530" y="158" text-anchor="middle" font-size="8" fill="oklch(50% 0.02 260)">$97–497 flat</text>
+          <foreignObject x="460" y="128" width="0" height="0" overflow="visible">
+            <div xmlns="http://www.w3.org/1999/xhtml" class="tooltip">Dominant SMB marketing agency CRM/automation. Flat pricing, white-label. AI Employee is a usage-based add-on. No PM depth or profitability.</div>
+          </foreignObject>
+        </g>
+
+        <!-- Scoro: agency-specific PSA, manual -->
+        <g class="has-tooltip" style="cursor:pointer">
+          <circle cx="620" cy="345" r="9" fill="oklch(58% 0.18 280)" opacity="0.85"/>
+          <text x="620" y="325" text-anchor="middle" font-size="9" fill="oklch(65% 0.02 260)" font-weight="600">Scoro</text>
+          <text x="620" y="335" text-anchor="middle" font-size="8" fill="oklch(50% 0.02 260)">$20–50/seat</text>
+          <foreignObject x="550" y="305" width="0" height="0" overflow="visible">
+            <div xmlns="http://www.w3.org/1999/xhtml" class="tooltip">Deepest financial reporting of any PSA. Resource planning locked at top tier ($49.90). 1–3 month onboarding. Overkill &lt;15 seats.</div>
+          </foreignObject>
+        </g>
+
+        <!-- Productive.io: agency-specific, AI bolt-on -->
+        <g class="has-tooltip" style="cursor:pointer">
+          <circle cx="590" cy="200" r="9" fill="oklch(58% 0.18 280)" opacity="0.85"/>
+          <text x="590" y="182" text-anchor="middle" font-size="9" fill="oklch(65% 0.02 260)" font-weight="600">Productive.io</text>
+          <text x="590" y="192" text-anchor="middle" font-size="8" fill="oklch(50% 0.02 260)">$9–33/seat</text>
+          <foreignObject x="520" y="162" width="0" height="0" overflow="visible">
+            <div xmlns="http://www.w3.org/1999/xhtml" class="tooltip">Fast deploy + budget-vs-actual. AI time tracking is 2025 beta — bolt-on. Per-seat escalates fast. Hybrid billing fails.</div>
+          </foreignObject>
+        </g>
+
+        <!-- Teamwork: agency-specific, manual -->
+        <g class="has-tooltip" style="cursor:pointer">
+          <circle cx="555" cy="335" r="8" fill="oklch(58% 0.18 280)" opacity="0.8"/>
+          <text x="555" y="315" text-anchor="middle" font-size="9" fill="oklch(65% 0.02 260)" font-weight="600">Teamwork</text>
+          <text x="555" y="325" text-anchor="middle" font-size="8" fill="oklch(50% 0.02 260)">$14–26/seat</text>
+          <foreignObject x="485" y="295" width="0" height="0" overflow="visible">
+            <div xmlns="http://www.w3.org/1999/xhtml" class="tooltip">Client portal + onboarding strengths. Zero profitability or margin tracking. AI = none.</div>
+          </foreignObject>
+        </g>
+
+        <!-- Workamajig: agency-specific, full accounting, manual -->
+        <g class="has-tooltip" style="cursor:pointer">
+          <circle cx="660" cy="390" r="8" fill="oklch(55% 0.15 280)" opacity="0.8"/>
+          <text x="660" y="370" text-anchor="middle" font-size="9" fill="oklch(65% 0.02 260)" font-weight="600">Workamajig</text>
+          <text x="660" y="380" text-anchor="middle" font-size="8" fill="oklch(50% 0.02 260)">~$50/seat</text>
+          <foreignObject x="590" y="350" width="0" height="0" overflow="visible">
+            <div xmlns="http://www.w3.org/1999/xhtml" class="tooltip">Full accounting built-in. 3–6 month onboarding. Overkill &lt;20 people. Timer UX criticized. Budget visibility poor.</div>
+          </foreignObject>
+        </g>
+
+        <!-- Function Point: agency-specific, manual -->
+        <g class="has-tooltip" style="cursor:pointer">
+          <circle cx="625" cy="410" r="7" fill="oklch(55% 0.15 280)" opacity="0.75"/>
+          <text x="625" y="430" text-anchor="middle" font-size="9" fill="oklch(65% 0.02 260)" font-weight="600">Function Point</text>
+          <text x="625" y="440" text-anchor="middle" font-size="8" fill="oklch(50% 0.02 260)">$52–55/seat</text>
+          <foreignObject x="555" y="390" width="0" height="0" overflow="visible">
+            <div xmlns="http://www.w3.org/1999/xhtml" class="tooltip">Job costing + time tracking. Retainer billing hard. Caps at 49 users. Dated UI. No accounting module.</div>
+          </foreignObject>
+        </g>
+
+        <!-- Bonsai: agency-adjacent, freelancer, manual -->
+        <g class="has-tooltip" style="cursor:pointer">
+          <circle cx="480" cy="380" r="8" fill="oklch(62% 0.15 50)" opacity="0.8"/>
+          <text x="480" y="360" text-anchor="middle" font-size="9" fill="oklch(65% 0.02 260)" font-weight="600">Bonsai ⚡</text>
+          <text x="480" y="370" text-anchor="middle" font-size="8" fill="oklch(50% 0.02 260)">Zoom-acquired</text>
+          <foreignObject x="410" y="340" width="0" height="0" overflow="visible">
+            <div xmlns="http://www.w3.org/1999/xhtml" class="tooltip">Proposals → contracts → invoices for boutiques. Acquired by Zoom Dec 2025. Product direction uncertain. Active migration window.</div>
+          </foreignObject>
+        </g>
+
+        <!-- Plutio: freelancer-agency, manual -->
+        <g class="has-tooltip" style="cursor:pointer">
+          <circle cx="450" cy="350" r="7" fill="oklch(60% 0.12 50)" opacity="0.75"/>
+          <text x="450" y="330" text-anchor="middle" font-size="9" fill="oklch(65% 0.02 260)" font-weight="600">Plutio</text>
+          <text x="450" y="340" text-anchor="middle" font-size="8" fill="oklch(50% 0.02 260)">$19–99 flat</text>
+          <foreignObject x="380" y="310" width="0" height="0" overflow="visible">
+            <div xmlns="http://www.w3.org/1999/xhtml" class="tooltip">Flat pricing + all-in-one for freelancers/boutiques. Basic CRM/accounting. Breaks down at 10+ team collaboration.</div>
+          </foreignObject>
+        </g>
+
+        <!-- AgencyXOS: agency-specific, AI-native aspirational -->
+        <g class="has-tooltip" style="cursor:pointer">
+          <circle cx="600" cy="72" r="8" fill="oklch(70% 0.2 145)" opacity="0.8"/>
+          <text x="600" y="52" text-anchor="middle" font-size="9" fill="oklch(65% 0.02 260)" font-weight="600">AgencyXOS</text>
+          <text x="600" y="62" text-anchor="middle" font-size="8" fill="oklch(50% 0.02 260)">Early-stage</text>
+          <foreignObject x="530" y="32" width="0" height="0" overflow="visible">
+            <div xmlns="http://www.w3.org/1999/xhtml" class="tooltip">Closest direct framing competitor. AI-native OS claim. Early-stage; AI may be aspirational not production. Closest threat to Metalyde's positioning.</div>
+          </foreignObject>
+        </g>
+
+        <!-- Kantata: agency-specific, large, manual -->
+        <g class="has-tooltip" style="cursor:pointer">
+          <circle cx="690" cy="310" r="8" fill="oklch(52% 0.12 280)" opacity="0.8"/>
+          <text x="690" y="290" text-anchor="middle" font-size="9" fill="oklch(65% 0.02 260)" font-weight="600">Kantata</text>
+          <text x="690" y="300" text-anchor="middle" font-size="8" fill="oklch(50% 0.02 260)">$50K–150K/yr</text>
+          <foreignObject x="620" y="270" width="0" height="0" overflow="visible">
+            <div xmlns="http://www.w3.org/1999/xhtml" class="tooltip">Skills-based resource management. Enterprise only ($50K–$150K/yr contracts). Irrelevant &lt;100 seats. Steep learning curve.</div>
+          </foreignObject>
+        </g>
+
+        <!-- ── METALYDE TARGET POSITION ── -->
+        <g class="has-tooltip" style="cursor:pointer">
+          <circle cx="685" cy="58" r="14" fill="none" stroke="oklch(68% 0.22 195)" stroke-width="2.5" opacity="0.4"/>
+          <circle cx="685" cy="58" r="10" fill="oklch(68% 0.22 195)" opacity="0.9"/>
+          <text x="685" y="36" text-anchor="middle" font-size="10" fill="oklch(68% 0.22 195)" font-weight="800">Metalyde</text>
+          <text x="685" y="46" text-anchor="middle" font-size="8" fill="oklch(68% 0.22 195)" opacity="0.8">← target</text>
+          <foreignObject x="615" y="16" width="0" height="0" overflow="visible">
+            <div xmlns="http://www.w3.org/1999/xhtml" class="tooltip">Metalyde's intended position: marketing-agency-specific + AI-native (by architecture, not bolt-on) + profitability-led. No current competitor occupies this quadrant at scale.</div>
+          </foreignObject>
+        </g>
+
+      </svg>
+
+      <div class="plot-legend">
+        <div class="legend-item">
+          <div class="legend-dot" style="background: oklch(60% 0.15 260)"></div>
+          Horizontal work OS
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot" style="background: oklch(58% 0.18 280)"></div>
+          Agency PSA (traditional)
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot" style="background: oklch(65% 0.2 50)"></div>
+          SMB CRM / boutique
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot" style="background: oklch(70% 0.2 145)"></div>
+          Early AI-native entrant
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot" style="background: oklch(68% 0.22 195)"></div>
+          <strong>Metalyde target</strong>
+        </div>
+        <div class="legend-item" style="color: oklch(65% 0.2 50)">
+          ⚡ Bonsai: active migration window (Zoom acquisition Dec 2025)
+        </div>
+      </div>
+    </div>
+
+    <!-- Whitespace note -->
+    <div class="card" style="margin-top: var(--sp-6); border-color: color-mix(in oklch, var(--accent), transparent 60%);">
+      <div class="card-label">Key whitespace reading</div>
+      <p style="color: var(--text); margin-bottom: 0;">The top-right quadrant (agency-specific + AI-native) is nearly empty. AgencyXOS claims it but is early-stage and likely aspirational. No traditional PSA (Scoro, Productive, Workamajig, Kantata) is anywhere near it — their AI is isolated bolt-ons on manual cores. GoHighLevel sits in a semi-specific middle zone but lacks PM depth. Metalyde's structural opening is clear: marketing agency specificity + AI by architecture + profitability surface = unoccupied at any significant scale.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── 04 DIFFERENTIATORS ────────────────────────────────────────── -->
+<section id="differentiators">
+  <div class="wrapper">
+    <div class="section-label">04</div>
+    <h2 class="section-title">Differentiators by Defensibility</h2>
+    <p class="section-sub">Ranked: how long before a well-funded incumbent can copy this? Top = structural moat. Bottom = table stakes (still needed, just not protective).</p>
+
+    <div class="diff-list">
+
+      <div class="diff-item">
+        <div class="diff-rank top">1</div>
+        <div class="diff-content">
+          <h4>AI-native architecture — agents as the operating layer, not a feature</h4>
+          <p>No incumbent can rearchitect around AI without breaking their existing products. Metalyde starts clean: scope creep auto-flagged, briefs auto-generated, budget risk surfaced before the client call. This is the only structural moat that compounds with time. The roxabi-boilerplate agent team infrastructure means this ships day one, not as a roadmap promise.</p>
+        </div>
+        <div class="diff-bar-wrap">
+          <div class="diff-bar-bg"><div class="diff-bar-fill" style="width:95%"></div></div>
+          <div style="font-size:var(--fs-xs); color:var(--muted); margin-top:4px; text-align:right">95/100</div>
+        </div>
+      </div>
+
+      <div class="diff-item">
+        <div class="diff-rank top">2</div>
+        <div class="diff-content">
+          <h4>Profitability as the primary surface — not buried in reports</h4>
+          <p>Every PSA has a profitability report. None makes it the first screen. Metalyde's daily dashboard surfaces which clients made money this week, utilization vs. healthy range, and unbilled scope in real time. This isn't a feature — it's an information architecture decision that no incumbent can retrofit without UX surgery.</p>
+        </div>
+        <div class="diff-bar-wrap">
+          <div class="diff-bar-bg"><div class="diff-bar-fill" style="width:88%"></div></div>
+          <div style="font-size:var(--fs-xs); color:var(--muted); margin-top:4px; text-align:right">88/100</div>
+        </div>
+      </div>
+
+      <div class="diff-item">
+        <div class="diff-rank top">3</div>
+        <div class="diff-content">
+          <h4>Hybrid billing data model — retainer + project + milestone + value-based in one object</h4>
+          <p>No competitor has solved this. Agencies with mixed models maintain spreadsheets alongside any PSA. The hybrid billing model is architecturally excluded by the single-model assumptions baked into incumbents. First to solve this at the data model level owns a genuine moat: the problem is felt but believed to be unsolvable in software.</p>
+        </div>
+        <div class="diff-bar-wrap">
+          <div class="diff-bar-bg"><div class="diff-bar-fill" style="width:85%"></div></div>
+          <div style="font-size:var(--fs-xs); color:var(--muted); margin-top:4px; text-align:right">85/100</div>
+        </div>
+      </div>
+
+      <div class="diff-item">
+        <div class="diff-rank top">4</div>
+        <div class="diff-content">
+          <h4>Marketing production loop — brief → creative → delivery → client reporting in one flow</h4>
+          <p>Content and social agencies use an entirely separate stack (Planable, ContentCal, AgencyAnalytics) because PSA tools ignore the marketing production cadence. No competitor unifies the production loop with the financial layer. This is a vertical gap that generic tools structurally cannot fill without losing their horizontal appeal.</p>
+        </div>
+        <div class="diff-bar-wrap">
+          <div class="diff-bar-bg"><div class="diff-bar-fill" style="width:80%"></div></div>
+          <div style="font-size:var(--fs-xs); color:var(--muted); margin-top:4px; text-align:right">80/100</div>
+        </div>
+      </div>
+
+      <div class="diff-item">
+        <div class="diff-rank">5</div>
+        <div class="diff-content">
+          <h4>AI-native branded client portal — real-time dashboards + AI-generated insights</h4>
+          <p>Clients in 2026 expect real-time dashboards and AI insights; agencies still deliver monthly PDFs. Incumbents have functional-not-branded portals bolted on. A portal built day one as a branded, AI-enriched client experience changes the agency's client relationships — and makes switching cost emotional, not just operational.</p>
+        </div>
+        <div class="diff-bar-wrap">
+          <div class="diff-bar-bg"><div class="diff-bar-fill" style="width:72%"></div></div>
+          <div style="font-size:var(--fs-xs); color:var(--muted); margin-top:4px; text-align:right">72/100</div>
+        </div>
+      </div>
+
+      <div class="diff-item">
+        <div class="diff-rank">6</div>
+        <div class="diff-content">
+          <h4>Lean Agency 2.0 as the named primary segment — no current tool owns it</h4>
+          <p>2–10 person AI-augmented teams with sophisticated portfolios have no purpose-built home. Freelancer tools (Bonsai, Plutio) are under-powered; PSAs require 2–6 weeks onboarding minimum. The segment is validated by YC actively recruiting AI-native agencies and the @Jacobsklug labor→leverage thesis gaining real traction. Name the segment; own it.</p>
+        </div>
+        <div class="diff-bar-wrap">
+          <div class="diff-bar-bg"><div class="diff-bar-fill" style="width:65%"></div></div>
+          <div style="font-size:var(--fs-xs); color:var(--muted); margin-top:4px; text-align:right">65/100</div>
+        </div>
+      </div>
+
+      <div class="diff-item">
+        <div class="diff-rank">7</div>
+        <div class="diff-content">
+          <h4>Flat or outcome-based pricing — structural contrast to per-seat incumbents</h4>
+          <p>Per-seat dominates the market. GoHighLevel and Plutio prove flat-rate demand exists. Agencies penalized for growth by per-seat pricing are an active pain. A pricing model that scales with value (not headcount) would be a genuine differentiator — especially for Lean Agency 2.0 teams that use AI multipliers to punch above their headcount. Harder to defend long-term once incumbents copy it, but a strong acquisition hook.</p>
+        </div>
+        <div class="diff-bar-wrap">
+          <div class="diff-bar-bg"><div class="diff-bar-fill" style="width:52%"></div></div>
+          <div style="font-size:var(--fs-xs); color:var(--muted); margin-top:4px; text-align:right">52/100</div>
+        </div>
+      </div>
+
+      <div class="diff-item">
+        <div class="diff-rank">8</div>
+        <div class="diff-content">
+          <h4>Opinionated UX — agency-shaped, not infinitely configurable</h4>
+          <p>Monday/ClickUp's weakness is the blank canvas that requires months of configuration. Metalyde is opinionated by design: briefs look like briefs, retainers look like retainers, reports look like client reports. "Opinionated" is copyable by any new entrant, but being fast and agency-shaped at launch wins early adopters from the bloat-burned segment.</p>
+        </div>
+        <div class="diff-bar-wrap">
+          <div class="diff-bar-bg"><div class="diff-bar-fill" style="width:40%"></div></div>
+          <div style="font-size:var(--fs-xs); color:var(--muted); margin-top:4px; text-align:right">40/100</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── 05 ANTI-POSITIONING ────────────────────────────────────────── -->
+<section id="anti">
+  <div class="wrapper">
+    <div class="section-label">05</div>
+    <h2 class="section-title">Anti-Positioning</h2>
+    <p class="section-sub">What Metalyde explicitly is not. These are foils, not features. Sharp anti-positioning creates a buyer who filters themselves in — and keeps out the wrong customers.</p>
+
+    <div class="anti-grid">
+
+      <div class="anti-card">
+        <div class="anti-label">Not this</div>
+        <h4>Another all-in-one work OS for any team</h4>
+        <p>Metalyde is not Monday.com. It is not ClickUp. It will never try to be. Those tools are configurable to anything, which means they're optimized for nothing. Metalyde is opinionated, agency-shaped, and refuses to serve a SaaS startup or a construction firm. The blank canvas is the enemy.</p>
+        <div class="blockquote" style="margin-top: var(--sp-4); margin-bottom:0">
+          "Basically a worse version of Google Sheets with integrations you'll never use."
+          <cite>— @anothercohen</cite>
+        </div>
+      </div>
+
+      <div class="anti-card">
+        <div class="anti-label">Not this</div>
+        <h4>A PSA that takes 6 weeks to onboard</h4>
+        <p>Scoro, Kantata, and Workamajig are excellent for 50+ seat agencies with dedicated ops admins and $150K implementation budgets. Metalyde is not them and will never compete on their terrain. If a prospect needs a "discovery call" before they can see pricing, they are not the target. If they need a 3-month configuration project, they are not the target.</p>
+      </div>
+
+      <div class="anti-card">
+        <div class="anti-label">Not this</div>
+        <h4>A freelancer invoicing tool with "agency mode"</h4>
+        <p>Bonsai, Plutio, and Moxie serve solo operators well. Metalyde starts where they run out: multi-client portfolio management, team utilization, retainer health, multi-person collaboration. The fact that Bonsai migrants need a home does not mean Metalyde should match Bonsai's feature set — it should be the tool those users grow into.</p>
+      </div>
+
+      <div class="anti-card">
+        <div class="anti-label">Not this</div>
+        <h4>AI features bolted onto a manual core</h4>
+        <p>Productive.io added AI time tracking in beta in 2025. AgencyAnalytics added AI report generation. These are features. Metalyde is not adding AI to an existing ops flow — the ops flow is the AI. Brief capture, scope monitoring, budget alerting, and client reporting are agentic by default, not opt-in. The difference is architectural, not marketing.</p>
+      </div>
+
+      <div class="anti-card">
+        <div class="anti-label">Not this</div>
+        <h4>A generic "agency OS" for any kind of agency</h4>
+        <p>@polsia built "an OS for a founder running three businesses simultaneously: a digital agency…" That is Metalyde's foil — generic, multi-business, non-specific. Metalyde is built for marketing agencies specifically: the brief-to-campaign loop, media buying reconciliation, retainer/creative/performance hybrid billing, and client-ROI reporting. Not any business. Not any agency. Marketing agencies.</p>
+      </div>
+
+      <div class="anti-card">
+        <div class="anti-label">Not this</div>
+        <h4>A tool that buries profitability in a reports tab</h4>
+        <p>Every PSA has a profitability report. None surfaces it as the primary operational view. Metalyde does not add a profitability report. Profitability is the UI. If you have to navigate to a report to know whether a client is profitable, the tool has failed. The daily dashboard is a margin dashboard, not a task list.</p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ── 06 COLOR PALETTES ──────────────────────────────────────────── -->
+<section id="palettes">
+  <div class="wrapper">
+    <div class="section-label">06</div>
+    <h2 class="section-title">Color Palette Directions</h2>
+    <p class="section-sub">Three signal directions — not a brand decision, a reaction test. Click a palette to preview it on this page. The hex codes are the current viewport's OKLCH values converted for reference.</p>
+
+    <div class="palette-grid">
+
+      <!-- Palette A -->
+      <div class="palette-card" data-palette="a" onclick="previewPalette('a', this)">
+        <div class="palette-preview" style="background: linear-gradient(135deg, oklch(12% 0.02 260), oklch(20% 0.04 195) 50%, oklch(15% 0.03 280));">
+          <span class="palette-preview-label" style="color: oklch(68% 0.22 195)">Midnight Precision</span>
+        </div>
+        <div class="palette-info">
+          <h4>A — Midnight Precision</h4>
+          <p>Deep navy-black with a cyan-teal accent. Signals precision, intelligence, control. Feels technical without being cold. Aligns with "AI-native / leverage business" buyer identity — sophisticated, not playful.</p>
+          <p style="margin-bottom: var(--sp-3)"><strong>Mood:</strong> Bloomberg terminal meets Stripe. Finance-grade trust signal.</p>
+          <div class="swatches-row">
+            <div class="swatch-chip">
+              <div class="swatch-block" style="background: oklch(12% 0.02 260)"></div>
+              <span class="swatch-hex">#0d1017<br>Void</span>
+            </div>
+            <div class="swatch-chip">
+              <div class="swatch-block" style="background: oklch(17% 0.025 260)"></div>
+              <span class="swatch-hex">#151b26<br>Surface</span>
+            </div>
+            <div class="swatch-chip">
+              <div class="swatch-block" style="background: oklch(68% 0.22 195)"></div>
+              <span class="swatch-hex">#00c4cc<br>Accent</span>
+            </div>
+            <div class="swatch-chip">
+              <div class="swatch-block" style="background: oklch(72% 0.18 280)"></div>
+              <span class="swatch-hex">#7c9eff<br>Alt</span>
+            </div>
+            <div class="swatch-chip">
+              <div class="swatch-block" style="background: oklch(90% 0.01 260)"></div>
+              <span class="swatch-hex">#e0e4f0<br>Text</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Palette B -->
+      <div class="palette-card" data-palette="b" onclick="previewPalette('b', this)">
+        <div class="palette-preview" style="background: linear-gradient(135deg, oklch(92% 0.015 55), oklch(96% 0.01 70) 50%, oklch(90% 0.02 40));">
+          <span class="palette-preview-label" style="color: oklch(45% 0.21 30)">Warm Signal</span>
+        </div>
+        <div class="palette-info">
+          <h4>B — Warm Signal</h4>
+          <p>Cream background with a terracotta-orange accent. Signals warmth, approachability, founder energy. Less "enterprise SaaS", more "tool built by people who understand your work." Attracts Lean Agency 2.0 founders who distrust cold tech aesthetics.</p>
+          <p style="margin-bottom: var(--sp-3)"><strong>Mood:</strong> Linear meets Readwise. Indie-credible, not playful.</p>
+          <div class="swatches-row">
+            <div class="swatch-chip">
+              <div class="swatch-block" style="background: oklch(96% 0.01 60)"></div>
+              <span class="swatch-hex">#f5f0e8<br>Base</span>
+            </div>
+            <div class="swatch-chip">
+              <div class="swatch-block" style="background: oklch(99% 0.005 60)"></div>
+              <span class="swatch-hex">#fdfbf8<br>Surface</span>
+            </div>
+            <div class="swatch-chip">
+              <div class="swatch-block" style="background: oklch(55% 0.21 30)"></div>
+              <span class="swatch-hex">#c94a22<br>Accent</span>
+            </div>
+            <div class="swatch-chip">
+              <div class="swatch-block" style="background: oklch(62% 0.18 50)"></div>
+              <span class="swatch-hex">#d97a35<br>Alt</span>
+            </div>
+            <div class="swatch-chip">
+              <div class="swatch-block" style="background: oklch(18% 0.02 60)"></div>
+              <span class="swatch-hex">#1e1a14<br>Text</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Palette C -->
+      <div class="palette-card" data-palette="c" onclick="previewPalette('c', this)">
+        <div class="palette-preview" style="background: linear-gradient(135deg, oklch(11% 0.03 145), oklch(18% 0.06 160) 50%, oklch(13% 0.04 200));">
+          <span class="palette-preview-label" style="color: oklch(75% 0.22 145)">Electric Sage</span>
+        </div>
+        <div class="palette-info">
+          <h4>C — Electric Sage</h4>
+          <p>Deep forest-black with an electric green accent. Signals growth, nature-meets-tech, an "agency that's alive." The green anchor is unexpected in the PSA space — creates instant recall. Carries ecological resonance for agencies who see their work as building, not depleting.</p>
+          <p style="margin-bottom: var(--sp-3)"><strong>Mood:</strong> Vercel meets Robinhood. High-recall, polarizing.</p>
+          <div class="swatches-row">
+            <div class="swatch-chip">
+              <div class="swatch-block" style="background: oklch(11% 0.03 145)"></div>
+              <span class="swatch-hex">#0a1410<br>Void</span>
+            </div>
+            <div class="swatch-chip">
+              <div class="swatch-block" style="background: oklch(16% 0.04 145)"></div>
+              <span class="swatch-hex">#111e15<br>Surface</span>
+            </div>
+            <div class="swatch-chip">
+              <div class="swatch-block" style="background: oklch(75% 0.22 145)"></div>
+              <span class="swatch-hex">#22e856<br>Accent</span>
+            </div>
+            <div class="swatch-chip">
+              <div class="swatch-block" style="background: oklch(78% 0.2 200)"></div>
+              <span class="swatch-hex">#00e0cc<br>Alt</span>
+            </div>
+            <div class="swatch-chip">
+              <div class="swatch-block" style="background: oklch(92% 0.01 145)"></div>
+              <span class="swatch-hex">#e4ede6<br>Text</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="card" style="margin-top: var(--sp-8)">
+      <div class="card-label">Palette read</div>
+      <p style="color: var(--text)"><strong>A (Midnight Precision)</strong> — lowest risk, highest enterprise trust signal. Will read well in B2B demos. Risk: looks like every other SaaS dark theme.</p>
+      <p style="color: var(--text); margin-top: var(--sp-3)"><strong>B (Warm Signal)</strong> — highest founder empathy signal. Will feel familiar to indie SaaS buyers migrating from Bonsai. Risk: may under-signal the AI-native / precision angle.</p>
+      <p style="color: var(--text); margin-top: var(--sp-3)"><strong>C (Electric Sage)</strong> — highest recall, highest risk. No competitor uses green. If Metalyde is the "agency that grows" — this is on-brand. Risk: polarizing; some buyers will read "fintech" not "marketing agency."</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ─────────────────────────────────────────────────────── -->
+<footer class="footer">
+  <div>Metalyde · Positioning Exploration · Phase 2, Agent 1 · 2026-06-16</div>
+  <div style="margin-top: var(--sp-2)">Grounded in: Ignition 2025 State of Billing · Mosaic PSA/Time Doctor · Bennett Financials · X Signals (Jun 2026, Grok live search) · G2/Capterra aggregates · Grand View Research ($15.22B PSA market 2025)</div>
+</footer>
+
+<script>
+  // ── THEME SWITCHER ─────────────────────────────────────────────
+  const body = document.getElementById('body-root');
+  document.querySelectorAll('.swatch-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const theme = btn.dataset.theme;
+      body.className = theme === 'a' ? 'theme-a' : `theme-${theme}`;
+      document.querySelectorAll('.swatch-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+
+  // ── TABS ────────────────────────────────────────────────────────
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tabId = btn.dataset.tab;
+      const parent = btn.closest('section') || document;
+
+      // Deactivate all in same tab group
+      const tabNav = btn.closest('.tabs-nav');
+      tabNav.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      // Find panels: siblings of the tabs-nav
+      const container = tabNav.parentElement;
+      container.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      const target = container.querySelector('#' + tabId);
+      if (target) target.classList.add('active');
+    });
+  });
+
+  // ── PALETTE PREVIEW ────────────────────────────────────────────
+  function previewPalette(palette, cardEl) {
+    // Apply theme
+    body.className = palette === 'a' ? 'theme-a' : `theme-${palette}`;
+    // Update nav swatches
+    document.querySelectorAll('.swatch-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.theme === palette);
+    });
+    // Update card selected state
+    document.querySelectorAll('.palette-card').forEach(c => c.classList.remove('selected'));
+    cardEl.classList.add('selected');
+  }
+
+  // ── PLOT AXIS BUTTONS (visual only — axes re-labeled) ─────────
+  const axisData = {
+    'generic-specific': { left: 'GENERIC', right: 'AGENCY-SPECIFIC' },
+    'simple-complex':   { left: 'SIMPLE / FAST ONBOARD', right: 'COMPLEX / SLOW ONBOARD' },
+    'manual-ai':        { top: 'AI-NATIVE', bottom: 'MANUAL' },
+    'pm-financial':     { top: 'FINANCIAL-LED', bottom: 'PM-LED' },
+  };
+
+  document.querySelectorAll('.plot-axis-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const axis = btn.dataset.axis;
+      // Deactivate siblings in same axis group
+      document.querySelectorAll(`.plot-axis-btn[data-axis="${axis}"]`).forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const val = btn.dataset.value;
+      const svg = document.getElementById('scatter-svg');
+      const data = axisData[val];
+      if (!data) return;
+
+      if (axis === 'x') {
+        const leftLabel = svg.querySelector('text[x="40"][y="237"]');
+        const rightLabel = svg.querySelector('text[x="740"][y="237"]');
+        if (leftLabel) leftLabel.textContent = data.left;
+        if (rightLabel) rightLabel.textContent = data.right;
+      } else {
+        const topLabel = svg.querySelector('text[x="393"][y="30"]');
+        const bottomLabel = svg.querySelector('text[x="393"][y="458"]');
+        if (topLabel) topLabel.textContent = data.top;
+        if (bottomLabel) bottomLabel.textContent = data.bottom;
+      }
+    });
+  });
+
+  // ── ANIMATE DIFF BARS ON SCROLL ────────────────────────────────
+  const bars = document.querySelectorAll('.diff-bar-fill');
+  const targets = Array.from(bars).map(b => b.style.width);
+  bars.forEach(b => { b.dataset.target = b.style.width; b.style.width = '0%'; });
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.width = entry.target.dataset.target;
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  bars.forEach(b => observer.observe(b));
+</script>
+
+</body>
+</html>

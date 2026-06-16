@@ -1,0 +1,1694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Metalyde — Customer Personas &amp; Voice</title>
+<style>
+  :root {
+    --bg: oklch(0.97 0.004 260);
+    --bg-card: oklch(1 0 0);
+    --bg-card-alt: oklch(0.975 0.008 260);
+    --border: oklch(0.88 0.012 260);
+    --border-subtle: oklch(0.93 0.006 260);
+    --text-primary: oklch(0.18 0.02 260);
+    --text-secondary: oklch(0.45 0.015 260);
+    --text-tertiary: oklch(0.62 0.010 260);
+
+    --p1-hue: 145;
+    --p2-hue: 210;
+    --p3-hue: 55;
+    --p4-hue: 320;
+
+    --p1-accent: oklch(0.52 0.18 145);
+    --p1-accent-light: oklch(0.94 0.06 145);
+    --p1-accent-mid: oklch(0.72 0.12 145);
+    --p2-accent: oklch(0.48 0.17 210);
+    --p2-accent-light: oklch(0.93 0.06 210);
+    --p2-accent-mid: oklch(0.70 0.11 210);
+    --p3-accent: oklch(0.58 0.16 55);
+    --p3-accent-light: oklch(0.96 0.07 55);
+    --p3-accent-mid: oklch(0.78 0.12 55);
+    --p4-accent: oklch(0.50 0.18 320);
+    --p4-accent-light: oklch(0.94 0.06 320);
+    --p4-accent-mid: oklch(0.70 0.12 320);
+
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --font: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-mono: "SF Mono", "Fira Code", "Cascadia Code", Consolas, monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text-primary);
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .site-header {
+    background: oklch(0.16 0.025 260);
+    color: oklch(0.96 0.006 260);
+    padding: 48px 40px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .site-header::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 80% 0%, oklch(0.38 0.14 145 / 0.28) 0%, transparent 55%),
+                radial-gradient(ellipse at 10% 110%, oklch(0.38 0.14 210 / 0.18) 0%, transparent 45%);
+    pointer-events: none;
+  }
+  .header-inner { position: relative; max-width: 1200px; margin: 0 auto; }
+  .header-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: oklch(0.28 0.04 260);
+    border: 1px solid oklch(0.38 0.06 260);
+    border-radius: 999px;
+    padding: 4px 12px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: oklch(0.72 0.08 145);
+    margin-bottom: 20px;
+  }
+  .header-badge::before {
+    content: "";
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--p1-accent);
+    display: inline-block;
+  }
+  .site-header h1 {
+    font-size: clamp(26px, 4vw, 40px);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    margin-bottom: 12px;
+  }
+  .site-header h1 span { color: var(--p1-accent-mid); }
+  .header-meta {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    font-size: 13px;
+    color: oklch(0.58 0.02 260);
+    margin-top: 20px;
+    border-top: 1px solid oklch(0.28 0.03 260);
+    padding-top: 20px;
+  }
+  .header-meta span { display: flex; align-items: center; gap: 6px; }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+  .section { padding: 48px 0; }
+  .section + .section { border-top: 1px solid var(--border); }
+
+  /* ── SECTION LABELS ── */
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 8px;
+  }
+  .section-title {
+    font-size: clamp(20px, 3vw, 28px);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    margin-bottom: 8px;
+  }
+  .section-sub {
+    font-size: 14px;
+    color: var(--text-secondary);
+    max-width: 640px;
+    margin-bottom: 32px;
+  }
+
+  /* ── PRIORITY MATRIX ── */
+  .priority-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+  @media (max-width: 800px) { .priority-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 500px) { .priority-grid { grid-template-columns: 1fr; } }
+
+  .priority-card {
+    border-radius: var(--radius-md);
+    padding: 20px;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    position: relative;
+    overflow: hidden;
+  }
+  .priority-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+  .pc-p1::before { background: var(--p1-accent); }
+  .pc-p2::before { background: var(--p2-accent); }
+  .pc-p3::before { background: var(--p3-accent); }
+  .pc-p4::before { background: var(--p4-accent); }
+
+  .priority-rank {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .rank-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .pc-p1 .rank-dot { background: var(--p1-accent); }
+  .pc-p2 .rank-dot { background: var(--p2-accent); }
+  .pc-p3 .rank-dot { background: var(--p3-accent); }
+  .pc-p4 .rank-dot { background: var(--p4-accent); }
+
+  .priority-card h3 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .priority-card p { font-size: 12px; color: var(--text-secondary); line-height: 1.5; }
+
+  /* ── TABS ── */
+  .tabs-nav {
+    display: flex;
+    gap: 4px;
+    border-bottom: 2px solid var(--border);
+    margin-bottom: 32px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .tabs-nav::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    padding: 10px 18px;
+    border: none;
+    background: transparent;
+    font-family: var(--font);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    color: var(--text-secondary);
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    white-space: nowrap;
+    transition: color 0.15s, border-color 0.15s;
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  }
+  .tab-btn:hover { color: var(--text-primary); background: var(--border-subtle); }
+  .tab-btn.active { color: var(--text-primary); }
+  .tab-btn[data-persona="1"].active { border-bottom-color: var(--p1-accent); color: var(--p1-accent); }
+  .tab-btn[data-persona="2"].active { border-bottom-color: var(--p2-accent); color: var(--p2-accent); }
+  .tab-btn[data-persona="3"].active { border-bottom-color: var(--p3-accent); color: var(--p3-accent); }
+  .tab-btn[data-persona="4"].active { border-bottom-color: var(--p4-accent); color: var(--p4-accent); }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ── PERSONA CARD HEADER ── */
+  .persona-header {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 24px;
+    align-items: start;
+    margin-bottom: 32px;
+    padding: 28px;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+  }
+  .persona-avatar {
+    width: 72px; height: 72px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    flex-shrink: 0;
+  }
+  .p1 .persona-avatar { background: var(--p1-accent-light); color: var(--p1-accent); }
+  .p2 .persona-avatar { background: var(--p2-accent-light); color: var(--p2-accent); }
+  .p3 .persona-avatar { background: var(--p3-accent-light); color: var(--p3-accent); }
+  .p4 .persona-avatar { background: var(--p4-accent-light); color: var(--p4-accent); }
+
+  .persona-name { font-size: 22px; font-weight: 700; letter-spacing: -0.025em; margin-bottom: 2px; }
+  .persona-role { font-size: 13px; color: var(--text-secondary); margin-bottom: 12px; }
+  .persona-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    border: 1px solid transparent;
+  }
+  .p1 .tag { background: var(--p1-accent-light); color: var(--p1-accent); border-color: oklch(0.85 0.09 145); }
+  .p2 .tag { background: var(--p2-accent-light); color: var(--p2-accent); border-color: oklch(0.82 0.09 210); }
+  .p3 .tag { background: var(--p3-accent-light); color: var(--p3-accent); border-color: oklch(0.88 0.09 55); }
+  .p4 .tag { background: var(--p4-accent-light); color: var(--p4-accent); border-color: oklch(0.84 0.09 320); }
+
+  /* ── TWO-COL GRID ── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  @media (max-width: 720px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+
+  /* ── BLOCKS ── */
+  .block {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 20px;
+  }
+  .block-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .p1 .block-title { color: var(--p1-accent); }
+  .p2 .block-title { color: var(--p2-accent); }
+  .p3 .block-title { color: var(--p3-accent); }
+  .p4 .block-title { color: var(--p4-accent); }
+
+  /* ── QUOTE ── */
+  .quote-block {
+    border-radius: var(--radius-md);
+    padding: 18px 20px 18px 20px;
+    position: relative;
+    margin-bottom: 12px;
+    border: 1px solid;
+  }
+  .p1 .quote-block { background: var(--p1-accent-light); border-color: oklch(0.85 0.09 145); }
+  .p2 .quote-block { background: var(--p2-accent-light); border-color: oklch(0.82 0.09 210); }
+  .p3 .quote-block { background: var(--p3-accent-light); border-color: oklch(0.88 0.09 55); }
+  .p4 .quote-block { background: var(--p4-accent-light); border-color: oklch(0.84 0.09 320); }
+  .quote-text {
+    font-size: 14px;
+    line-height: 1.65;
+    font-style: italic;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+  .quote-text::before { content: "\201C"; }
+  .quote-text::after  { content: "\201D"; }
+  .quote-attr {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    font-style: normal;
+    font-family: var(--font-mono);
+  }
+
+  /* ── LIST ── */
+  ul.styled-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  ul.styled-list li {
+    padding: 8px 12px;
+    background: var(--bg-card-alt);
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    line-height: 1.5;
+    border-left: 3px solid;
+    color: var(--text-primary);
+  }
+  .p1 ul.styled-list li { border-left-color: var(--p1-accent-mid); }
+  .p2 ul.styled-list li { border-left-color: var(--p2-accent-mid); }
+  .p3 ul.styled-list li { border-left-color: var(--p3-accent-mid); }
+  .p4 ul.styled-list li { border-left-color: var(--p4-accent-mid); }
+
+  /* ── DAY IN LIFE TIMELINE ── */
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+  }
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 46px;
+    top: 0; bottom: 0;
+    width: 1px;
+    background: var(--border);
+  }
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 92px 1fr;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 12px 0;
+  }
+  .tl-time {
+    font-size: 11px;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    color: var(--text-tertiary);
+    text-align: right;
+    padding-top: 3px;
+    position: relative;
+  }
+  .tl-time::after {
+    content: "";
+    position: absolute;
+    right: -22px;
+    top: 7px;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--bg-card);
+    border: 2px solid;
+  }
+  .p1 .tl-time::after { border-color: var(--p1-accent); }
+  .p2 .tl-time::after { border-color: var(--p2-accent); }
+  .p3 .tl-time::after { border-color: var(--p3-accent); }
+  .p4 .tl-time::after { border-color: var(--p4-accent); }
+  .tl-content {
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--text-primary);
+    padding-bottom: 4px;
+  }
+  .tl-stress {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 3px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  .stress-high { background: oklch(0.94 0.08 25); color: oklch(0.44 0.18 25); }
+  .stress-med  { background: oklch(0.96 0.07 55); color: oklch(0.48 0.16 55); }
+  .stress-low  { background: oklch(0.94 0.06 145); color: oklch(0.40 0.16 145); }
+
+  /* ── JTBD CARDS ── */
+  .jtbd-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  @media (max-width: 720px) { .jtbd-grid { grid-template-columns: 1fr; } }
+  .jtbd-card {
+    border-radius: var(--radius-md);
+    padding: 18px;
+    border: 1px solid var(--border);
+  }
+  .jtbd-card:nth-child(1) { background: oklch(0.97 0.01 145); border-color: oklch(0.88 0.07 145); }
+  .jtbd-card:nth-child(2) { background: oklch(0.96 0.015 55);  border-color: oklch(0.88 0.08 55);  }
+  .jtbd-card:nth-child(3) { background: oklch(0.96 0.01 280);  border-color: oklch(0.87 0.07 280); }
+  .jtbd-type {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .jtbd-card:nth-child(1) .jtbd-type { color: oklch(0.40 0.17 145); }
+  .jtbd-card:nth-child(2) .jtbd-type { color: oklch(0.44 0.18 55); }
+  .jtbd-card:nth-child(3) .jtbd-type { color: oklch(0.40 0.17 280); }
+  .jtbd-card ul { list-style: none; display: flex; flex-direction: column; gap: 7px; }
+  .jtbd-card ul li { font-size: 13px; line-height: 1.5; }
+  .jtbd-card ul li::before { content: "— "; color: var(--text-tertiary); }
+
+  /* ── SEARCH QUERIES ── */
+  .search-queries {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .sq-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-family: var(--font-mono);
+    background: oklch(0.14 0.025 260);
+    color: oklch(0.85 0.04 260);
+    border: 1px solid oklch(0.26 0.03 260);
+  }
+  .sq-pill::before { content: "›"; color: var(--p1-accent-mid); }
+  .p2 .sq-pill::before { color: var(--p2-accent-mid); }
+  .p3 .sq-pill::before { color: var(--p3-accent-mid); }
+  .p4 .sq-pill::before { color: var(--p4-accent-mid); }
+
+  /* ── OBJECTIONS TABLE ── */
+  .objection-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .obj-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 14px;
+    border-radius: var(--radius-md);
+    background: var(--bg-card-alt);
+    border: 1px solid var(--border-subtle);
+  }
+  @media (max-width: 600px) { .obj-row { grid-template-columns: 1fr; } }
+  .obj-objection { font-size: 13px; color: oklch(0.40 0.14 25); font-style: italic; }
+  .obj-objection::before { content: "Objection: "; font-weight: 700; font-style: normal; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; display: block; margin-bottom: 4px; color: oklch(0.55 0.14 25); }
+  .obj-counter { font-size: 13px; color: oklch(0.30 0.14 145); }
+  .obj-counter::before { content: "Answer: "; font-weight: 700; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; display: block; margin-bottom: 4px; color: oklch(0.42 0.14 145); }
+
+  /* ── COMMUNITIES ── */
+  .community-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .com-pill {
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    color: var(--text-secondary);
+  }
+
+  /* ── TRIGGER EVENT ── */
+  .trigger-block {
+    border-radius: var(--radius-md);
+    padding: 20px 24px;
+    border-left: 4px solid;
+    background: var(--bg-card-alt);
+    border: 1px solid var(--border);
+    position: relative;
+  }
+  .p1 .trigger-block { border-left: 4px solid var(--p1-accent); }
+  .p2 .trigger-block { border-left: 4px solid var(--p2-accent); }
+  .p3 .trigger-block { border-left: 4px solid var(--p3-accent); }
+  .p4 .trigger-block { border-left: 4px solid var(--p4-accent); }
+  .trigger-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 8px;
+  }
+  .trigger-text {
+    font-size: 15px;
+    line-height: 1.6;
+    font-style: italic;
+    color: var(--text-primary);
+  }
+
+  /* ── COMPARISON TABLE ── */
+  .comp-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .comp-table thead tr { background: oklch(0.14 0.025 260); color: oklch(0.92 0.01 260); }
+  .comp-table th { padding: 12px 16px; text-align: left; font-size: 11px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; }
+  .comp-table td { padding: 11px 16px; border-bottom: 1px solid var(--border-subtle); vertical-align: top; }
+  .comp-table tr:last-child td { border-bottom: none; }
+  .comp-table tr:nth-child(even) td { background: var(--bg-card-alt); }
+  .comp-table tr:nth-child(odd) td { background: var(--bg-card); }
+  .col-p1 { color: var(--p1-accent); font-weight: 700; }
+  .col-p2 { color: var(--p2-accent); font-weight: 700; }
+  .col-p3 { color: var(--p3-accent); font-weight: 700; }
+  .col-p4 { color: var(--p4-accent); font-weight: 700; }
+
+  /* ── SCATTER PLOT ── */
+  .scatter-container {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+  }
+  .scatter-title {
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    font-size: 11px;
+  }
+
+  /* ── PAIN SCORE BAR ── */
+  .pain-bars { display: flex; flex-direction: column; gap: 10px; }
+  .pain-bar-row { display: flex; align-items: center; gap: 12px; }
+  .pain-bar-label { font-size: 12px; color: var(--text-secondary); min-width: 140px; }
+  .pain-bar-track {
+    flex: 1;
+    height: 8px;
+    border-radius: 4px;
+    background: var(--bg-card-alt);
+    border: 1px solid var(--border-subtle);
+    overflow: hidden;
+  }
+  .pain-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.5s ease;
+  }
+  .pain-bar-val { font-size: 11px; font-weight: 700; color: var(--text-tertiary); font-family: var(--font-mono); min-width: 28px; }
+
+  /* ── FOOTER ── */
+  .site-footer {
+    background: oklch(0.12 0.02 260);
+    color: oklch(0.45 0.015 260);
+    padding: 32px 40px;
+    font-size: 12px;
+    text-align: center;
+    margin-top: 48px;
+  }
+  .site-footer strong { color: oklch(0.65 0.015 260); }
+
+  /* ── DIVIDER ── */
+  .divider { height: 1px; background: var(--border); margin: 24px 0; }
+
+  /* ── ACTIVE color scoping ── */
+  .p1 { --accent: var(--p1-accent); --accent-light: var(--p1-accent-light); --accent-mid: var(--p1-accent-mid); }
+  .p2 { --accent: var(--p2-accent); --accent-light: var(--p2-accent-light); --accent-mid: var(--p2-accent-mid); }
+  .p3 { --accent: var(--p3-accent); --accent-light: var(--p3-accent-light); --accent-mid: var(--p3-accent-mid); }
+  .p4 { --accent: var(--p4-accent); --accent-light: var(--p4-accent-light); --accent-mid: var(--p4-accent-mid); }
+
+  /* ── OVERLAP BADGE ── */
+  .overlap-note {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: oklch(0.96 0.04 55);
+    border: 1px solid oklch(0.88 0.09 55);
+    font-size: 11px;
+    font-weight: 600;
+    color: oklch(0.46 0.16 55);
+    margin-left: 8px;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    .site-header { padding: 32px 20px; }
+    .container { padding: 0 16px; }
+    .persona-header { grid-template-columns: 1fr; }
+    .timeline::before { left: 0; display: none; }
+    .timeline-item { grid-template-columns: 60px 1fr; }
+    .tl-time::after { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-badge">Phase 2 — Customer Personas &amp; Voice</div>
+    <h1>Metalyde<span> — Who We Are Building For</span></h1>
+    <p style="font-size:15px;color:oklch(0.68 0.015 260);max-width:600px;line-height:1.6;margin-top:12px;">
+      Four personas across the agency operating surface. Primary target: the solo/founding operator of a 2–10 person AI-augmented agency who sits at every broken seam simultaneously.
+    </p>
+    <div class="header-meta">
+      <span>Signal sources: metalyde-x-signals.md + metalyde-web-signals.md (2026-06-16)</span>
+      <span>Verbatim quotes attributed by @handle + date</span>
+      <span>JTBD: Functional / Emotional / Social per persona</span>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- ═══════════════════════════════════════════════
+       SECTION 0 — PRIORITY ORDER
+  ═══════════════════════════════════════════════ -->
+  <section class="section">
+    <div class="section-label">Priority Order</div>
+    <div class="section-title">Persona Priority with Rationale</div>
+    <p class="section-sub">Prioritized by: density of signal volume, buyer control (pays + decides), proximity to all four broken seams, and addressable TAM within Lean Agency 2.0.</p>
+
+    <div class="priority-grid">
+      <div class="priority-card pc-p1">
+        <div class="priority-rank"><span class="rank-dot"></span>P1 — Primary Buyer</div>
+        <h3>The Founder-Operator</h3>
+        <p>2–8 person agency. Wears every hat. Controls the credit card. Feels every broken seam personally. Highest signal density in research. The person Metalyde must win.</p>
+      </div>
+      <div class="priority-card pc-p2">
+        <div class="priority-rank"><span class="rank-dot"></span>P2 — Expansion Buyer</div>
+        <h3>The Ops / Traffic Manager</h3>
+        <p>First ops hire in 5–15 person agency. Decides or strongly influences tool stack. Exposed to all four seams as the human glue. High influence, lower direct authority.</p>
+      </div>
+      <div class="priority-card pc-p3">
+        <div class="priority-rank"><span class="rank-dot"></span>P3 — Champion User</div>
+        <h3>The Account / Project Lead</h3>
+        <p>Day-to-day Metalyde user; surfaces scope creep and client friction. Not the buyer, but kills adoption if tool doesn't fit. Referral engine once converted.</p>
+      </div>
+      <div class="priority-card pc-p4">
+        <div class="priority-rank"><span class="rank-dot"></span>P4 — Stakeholder User</div>
+        <h3>The Creative / Delivery Lead</h3>
+        <p>Cares about brief quality and handoff clarity, not billing. Key user for the brief→production seam. Adoption blocker if tool adds overhead; accelerator if it reduces brief ambiguity.</p>
+      </div>
+    </div>
+
+    <!-- Rationale block -->
+    <div class="block" style="background:oklch(0.96 0.01 145);border-color:oklch(0.88 0.08 145);">
+      <div class="block-title p1" style="color:var(--p1-accent);">Why P1 Founder-Operator First</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;">
+        <div>
+          <div style="font-size:11px;font-weight:700;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">Signal Density</div>
+          <p style="font-size:13px;line-height:1.6;">X research yields 8 of 12 top quotes from founder-operators venting directly. They are the most vocal, most searchable, most reachable through content.</p>
+        </div>
+        <div>
+          <div style="font-size:11px;font-weight:700;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">Seam Exposure</div>
+          <p style="font-size:13px;line-height:1.6;">At 2–8 people, the founder touches ALL FOUR seams: writes the brief, manages production, does billing, and delivers the report. No other persona has this exposure.</p>
+        </div>
+        <div>
+          <div style="font-size:11px;font-weight:700;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">AI-Native Identity Pull</div>
+          <p style="font-size:13px;line-height:1.6;">The "labor → leverage" identity shift (@Jacobsklug, @MLewisson10) targets exactly this persona. They are not just buying a tool — they are buying an identity upgrade.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       SECTION 1 — PERSONA PROFILES (TABS)
+  ═══════════════════════════════════════════════ -->
+  <section class="section">
+    <div class="section-label">Persona Profiles</div>
+    <div class="section-title">Day-in-the-Life, Pain Points &amp; Goals</div>
+    <p class="section-sub">Real operator voice from X signals. Each persona has: overview, day-in-the-life timeline, pain points, goals, JTBD, customer voice block, and objections.</p>
+
+    <div class="tabs-nav">
+      <button class="tab-btn active" data-persona="1" onclick="switchTab(1)">P1 — Founder-Operator</button>
+      <button class="tab-btn" data-persona="2" onclick="switchTab(2)">P2 — Ops / Traffic Manager</button>
+      <button class="tab-btn" data-persona="3" onclick="switchTab(3)">P3 — Account / Project Lead</button>
+      <button class="tab-btn" data-persona="4" onclick="switchTab(4)">P4 — Creative / Delivery Lead</button>
+    </div>
+
+    <!-- ─── PERSONA 1 ─── -->
+    <div class="tab-panel active p1" id="panel-1">
+
+      <div class="persona-header">
+        <div class="persona-avatar">AO</div>
+        <div>
+          <div class="persona-name">Alex / "The Operator"</div>
+          <div class="persona-role">Agency Founder · Solo or 2–8 person team · Marketing or Growth agency · 1–4 years running</div>
+          <div class="persona-tags">
+            <span class="tag">Primary Buyer</span>
+            <span class="tag">All Four Seams</span>
+            <span class="tag">AI-Native Identity Aspirant</span>
+            <span class="tag">Credit Card Holder</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div>
+          <div class="block">
+            <div class="block-title">Day-in-the-Life</div>
+            <div class="timeline">
+              <div class="timeline-item">
+                <div class="tl-time">07:30</div>
+                <div class="tl-content">Slack is open before coffee. 3 client messages overnight. One wants a change that wasn't in scope. <span class="tl-stress stress-high">HIGH STRESS</span></div>
+              </div>
+              <div class="timeline-item">
+                <div class="tl-time">08:15</div>
+                <div class="tl-content">Briefs a freelancer via email. No template. Remembers three details were agreed verbally in the last Zoom. Searches for the recording. <span class="tl-stress stress-med">MED</span></div>
+              </div>
+              <div class="timeline-item">
+                <div class="tl-time">09:45</div>
+                <div class="tl-content">Invoicing. Opens QuickBooks, then Notion, then a Google Sheet to cross-check hours logged. Discovers 8 hours unbilled from last week. <span class="tl-stress stress-high">HIGH STRESS</span></div>
+              </div>
+              <div class="timeline-item">
+                <div class="tl-time">11:00</div>
+                <div class="tl-content">Client call. Tries to pull together a status update. Ends up in 3 different Notion pages. Client asks "where are we on deliverable X?" — 30 second silence. <span class="tl-stress stress-high">HIGH STRESS</span></div>
+              </div>
+              <div class="timeline-item">
+                <div class="tl-time">13:30</div>
+                <div class="tl-content">Lunch skipped. Approves a freelancer payment from personal card because the agency card limit was hit. <span class="tl-stress stress-med">MED</span></div>
+              </div>
+              <div class="timeline-item">
+                <div class="tl-time">15:00</div>
+                <div class="tl-content">Prospecting for new clients, but the moment feels stolen. Can't delegate follow-up because no one else knows the CRM. <span class="tl-stress stress-low">LOW</span></div>
+              </div>
+              <div class="timeline-item">
+                <div class="tl-time">17:30</div>
+                <div class="tl-content">Monthly report due Friday. Pulls data from 4 dashboards manually. Formats in Google Slides. Considers what it would cost to automate this. <span class="tl-stress stress-high">HIGH STRESS</span></div>
+              </div>
+              <div class="timeline-item">
+                <div class="tl-time">21:00</div>
+                <div class="tl-content">Still online. Responds to two client Slacks. This is the job. <span class="tl-stress stress-med">MED</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div class="block">
+            <div class="block-title">Pain Points</div>
+            <ul class="styled-list">
+              <li>Scope creep bleeds revenue silently — 57% of agency owners lose $1–5K/mo to unbilled extras (Ignition 2025)</li>
+              <li>Every broken seam requires context-switching to a different tool — briefs in Notion, tasks in Asana, billing in QuickBooks, reports in Google Slides</li>
+              <li>Unbilled hours: $32K/yr average loss per business from poor time tracking</li>
+              <li>Client reporting is a 4-hour manual assembly job, every single month</li>
+              <li>"Golden handcuffs" — 1–2K retainers that don't cover the actual cognitive load</li>
+              <li>No single view of utilization — no way to know if 60% or 90% of capacity is booked</li>
+              <li>AI tools are fragmented and not connected to actual client work</li>
+            </ul>
+          </div>
+          <div class="block">
+            <div class="block-title">Goals</div>
+            <ul class="styled-list">
+              <li>Stop bleeding revenue from unbilled scope; get paid for everything delivered</li>
+              <li>Operate as a "leverage business" — 5-person output with 2-person team</li>
+              <li>Client reporting should generate itself, not be a Friday afternoon project</li>
+              <li>One place that knows: what's being worked on, what's been delivered, what's owed</li>
+              <li>Hire the right people, not hire out of desperation because ops are failing</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- JTBD -->
+      <div class="block-title" style="color:var(--p1-accent);font-size:11px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;margin-bottom:12px;">Jobs-to-be-Done</div>
+      <div class="jtbd-grid">
+        <div class="jtbd-card">
+          <div class="jtbd-type">Functional</div>
+          <ul>
+            <li>Capture all delivered work and bill it without manual reconciliation</li>
+            <li>Turn a client brief into an assigned, tracked production task in under 5 minutes</li>
+            <li>Generate the monthly client report in one click</li>
+            <li>See real-time utilization across the whole team</li>
+          </ul>
+        </div>
+        <div class="jtbd-card">
+          <div class="jtbd-type">Emotional</div>
+          <ul>
+            <li>Stop feeling like the agency runs on anxiety and memory</li>
+            <li>Feel like a real business owner, not a contractor with a logo</li>
+            <li>Know exactly what's happening without needing to ask</li>
+            <li>Sleep without worrying whether Friday's invoice is complete</li>
+          </ul>
+        </div>
+        <div class="jtbd-card">
+          <div class="jtbd-type">Social</div>
+          <ul>
+            <li>Position as an "AI-native" operator — not a traditional agency</li>
+            <li>Show clients a professionalized, dashboard-driven relationship</li>
+            <li>Be credible when telling other agency founders how they scaled without hiring</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- CUSTOMER VOICE -->
+      <div class="divider"></div>
+      <div class="block-title" style="color:var(--p1-accent);font-size:11px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;margin-bottom:16px;">Customer Voice</div>
+
+      <div class="quote-block">
+        <div class="quote-text">Monday: a client campaign kicks off. Three tools need to be activated immediately… Someone on the team pays from personal funds… Wednesday: freelancer deliverables come in. Four different people. Four different payment requests… Friday: a client needs an invoice…</div>
+        <div class="quote-attr">@habeeb_taj19252 — 4 Apr 2026</div>
+      </div>
+      <div class="quote-block">
+        <div class="quote-text">everyone loves the idea of being an agency owner… then you're 6 months in no team… you're the strategist, the account manager, the designer, the copywriter, AND the business development team all for 1-2K retainers that feel like golden handcuffs</div>
+        <div class="quote-attr">@blvckledge — 3 Nov 2025</div>
+      </div>
+      <div class="quote-block">
+        <div class="quote-text">There's nothing I hate more than the all-in-one SaaS super apps. Monday, ClickUp, etc. they're all horrendous. Basically a worse version of Google Sheets with integrations you'll never use and a more confusing UI.</div>
+        <div class="quote-attr">@anothercohen — 1 May 2025</div>
+      </div>
+
+      <div class="divider"></div>
+      <div class="two-col">
+        <div class="block">
+          <div class="block-title">Search Queries They Type</div>
+          <div class="search-queries">
+            <div class="sq-pill">agency project management billing all-in-one</div>
+            <div class="sq-pill">stop scope creep billing tool agency</div>
+            <div class="sq-pill">client reporting automation marketing agency</div>
+            <div class="sq-pill">agency OS replace monday clickup</div>
+            <div class="sq-pill">freelancer payment invoicing small agency</div>
+            <div class="sq-pill">AI agency tool 2026</div>
+            <div class="sq-pill">agency profitability tracking tool</div>
+          </div>
+        </div>
+        <div class="block">
+          <div class="block-title">Communities</div>
+          <div class="community-row">
+            <span class="com-pill">X / #BuildingInPublic</span>
+            <span class="com-pill">Agency Slack communities</span>
+            <span class="com-pill">SPI Community</span>
+            <span class="com-pill">YC Startup School</span>
+            <span class="com-pill">Reddit r/agency</span>
+            <span class="com-pill">GoHighLevel Facebook Groups</span>
+            <span class="com-pill">Indie Hackers</span>
+            <span class="com-pill">LinkedIn "agency growth" threads</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:16px;">
+        <div class="trigger-block">
+          <div class="trigger-label">Trigger Event — in their own words</div>
+          <div class="trigger-text">Another business owner was drowning in agency chaos — scope creep, surprise invoices, endless timelines. <br><br>Translation (Alex's voice): "I just finished the month, billed the client, and realized I left $2,400 on the table from scope I delivered but never captured. That's $28K a year I'm working for free. I need to fix this now."</div>
+        </div>
+      </div>
+
+      <!-- OBJECTIONS -->
+      <div class="divider"></div>
+      <div class="block-title" style="color:var(--p1-accent);font-size:11px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;margin-bottom:16px;">Objections to Adopting a New OS</div>
+      <div class="objection-list">
+        <div class="obj-row">
+          <div class="obj-objection">I already have a system — it's messy but it works. Migration will break everything for a week.</div>
+          <div class="obj-counter">Migration takes one afternoon. We import existing clients, projects, and open invoices. Your team is operational the same day.</div>
+        </div>
+        <div class="obj-row">
+          <div class="obj-objection">Every "all-in-one" I've tried is a bloated mess — worse than Google Sheets.</div>
+          <div class="obj-counter">We do four things only: brief, deliver, bill, report. No marketplace, no integrations tab, no 47 views you'll never open.</div>
+        </div>
+        <div class="obj-row">
+          <div class="obj-objection">I'll just build my own automation in Zapier / Make. I'm already doing that.</div>
+          <div class="obj-counter">You're spending 4-6 hrs/week as a human bridge between tools. That's $6K–12K/year of your own time. Metalyde gives that back.</div>
+        </div>
+        <div class="obj-row">
+          <div class="obj-objection">My clients expect Slack + Google Docs. I can't move them.</div>
+          <div class="obj-counter">Clients stay in Slack. What changes is your internal ops — the brief, production tracking, billing, and the report you send them on Friday.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ─── PERSONA 2 ─── -->
+    <div class="tab-panel p2" id="panel-2">
+
+      <div class="persona-header">
+        <div class="persona-avatar">OT</div>
+        <div>
+          <div class="persona-name">Olivia / "The Traffic Controller"</div>
+          <div class="persona-role">Operations Manager / Traffic Manager · 5–15 person agency · 3–8 years in ops roles</div>
+          <div class="persona-tags">
+            <span class="tag">Expansion Buyer</span>
+            <span class="tag">Human Glue Between Seams</span>
+            <span class="tag">Strong Tool-Stack Influence</span>
+            <span class="tag">Utilization Owner</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div>
+          <div class="block">
+            <div class="block-title">Day-in-the-Life</div>
+            <div class="timeline">
+              <div class="timeline-item">
+                <div class="tl-time">08:00</div>
+                <div class="tl-content">Checks project board in Monday.com. 3 tasks have no assignee, 2 are past due. Pings account leads. Waits. <span class="tl-stress stress-med">MED</span></div>
+              </div>
+              <div class="timeline-item">
+                <div class="tl-time">09:00</div>
+                <div class="tl-content">Capacity planning: manually adds up estimated hours from Notion project pages, cross-refs with Harvest time log, builds a rough utilization estimate in a Google Sheet. Takes 45 min. <span class="tl-stress stress-high">HIGH STRESS</span></div>
+              </div>
+              <div class="timeline-item">
+                <div class="tl-time">10:30</div>
+                <div class="tl-content">Freelancer needs a brief. Brief lives in Notion page created 3 weeks ago. Half the creative direction has changed. Sends updated doc, hopes freelancer reads it. <span class="tl-stress stress-med">MED</span></div>
+              </div>
+              <div class="timeline-item">
+                <div class="tl-time">13:00</div>
+                <div class="tl-content">Monthly billing reconciliation with finance. Pulls actuals from Harvest, approved scope from Notion, contract from Google Drive, draft invoice from QuickBooks. 4 different sources. <span class="tl-stress stress-high">HIGH STRESS</span></div>
+              </div>
+              <div class="timeline-item">
+                <div class="tl-time">15:00</div>
+                <div class="tl-content">Bridges a Slack discussion and a Monday task that are about the same deliverable. Creates a decision log in Notion. Wonders if anyone will read it. <span class="tl-stress stress-low">LOW</span></div>
+              </div>
+              <div class="timeline-item">
+                <div class="tl-time">16:30</div>
+                <div class="tl-content">New project kick-off next week. No templatized onboarding. Starts from scratch again: project brief doc, task list, resource slots, client folder. <span class="tl-stress stress-med">MED</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div class="block">
+            <div class="block-title">Pain Points</div>
+            <ul class="styled-list">
+              <li>Is the human bridge between 4–6 tools: "4–6 hours/week your team spends manually bridging two systems" (@convoeai, 15 Jun 2026)</li>
+              <li>No live utilization view — has to build it manually from 3 sources every Monday morning</li>
+              <li>Brief drift: the brief mutates in Slack but the doc in Notion is frozen at kickoff</li>
+              <li>Freelancer payments arrive in waves with no single ledger</li>
+              <li>When she's sick, nothing works — she is the integration layer</li>
+            </ul>
+          </div>
+          <div class="block">
+            <div class="block-title">Goals</div>
+            <ul class="styled-list">
+              <li>One screen that shows live capacity, open tasks, and billing status</li>
+              <li>New project = run a template, not build from scratch</li>
+              <li>Brief stays connected to the tasks it generated — no separate doc drift</li>
+              <li>Become the person who runs ops at scale, not the person who is ops at scale</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- JTBD -->
+      <div class="block-title" style="color:var(--p2-accent);font-size:11px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;margin-bottom:12px;">Jobs-to-be-Done</div>
+      <div class="jtbd-grid">
+        <div class="jtbd-card">
+          <div class="jtbd-type">Functional</div>
+          <ul>
+            <li>See team utilization in real time without building a spreadsheet</li>
+            <li>Spin up a new project from a template in under 10 minutes</li>
+            <li>See all unbilled work across all clients in one view</li>
+            <li>Keep brief connected to tasks — changes propagate, not fork</li>
+          </ul>
+        </div>
+        <div class="jtbd-card">
+          <div class="jtbd-type">Emotional</div>
+          <ul>
+            <li>Stop being the single point of failure for the agency's ops</li>
+            <li>Feel like she's managing systems, not being managed by chaos</li>
+            <li>Walk into Monday morning standup with facts, not best guesses</li>
+          </ul>
+        </div>
+        <div class="jtbd-card">
+          <div class="jtbd-type">Social</div>
+          <ul>
+            <li>Be the ops hero who introduced the tool that professionalized the agency</li>
+            <li>Recommend a tool that sticks (not another "we tried Monday, we tried Asana")</li>
+            <li>Have real leverage when asking for a promotion or more headcount</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- VOICE -->
+      <div class="divider"></div>
+      <div class="block-title" style="color:var(--p2-accent);font-size:11px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;margin-bottom:16px;">Customer Voice</div>
+
+      <div class="quote-block">
+        <div class="quote-text">The 'two-tool problem' in project management: why Slack + Monday/Asana isn't the answer… you've created two separate sources of truth… 4-6 hours/week your team spends manually bridging two systems</div>
+        <div class="quote-attr">@convoeai — 15 Jun 2026</div>
+      </div>
+      <div class="quote-block">
+        <div class="quote-text">Marketing teams spend a surprising amount of time jumping between tools. Creative, approvals, scheduling, launch…</div>
+        <div class="quote-attr">@NeuraFlowAix — 9 Jun 2026</div>
+      </div>
+      <div class="quote-block">
+        <div class="quote-text">Tool sprawl: Team uses different tools: Person A uses Ahrefs, Person B uses SEMrush, Person C uses Moz… Duplicate subscriptions, No shared workflows, Fragmented knowledge</div>
+        <div class="quote-attr">@noelcetaSEO — 12 Jun 2026</div>
+      </div>
+
+      <div class="divider"></div>
+      <div class="two-col">
+        <div class="block">
+          <div class="block-title">Search Queries They Type</div>
+          <div class="search-queries p2">
+            <div class="sq-pill">agency capacity planning tool</div>
+            <div class="sq-pill">traffic management software agency</div>
+            <div class="sq-pill">project brief to task automation</div>
+            <div class="sq-pill">utilization tracking agency teams</div>
+            <div class="sq-pill">monday clickup alternative agencies</div>
+            <div class="sq-pill">single source of truth project management</div>
+          </div>
+        </div>
+        <div class="block">
+          <div class="block-title">Communities</div>
+          <div class="community-row">
+            <span class="com-pill">Agency Ops communities (Slack)</span>
+            <span class="com-pill">Traffic Manager Network</span>
+            <span class="com-pill">Reddit r/projectmanagement</span>
+            <span class="com-pill">LinkedIn "ops manager" groups</span>
+            <span class="com-pill">Productive.io blog readers</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:16px;">
+        <div class="trigger-block">
+          <div class="trigger-label">Trigger Event — in their own words</div>
+          <div class="trigger-text">"I just rebuilt the utilization spreadsheet from scratch for the fourth month in a row. Took me until noon. I told the founder we need a real ops tool — if it comes down to me or the spreadsheet, I'm done."</div>
+        </div>
+      </div>
+
+      <!-- OBJECTIONS -->
+      <div class="divider"></div>
+      <div class="block-title" style="color:var(--p2-accent);font-size:11px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;margin-bottom:16px;">Objections</div>
+      <div class="objection-list">
+        <div class="obj-row">
+          <div class="obj-objection">The founder won't pay for another tool after we just cancelled two.</div>
+          <div class="obj-counter">Metalyde replaces at least three tools (PM + billing + reporting). Net cost is a reduction, not an addition.</div>
+        </div>
+        <div class="obj-row">
+          <div class="obj-objection">My team won't adopt it. We've been burned before with Monday and ClickUp.</div>
+          <div class="obj-counter">Metalyde is built for the agency shape specifically — not a horizontal PM tool with 400 features no one uses. Onboarding takes one standup.</div>
+        </div>
+        <div class="obj-row">
+          <div class="obj-objection">We have custom workflows that no tool can accommodate.</div>
+          <div class="obj-counter">Brief templates are fully configurable. Metalyde adapts to your brief format, not the other way around.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ─── PERSONA 3 ─── -->
+    <div class="tab-panel p3" id="panel-3">
+
+      <div class="persona-header">
+        <div class="persona-avatar">CP</div>
+        <div>
+          <div class="persona-name">Chris / "The Shepherd"</div>
+          <div class="persona-role">Account Manager / Project Lead · Any agency size · Client-facing, delivery-accountable</div>
+          <div class="persona-tags">
+            <span class="tag">Champion User</span>
+            <span class="tag">Scope Creep Frontline</span>
+            <span class="tag">Client Trust Owner</span>
+            <span class="tag">Referral Engine</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div>
+          <div class="block">
+            <div class="block-title">Day-in-the-Life</div>
+            <div class="timeline">
+              <div class="timeline-item">
+                <div class="tl-time">08:30</div>
+                <div class="tl-content">Client emails a "quick" revision request. Opens the project in Asana. The original brief is in a Notion page linked 6 tasks deep. <span class="tl-stress stress-med">MED</span></div>
+              </div>
+              <div class="timeline-item">
+                <div class="tl-time">09:30</div>
+                <div class="tl-content">Standup. Asks creative team for status on 3 deliverables. Gets "almost done" on all three. Has no way to verify. Commits to client anyway. <span class="tl-stress stress-high">HIGH STRESS</span></div>
+              </div>
+              <div class="timeline-item">
+                <div class="tl-time">11:00</div>
+                <div class="tl-content">Client scope change request. Checks the SOW PDF from 3 months ago. Tries to figure out what "revision" means in their contract. Escalates to founder. <span class="tl-stress stress-high">HIGH STRESS</span></div>
+              </div>
+              <div class="timeline-item">
+                <div class="tl-time">14:00</div>
+                <div class="tl-content">Prepares client status update. Screenshots from Asana, data from Google Analytics, a note from Creative. Assembles in Google Slides. <span class="tl-stress stress-med">MED</span></div>
+              </div>
+              <div class="timeline-item">
+                <div class="tl-time">16:30</div>
+                <div class="tl-content">New project kicks off. Briefs the creative team in a Slack thread. Wonders if she should also put it in Notion. Does both. Now there are two sources of truth. <span class="tl-stress stress-low">LOW</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div class="block">
+            <div class="block-title">Pain Points</div>
+            <ul class="styled-list">
+              <li>Scope creep arrives as "quick" requests — no tooling to immediately flag and capture them</li>
+              <li>Client updates are manually assembled from 3–5 data sources every week</li>
+              <li>Brief lives in a different place than the tasks it generated — drift guaranteed</li>
+              <li>Relies on verbal updates from creatives — no live delivery visibility</li>
+              <li>"Surprise" invoices to clients: items that were delivered but weren't in the original SOW, not surfaced until month-end</li>
+            </ul>
+          </div>
+          <div class="block">
+            <div class="block-title">Goals</div>
+            <ul class="styled-list">
+              <li>One place to see: what was agreed, what's in progress, what's delivered, what's owed</li>
+              <li>Client gets a live dashboard link, not a weekly slide deck</li>
+              <li>Any scope change is flagged and captured immediately, not discovered at billing</li>
+              <li>Handoff to creative has zero ambiguity — brief is specific, versioned, attached to tasks</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- JTBD -->
+      <div class="block-title" style="color:var(--p3-accent);font-size:11px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;margin-bottom:12px;">Jobs-to-be-Done</div>
+      <div class="jtbd-grid">
+        <div class="jtbd-card">
+          <div class="jtbd-type">Functional</div>
+          <ul>
+            <li>Flag scope change immediately and route to approval + billing</li>
+            <li>Generate client status update from live project data, not manual assembly</li>
+            <li>Show client real-time delivery status without a call</li>
+            <li>Keep brief, tasks, and delivery all in one thread</li>
+          </ul>
+        </div>
+        <div class="jtbd-card">
+          <div class="jtbd-type">Emotional</div>
+          <ul>
+            <li>Stop carrying all context in their head and in Slack DMs</li>
+            <li>Feel confident committing to timelines because they can actually see delivery status</li>
+            <li>Not be the person who causes a surprise invoice to a client</li>
+          </ul>
+        </div>
+        <div class="jtbd-card">
+          <div class="jtbd-type">Social</div>
+          <ul>
+            <li>Be seen as a proactive, transparent account manager by the client</li>
+            <li>Become the internal champion for a tool that improved team relationships</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- VOICE -->
+      <div class="divider"></div>
+      <div class="block-title" style="color:var(--p3-accent);font-size:11px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;margin-bottom:16px;">Customer Voice</div>
+
+      <div class="quote-block">
+        <div class="quote-text">Another business owner was drowning in agency chaos — scope creep, surprise invoices, endless timelines.</div>
+        <div class="quote-attr">@polsia — 12 Jun 2026 (describing the state they're fixing)</div>
+      </div>
+      <div class="quote-block">
+        <div class="quote-text">ecom guys deal with thin margins… Agency guys deal with client churn and scope creep</div>
+        <div class="quote-attr">@monk_wire — 21 May 2026</div>
+      </div>
+      <div class="quote-block">
+        <div class="quote-text">Big mistake I see: Trying to do EVERYTHING at once. You look at 17 different tools, funnels, AI apps… and you freeze.</div>
+        <div class="quote-attr">@WillENeffSaid — 10 Jun 2026</div>
+      </div>
+
+      <div class="divider"></div>
+      <div class="two-col">
+        <div class="block">
+          <div class="block-title">Search Queries They Type</div>
+          <div class="search-queries p3">
+            <div class="sq-pill">client portal agency project updates</div>
+            <div class="sq-pill">scope creep tracking tool</div>
+            <div class="sq-pill">agency account management software</div>
+            <div class="sq-pill">automated client reporting dashboard</div>
+            <div class="sq-pill">real-time project status client-facing</div>
+          </div>
+        </div>
+        <div class="block">
+          <div class="block-title">Communities</div>
+          <div class="community-row">
+            <span class="com-pill">Account management LinkedIn groups</span>
+            <span class="com-pill">r/agency on Reddit</span>
+            <span class="com-pill">Agency growth Slack groups</span>
+            <span class="com-pill">AgencyAnalytics community</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:16px;">
+        <div class="trigger-block">
+          <div class="trigger-label">Trigger Event — in their own words</div>
+          <div class="trigger-text">"The client called asking why their invoice was higher than expected. I couldn't explain it quickly because I had to look across three places to reconstruct what we delivered. They were unhappy. I was embarrassed. That's the moment I knew we needed something better."</div>
+        </div>
+      </div>
+
+      <!-- OBJECTIONS -->
+      <div class="divider"></div>
+      <div class="block-title" style="color:var(--p3-accent);font-size:11px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;margin-bottom:16px;">Objections</div>
+      <div class="objection-list">
+        <div class="obj-row">
+          <div class="obj-objection">My clients won't log into another portal. They barely use the one we have.</div>
+          <div class="obj-counter">The client portal is optional and read-only. They get a link to a live dashboard. No login required if you configure it that way.</div>
+        </div>
+        <div class="obj-row">
+          <div class="obj-objection">Learning a new tool mid-project is too risky.</div>
+          <div class="obj-counter">Onboarding is per-project: one template, one import. You can run one project in Metalyde while maintaining existing projects elsewhere until you're ready.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ─── PERSONA 4 ─── -->
+    <div class="tab-panel p4" id="panel-4">
+
+      <div class="persona-header">
+        <div class="persona-avatar">DD</div>
+        <div>
+          <div class="persona-name">Dana / "The Maker"</div>
+          <div class="persona-role">Creative Director / Delivery Lead · Any agency size · Output-focused, brief-dependent</div>
+          <div class="persona-tags">
+            <span class="tag">Stakeholder User</span>
+            <span class="tag">Brief Quality Receiver</span>
+            <span class="tag">AI-Augmented Output</span>
+            <span class="tag">Adoption Blocker or Accelerator</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div>
+          <div class="block">
+            <div class="block-title">Day-in-the-Life</div>
+            <div class="timeline">
+              <div class="timeline-item">
+                <div class="tl-time">09:00</div>
+                <div class="tl-content">Opens Slack for today's assignments. Three tasks from account team, two with no brief attached, one with a Notion link to a doc that hasn't been updated since kickoff. <span class="tl-stress stress-high">HIGH STRESS</span></div>
+              </div>
+              <div class="timeline-item">
+                <div class="tl-time">10:00</div>
+                <div class="tl-content">Asks account lead for clarification on the brief. Waits 40 minutes for response. Starts on a different task. Loses the thread. <span class="tl-stress stress-med">MED</span></div>
+              </div>
+              <div class="timeline-item">
+                <div class="tl-time">11:30</div>
+                <div class="tl-content">Delivers first draft. Review feedback arrives in Slack, email, and a Google Doc comment. Tries to reconcile. Misses one item. Revision cycle +1. <span class="tl-stress stress-med">MED</span></div>
+              </div>
+              <div class="timeline-item">
+                <div class="tl-time">14:00</div>
+                <div class="tl-content">Uses an AI tool to accelerate copy production. Output is good but there's no brand voice doc connected to the project. Manually adds brand context each time. <span class="tl-stress stress-low">LOW</span></div>
+              </div>
+              <div class="timeline-item">
+                <div class="tl-time">16:00</div>
+                <div class="tl-content">Files completed work in Google Drive. Marks Asana task done. Wonders if the account lead knows it's done and where to find it. Sends a Slack message. <span class="tl-stress stress-low">LOW</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div class="block">
+            <div class="block-title">Pain Points</div>
+            <ul class="styled-list">
+              <li>Briefs arrive incomplete, ambiguous, or outdated — wastes 1–2 hours per project on clarification</li>
+              <li>Feedback is scattered across Slack, email, Google Doc comments — no canonical revision log</li>
+              <li>AI tools are disconnected from client brand context — has to manually re-inject per session</li>
+              <li>Completed work is hard to find — "done" in Asana doesn't mean account team knows where it is</li>
+              <li>Every revision cycle adds overhead because the task system doesn't track revision rounds</li>
+            </ul>
+          </div>
+          <div class="block">
+            <div class="block-title">Goals</div>
+            <ul class="styled-list">
+              <li>Brief arrives complete: reference materials, tone, scope, deadline, revision policy — all attached</li>
+              <li>All feedback in one place, not three channels</li>
+              <li>AI tools that already know the client context — brand voice, past deliverables, tone guide</li>
+              <li>Delivery is visible to the whole team the moment a task is marked done</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- JTBD -->
+      <div class="block-title" style="color:var(--p4-accent);font-size:11px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;margin-bottom:12px;">Jobs-to-be-Done</div>
+      <div class="jtbd-grid">
+        <div class="jtbd-card">
+          <div class="jtbd-type">Functional</div>
+          <ul>
+            <li>Receive a complete, structured brief with all references attached on project start</li>
+            <li>See all feedback in one canonical thread, not scattered across tools</li>
+            <li>AI output that already knows client context without manual priming</li>
+            <li>Signal "done" once and have it propagate to billing + client view automatically</li>
+          </ul>
+        </div>
+        <div class="jtbd-card">
+          <div class="jtbd-type">Emotional</div>
+          <ul>
+            <li>Stop feeling like incomplete briefs are their fault when the work misses</li>
+            <li>Feel that their work is visible and credited, not invisible once delivered</li>
+            <li>Use AI tools confidently without recreating context from scratch</li>
+          </ul>
+        </div>
+        <div class="jtbd-card">
+          <div class="jtbd-type">Social</div>
+          <ul>
+            <li>Be the team member who adopted AI smartly — not just "faster" but "smarter"</li>
+            <li>Deliver work that clearly links back to the brief, making revision requests illegitimate</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- VOICE -->
+      <div class="divider"></div>
+      <div class="block-title" style="color:var(--p4-accent);font-size:11px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;margin-bottom:16px;">Customer Voice</div>
+
+      <div class="quote-block">
+        <div class="quote-text">In 2026, they are using autonomous AI agents to execute entire workflows 24/7… A senior manager with 3 custom-built AI agents can now do the data analysis, operational routing, and reporting of an entire 5-person junior team.</div>
+        <div class="quote-attr">@MLewisson10 — 12 Jun 2026 (the identity aspirant Dana wants to become)</div>
+      </div>
+      <div class="quote-block">
+        <div class="quote-text">FOUNDERS ARE STARTING TO REPLACE DEPARTMENTS WITH AI AGENT TEAMS… Specialized AI agents handle marketing, sales, research…</div>
+        <div class="quote-attr">@RoundtableSpace — 9 Jun 2026 (the context Dana operates in)</div>
+      </div>
+
+      <div class="divider"></div>
+      <div class="two-col">
+        <div class="block">
+          <div class="block-title">Search Queries They Type</div>
+          <div class="search-queries p4">
+            <div class="sq-pill">AI creative brief tool agency</div>
+            <div class="sq-pill">brand voice AI context marketing</div>
+            <div class="sq-pill">creative project management feedback tool</div>
+            <div class="sq-pill">AI content workflow agency 2026</div>
+            <div class="sq-pill">design review consolidated feedback</div>
+          </div>
+        </div>
+        <div class="block">
+          <div class="block-title">Communities</div>
+          <div class="community-row">
+            <span class="com-pill">Dribbble community</span>
+            <span class="com-pill">Layers.to</span>
+            <span class="com-pill">LinkedIn creative groups</span>
+            <span class="com-pill">AI design / AI copy Twitter</span>
+            <span class="com-pill">Figma community</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:16px;">
+        <div class="trigger-block">
+          <div class="trigger-label">Trigger Event — in their own words</div>
+          <div class="trigger-text">"I delivered exactly what the brief said. The client rejected it. Turns out the account manager had updated the direction in a Slack thread that never made it to the brief. I wasted a full day. This is the third time this month."</div>
+        </div>
+      </div>
+
+      <!-- OBJECTIONS -->
+      <div class="divider"></div>
+      <div class="block-title" style="color:var(--p4-accent);font-size:11px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;margin-bottom:16px;">Objections</div>
+      <div class="objection-list">
+        <div class="obj-row">
+          <div class="obj-objection">Another tool = another context switch. I live in Figma and Slack, not a PM tool.</div>
+          <div class="obj-counter">Metalyde doesn't replace Figma. It's where the brief lives and where you mark work done. Two touch-points, not a new workspace.</div>
+        </div>
+        <div class="obj-row">
+          <div class="obj-objection">AI tools in a PM platform are usually gimmicks — summarize and autofill.</div>
+          <div class="obj-counter">The AI in Metalyde knows the client context (brand voice, past briefs, tone guide) so you stop priming from scratch. The output goes into actual deliverables, not summaries.</div>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       SECTION 2 — CROSS-PERSONA COMPARISON
+  ═══════════════════════════════════════════════ -->
+  <section class="section">
+    <div class="section-label">Cross-Persona View</div>
+    <div class="section-title">Comparison Grid</div>
+    <p class="section-sub">Maps which seams each persona feels, how they buy, and what success looks like on day 30.</p>
+
+    <div style="overflow-x:auto;">
+      <table class="comp-table">
+        <thead>
+          <tr>
+            <th>Dimension</th>
+            <th><span class="col-p1">P1 — Founder-Operator</span></th>
+            <th><span class="col-p2">P2 — Ops Manager</span></th>
+            <th><span class="col-p3">P3 — Account Lead</span></th>
+            <th><span class="col-p4">P4 — Creative Lead</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Buying role</strong></td>
+            <td>Sole decision-maker, credit card</td>
+            <td>Strong influencer, sometimes budget</td>
+            <td>Champion, ¬buyer</td>
+            <td>Adoption blocker or endorser</td>
+          </tr>
+          <tr>
+            <td><strong>Seams felt</strong></td>
+            <td>All 4 (brief, production, billing, reporting)</td>
+            <td>All 4 (human glue)</td>
+            <td>Brief → production, billing surface</td>
+            <td>Brief → production only</td>
+          </tr>
+          <tr>
+            <td><strong>Primary pain</strong></td>
+            <td>Revenue leakage (unbilled scope, $1–5K/mo)</td>
+            <td>Time lost bridging tools (4–6 hrs/wk)</td>
+            <td>Scope creep + surprise invoices</td>
+            <td>Incomplete / outdated briefs</td>
+          </tr>
+          <tr>
+            <td><strong>Trigger phrase</strong></td>
+            <td>"I'm leaving money on the table every month"</td>
+            <td>"I AM the integration layer and it's killing me"</td>
+            <td>"The client got a surprise invoice and I couldn't explain it"</td>
+            <td>"I delivered what the brief said and still got rejected"</td>
+          </tr>
+          <tr>
+            <td><strong>Success at day 30</strong></td>
+            <td>0 unbilled scope, first automated client report sent</td>
+            <td>Utilization visible live, 0 manual bridging Monday mornings</td>
+            <td>Scope change captured and billed same day it's requested</td>
+            <td>Briefed completely on every project, 0 clarification waits</td>
+          </tr>
+          <tr>
+            <td><strong>Identity aspirational</strong></td>
+            <td>"AI-native agency" / leverage business</td>
+            <td>"Ops lead at scale" / not ops IS scale</td>
+            <td>"Proactive, transparent account manager"</td>
+            <td>"AI-augmented creative" / 10x output</td>
+          </tr>
+          <tr>
+            <td><strong>Competitor they know</strong></td>
+            <td>Monday, ClickUp, GoHighLevel, Bonsai</td>
+            <td>Monday, Asana, Harvest, Productive</td>
+            <td>Asana, Notion, AgencyAnalytics</td>
+            <td>Figma, Notion, Frame.io</td>
+          </tr>
+          <tr>
+            <td><strong>Key objection</strong></td>
+            <td>"Another all-in-one that's a worse Google Sheets"</td>
+            <td>"Team won't adopt it after last failed rollout"</td>
+            <td>"My clients won't log into a portal"</td>
+            <td>"I don't want to live in a PM tool"</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       SECTION 3 — PAIN INTENSITY CHART
+  ═══════════════════════════════════════════════ -->
+  <section class="section">
+    <div class="section-label">Pain Intensity</div>
+    <div class="section-title">Where Each Seam Hurts Most</div>
+    <p class="section-sub">Self-reported pain intensity per seam, per persona. Based on signal density and quote specificity from X + web research.</p>
+
+    <div class="scatter-container">
+      <svg viewBox="0 0 760 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;font-family:system-ui,-apple-system,sans-serif;display:block;">
+        <!-- Grid lines -->
+        <line x1="120" y1="20" x2="120" y2="280" stroke="#E2E6ED" stroke-width="1"/>
+        <line x1="280" y1="20" x2="280" y2="280" stroke="#E2E6ED" stroke-width="1"/>
+        <line x1="440" y1="20" x2="440" y2="280" stroke="#E2E6ED" stroke-width="1"/>
+        <line x1="600" y1="20" x2="600" y2="280" stroke="#E2E6ED" stroke-width="1"/>
+        <line x1="760" y1="20" x2="760" y2="280" stroke="#E2E6ED" stroke-width="1"/>
+        <!-- H lines -->
+        <line x1="80" y1="60"  x2="760" y2="60"  stroke="#E2E6ED" stroke-width="1" stroke-dasharray="3 3"/>
+        <line x1="80" y1="110" x2="760" y2="110" stroke="#E2E6ED" stroke-width="1" stroke-dasharray="3 3"/>
+        <line x1="80" y1="160" x2="760" y2="160" stroke="#E2E6ED" stroke-width="1" stroke-dasharray="3 3"/>
+        <line x1="80" y1="210" x2="760" y2="210" stroke="#E2E6ED" stroke-width="1" stroke-dasharray="3 3"/>
+        <line x1="80" y1="260" x2="760" y2="260" stroke="#E2E6ED" stroke-width="1" stroke-dasharray="3 3"/>
+
+        <!-- Y labels (Personas) -->
+        <text x="72" y="64"  text-anchor="end" font-size="12" fill="#6B7280" font-weight="600">P1 Founder</text>
+        <text x="72" y="114" text-anchor="end" font-size="12" fill="#6B7280" font-weight="600">P2 Ops</text>
+        <text x="72" y="164" text-anchor="end" font-size="12" fill="#6B7280" font-weight="600">P3 Account</text>
+        <text x="72" y="214" text-anchor="end" font-size="12" fill="#6B7280" font-weight="600">P4 Creative</text>
+
+        <!-- X labels (Seams) -->
+        <text x="120" y="295" text-anchor="middle" font-size="11" fill="#9CA3AF">Brief</text>
+        <text x="280" y="295" text-anchor="middle" font-size="11" fill="#9CA3AF">Production</text>
+        <text x="440" y="295" text-anchor="middle" font-size="11" fill="#9CA3AF">Billing</text>
+        <text x="600" y="295" text-anchor="middle" font-size="11" fill="#9CA3AF">Reporting</text>
+
+        <!-- P1 Founder: Brief=7, Production=7, Billing=10, Reporting=9 -->
+        <circle cx="120" cy="60"  r="18" fill="oklch(0.52 0.18 145)" opacity="0.85"/>
+        <text   cx="120" cy="60"  text-anchor="middle" dominant-baseline="central" font-size="12" fill="white" font-weight="700">7</text>
+        <circle cx="280" cy="60"  r="18" fill="oklch(0.52 0.18 145)" opacity="0.85"/>
+        <text   cx="280" cy="60"  text-anchor="middle" dominant-baseline="central" font-size="12" fill="white" font-weight="700">7</text>
+        <circle cx="440" cy="60"  r="28" fill="oklch(0.52 0.18 145)" opacity="0.9"/>
+        <text   cx="440" cy="60"  text-anchor="middle" dominant-baseline="central" font-size="12" fill="white" font-weight="700">10</text>
+        <circle cx="600" cy="60"  r="24" fill="oklch(0.52 0.18 145)" opacity="0.88"/>
+        <text   cx="600" cy="60"  text-anchor="middle" dominant-baseline="central" font-size="12" fill="white" font-weight="700">9</text>
+
+        <!-- P2 Ops: Brief=7, Production=9, Billing=8, Reporting=8 -->
+        <circle cx="120" cy="110" r="18" fill="oklch(0.48 0.17 210)" opacity="0.85"/>
+        <text   cx="120" cy="110" text-anchor="middle" dominant-baseline="central" font-size="12" fill="white" font-weight="700">7</text>
+        <circle cx="280" cy="110" r="24" fill="oklch(0.48 0.17 210)" opacity="0.88"/>
+        <text   cx="280" cy="110" text-anchor="middle" dominant-baseline="central" font-size="12" fill="white" font-weight="700">9</text>
+        <circle cx="440" cy="110" r="21" fill="oklch(0.48 0.17 210)" opacity="0.87"/>
+        <text   cx="440" cy="110" text-anchor="middle" dominant-baseline="central" font-size="12" fill="white" font-weight="700">8</text>
+        <circle cx="600" cy="110" r="21" fill="oklch(0.48 0.17 210)" opacity="0.87"/>
+        <text   cx="600" cy="110" text-anchor="middle" dominant-baseline="central" font-size="12" fill="white" font-weight="700">8</text>
+
+        <!-- P3 Account: Brief=6, Production=7, Billing=8, Reporting=9 -->
+        <circle cx="120" cy="160" r="16" fill="oklch(0.58 0.16 55)" opacity="0.85"/>
+        <text   cx="120" cy="160" text-anchor="middle" dominant-baseline="central" font-size="12" fill="white" font-weight="700">6</text>
+        <circle cx="280" cy="160" r="18" fill="oklch(0.58 0.16 55)" opacity="0.85"/>
+        <text   cx="280" cy="160" text-anchor="middle" dominant-baseline="central" font-size="12" fill="white" font-weight="700">7</text>
+        <circle cx="440" cy="160" r="21" fill="oklch(0.58 0.16 55)" opacity="0.87"/>
+        <text   cx="440" cy="160" text-anchor="middle" dominant-baseline="central" font-size="12" fill="white" font-weight="700">8</text>
+        <circle cx="600" cy="160" r="24" fill="oklch(0.58 0.16 55)" opacity="0.88"/>
+        <text   cx="600" cy="160" text-anchor="middle" dominant-baseline="central" font-size="12" fill="white" font-weight="700">9</text>
+
+        <!-- P4 Creative: Brief=10, Production=8, Billing=2, Reporting=2 -->
+        <circle cx="120" cy="210" r="28" fill="oklch(0.50 0.18 320)" opacity="0.9"/>
+        <text   cx="120" cy="210" text-anchor="middle" dominant-baseline="central" font-size="12" fill="white" font-weight="700">10</text>
+        <circle cx="280" cy="210" r="21" fill="oklch(0.50 0.18 320)" opacity="0.87"/>
+        <text   cx="280" cy="210" text-anchor="middle" dominant-baseline="central" font-size="12" fill="white" font-weight="700">8</text>
+        <circle cx="440" cy="210" r="9"  fill="oklch(0.50 0.18 320)" opacity="0.5"/>
+        <text   cx="440" cy="210" text-anchor="middle" dominant-baseline="central" font-size="11" fill="white" font-weight="700">2</text>
+        <circle cx="600" cy="210" r="9"  fill="oklch(0.50 0.18 320)" opacity="0.5"/>
+        <text   cx="600" cy="210" text-anchor="middle" dominant-baseline="central" font-size="11" fill="white" font-weight="700">2</text>
+
+        <!-- Legend -->
+        <circle cx="100" cy="310" r="7" fill="oklch(0.52 0.18 145)"/>
+        <text x="112" y="314" font-size="11" fill="#6B7280">P1</text>
+        <circle cx="145" cy="310" r="7" fill="oklch(0.48 0.17 210)"/>
+        <text x="157" y="314" font-size="11" fill="#6B7280">P2</text>
+        <circle cx="190" cy="310" r="7" fill="oklch(0.58 0.16 55)"/>
+        <text x="202" y="314" font-size="11" fill="#6B7280">P3</text>
+        <circle cx="235" cy="310" r="7" fill="oklch(0.50 0.18 320)"/>
+        <text x="247" y="314" font-size="11" fill="#6B7280">P4 · Circle size = intensity (1–10)</text>
+      </svg>
+    </div>
+
+    <div style="margin-top:16px;padding:14px 18px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-md);font-size:13px;color:var(--text-secondary);">
+      <strong style="color:var(--text-primary);">Read:</strong> Billing is the highest P1 pain and a strong P2/P3 pain — this is the wedge to lead with. Brief quality is uniquely P4's highest pain — and the brief→production seam is where AI can create the most immediate, visible value for creatives. Reporting pain is uniformly high for P1–P3: the "automated client report" feature has cross-persona buy-in.
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       SECTION 4 — VOICE LEXICON
+  ═══════════════════════════════════════════════ -->
+  <section class="section">
+    <div class="section-label">Voice Lexicon</div>
+    <div class="section-title">Words They Use vs. Words to Avoid</div>
+    <p class="section-sub">Their language, not ours. Messaging must mirror the exact vocabulary of P1–P3 or it will not land.</p>
+
+    <div style="overflow-x:auto;">
+      <table class="comp-table">
+        <thead>
+          <tr>
+            <th>They Say (use this)</th>
+            <th>Source Signal</th>
+            <th>We Must NOT Say</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>"scope creep" / "surprise invoice"</td>
+            <td>@polsia, @monk_wire, Ignition report 57%</td>
+            <td>"billing discrepancy" / "unauthorized work"</td>
+          </tr>
+          <tr>
+            <td>"golden handcuffs" / "retainer that doesn't cover it"</td>
+            <td>@blvckledge (3 Nov 2025)</td>
+            <td>"pricing model optimization"</td>
+          </tr>
+          <tr>
+            <td>"juggling 5+ tools" / "fragmented" / "messy"</td>
+            <td>@prism_ops, @Must_Apha_, @noelcetaSEO</td>
+            <td>"tool consolidation" / "workflow unification"</td>
+          </tr>
+          <tr>
+            <td>"all-in-one is horrendous" / "worse Google Sheets"</td>
+            <td>@anothercohen (1 May 2025)</td>
+            <td>"all-in-one platform" / "complete solution"</td>
+          </tr>
+          <tr>
+            <td>"4-6 hours a week manually bridging"</td>
+            <td>@convoeai (15 Jun 2026)</td>
+            <td>"integration overhead" / "process friction"</td>
+          </tr>
+          <tr>
+            <td>"labor → leverage" / "AI-native"</td>
+            <td>@Jacobsklug, @MLewisson10 (Feb–Jun 2026)</td>
+            <td>"productivity suite" / "efficiency tool"</td>
+          </tr>
+          <tr>
+            <td>"drowning in agency chaos"</td>
+            <td>@polsia (12 Jun 2026)</td>
+            <td>"operational complexity" / "scale challenges"</td>
+          </tr>
+          <tr>
+            <td>"one view of everything"</td>
+            <td>@polsia (13 Jun 2026)</td>
+            <td>"centralized dashboard" / "unified visibility"</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       SECTION 5 — OPEN QUESTIONS
+  ═══════════════════════════════════════════════ -->
+  <section class="section">
+    <div class="section-label">Open Questions</div>
+    <div class="section-title">Convergence Gate — Founder Must Resolve</div>
+    <p class="section-sub">These questions block spec development. Answers determine ICP targeting, pricing model, and go-to-market sequence.</p>
+
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div style="padding:18px 20px;border:1px solid var(--border);border-radius:var(--radius-md);background:var(--bg-card);display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;">
+        <div style="width:28px;height:28px;border-radius:50%;background:var(--p1-accent-light);color:var(--p1-accent);font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">1</div>
+        <div>
+          <div style="font-size:14px;font-weight:700;margin-bottom:4px;">Is the Founder-Operator the only ICP for launch, or do you sell to 5-15 person agencies where P2 (Ops Manager) holds budget?</div>
+          <div style="font-size:13px;color:var(--text-secondary);">These are different GTM motions: P1 = self-serve PLG (solo sign-up, credit card immediate); P2 = sales-assisted (demo, stakeholder buy-in, IT approval). Both valid but require different onboarding and pricing architecture.</div>
+        </div>
+      </div>
+      <div style="padding:18px 20px;border:1px solid var(--border);border-radius:var(--radius-md);background:var(--bg-card);display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;">
+        <div style="width:28px;height:28px;border-radius:50%;background:var(--p2-accent-light);color:var(--p2-accent);font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">2</div>
+        <div>
+          <div style="font-size:14px;font-weight:700;margin-bottom:4px;">Which broken seam is the entry point — billing (highest P1/P3 pain) or brief-to-production (highest P4 pain, AI showcase)?</div>
+          <div style="font-size:13px;color:var(--text-secondary);">Starting with billing captures the P1 "stop the revenue bleed" urgency and drives faster conversion. Starting with brief-to-production showcases the AI-native identity angle and creates stickier daily use. These lead to different MVP feature priorities.</div>
+        </div>
+      </div>
+      <div style="padding:18px 20px;border:1px solid var(--border);border-radius:var(--radius-md);background:var(--bg-card);display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;">
+        <div style="width:28px;height:28px;border-radius:50%;background:var(--p3-accent-light);color:var(--p3-accent);font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">3</div>
+        <div>
+          <div style="font-size:14px;font-weight:700;margin-bottom:4px;">Does Metalyde compete on the GoHighLevel migration path, or does it explicitly NOT target GHL users?</div>
+          <div style="font-size:13px;color:var(--text-secondary);">GHL has the largest installed base of SMB marketing agencies. Post-Bonsai/Zoom acquisition, there is a churn window. But GHL users have fundamentally different workflows (funnel-centric, not project-centric). Supporting migration doubles onboarding complexity.</div>
+        </div>
+      </div>
+      <div style="padding:18px 20px;border:1px solid var(--border);border-radius:var(--radius-md);background:var(--bg-card);display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;">
+        <div style="width:28px;height:28px;border-radius:50%;background:var(--p4-accent-light);color:var(--p4-accent);font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">4</div>
+        <div>
+          <div style="font-size:14px;font-weight:700;margin-bottom:4px;">What is the minimum client-facing surface at launch — reporting dashboard only, or a full client portal with brief approval and live delivery tracking?</div>
+          <div style="font-size:13px;color:var(--text-secondary);">A read-only reporting dashboard ships faster and eliminates the "clients won't log into a portal" objection entirely. A full portal creates stronger retention but adds auth, permissions, and UX complexity that could delay launch 6–10 weeks.</div>
+        </div>
+      </div>
+      <div style="padding:18px 20px;border:1px solid var(--border);border-radius:var(--radius-md);background:var(--bg-card);display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;">
+        <div style="width:28px;height:28px;border-radius:50%;background:oklch(0.94 0.06 260);color:oklch(0.38 0.14 260);font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">5</div>
+        <div>
+          <div style="font-size:14px;font-weight:700;margin-bottom:4px;">Is the "AI-native" identity angle a primary message (change who you are) or a feature message (automate the report)?</div>
+          <div style="font-size:13px;color:var(--text-secondary);">Identity-first messaging (@Jacobsklug, @MLewisson10 thesis) targets the aspirational P1 who wants to become an AI leverage business — higher willingness to pay, longer retention. Feature-first messaging ("generate your monthly report in one click") converts faster, targets broader P1–P3 audience, lower risk of overpromise.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer class="site-footer">
+  <strong>Metalyde — Customer Personas &amp; Voice</strong> · Phase 2 of brand exploration pipeline · Generated 2026-06-16<br>
+  Signal sources: X (@habeeb_taj19252, @blvckledge, @noelcetaSEO, @anothercohen, @convoeai, @Jacobsklug, @MLewisson10, @polsia, @monk_wire, @Must_Apha_, @WillENeffSaid, @NeuraFlowAix, @RoundtableSpace, @prism_ops) + Ignition 2025 / Mosaic PSA / Grand View Research web signals.
+</footer>
+
+<script>
+  function switchTab(n) {
+    document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+    document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
+    var btn = document.querySelector('.tab-btn[data-persona="' + n + '"]');
+    var panel = document.getElementById('panel-' + n);
+    if (btn) btn.classList.add('active');
+    if (panel) panel.classList.add('active');
+  }
+</script>
+</body>
+</html>
