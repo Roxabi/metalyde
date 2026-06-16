@@ -57,6 +57,13 @@
       "when": 1781109716893,
       "tag": "0017_sweet_avengers",
       "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "7",
+      "when": 1781800000000,
+      "tag": "0018_rebrand_app_name",
+      "breakpoints": true
     }
   ]
 }
