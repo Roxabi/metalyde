@@ -7,6 +7,8 @@ export default function Preview() {
       url="https://metalyde.roxabi.dev/magic?token=abc123"
       translations={fr.magicLink}
       locale="fr"
+      appName="Metalyde"
+      appUrl="https://metalyde.roxabi.dev"
     />
   )
 }
