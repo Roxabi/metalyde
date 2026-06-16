@@ -196,7 +196,9 @@
       "!**/.vercel",
       "!**/e2e/.auth",
       "!talks",
-      "!docs/workflows"
+      "!docs/workflows",
+      "!**/.claude/worktrees",
+      "!brand"
     ]
   }
 }
