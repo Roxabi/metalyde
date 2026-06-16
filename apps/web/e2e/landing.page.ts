@@ -73,7 +73,7 @@ export class LandingPage {
   }
 
   get footerBrand(): Locator {
-    return this.footer.getByText(/Roxabi/)
+    return this.footer.getByText(/Metalyde/)
   }
 
   get footerGithubLink(): Locator {
