@@ -1,0 +1,197 @@
+---
+title: Design System
+description: Swiss Control Room design doctrine, token reference, and component conventions for Metalyde
+---
+
+## Direction and Doctrine
+
+Metalyde's visual identity is **Swiss Control Room**: a precision instrument aesthetic built on
+a paper/ink canvas, one red-orange accent, and near-square geometry. All design decisions must
+reinforce this identity, not dilute it.
+
+### The Five Rules
+
+| Rule | Constraint |
+|------|-----------|
+| **Color budget** | ≤ 7 colors in active use at any time. Palette = paper `#f5f5f0`, ink `#1a1a1a`, accent `#e63000` (dark: `#ff6a3d`), muted, border, chart-1..5. No additions without removing one. |
+| **One accent** | `--brand` / `#e63000` is the sole interactive accent. No teal, purple, or amber accents. Semantic status colors are status tokens, not accents. |
+| **Font budget** | ≤ 3 font roles: **display** (Bricolage Grotesque — hero headings, KPI values), **sans** (system sans-serif — body copy, UI labels), **mono** (monospace — numeric values, code). No decorative or serif faces. |
+| **Motion is punctuation** | Animations clarify state changes; they do not entertain. Default to `--duration-fast` (150 ms) with `--ease-control`. Use `--duration-normal` (300 ms) only for layout shifts. Use `--duration-slow` (700 ms) only for page-level transitions. Always honor `prefers-reduced-motion`. |
+| **Radius is near-square** | `--radius: 0.125rem` (2 px). This is non-negotiable brand identity. Do not introduce `rounded-xl`, `rounded-full` (except avatar/dot), or any radius > `--radius-lg`. |
+
+### Accessibility Baseline
+
+- Minimum contrast WCAG AA: 4.5:1 for body text, 3:1 for large text and UI components.
+- Focus indicators: 3 px `ring-ring/50` + `--shadow-focus-halo` outer glow on all interactive elements.
+- Numeric data columns use `tabular-nums` so digit widths stay stable across rows (see §Numeric Values below).
+
+---
+
+## Token Reference
+
+Token source of truth: `packages/ui/src/theme.css`.
+
+### Type Scale
+
+11 named steps. Each step is defined by four CSS custom properties (`-size`, `-weight`, `-lh`, `-ls`),
+forwarded as Tailwind utilities via `@theme inline`.
+
+| Utility | Size | Weight | Line-height | Tracking | Notes |
+|---------|------|--------|-------------|----------|-------|
+| `text-display` | 48 px | 560 | 1.05 | −0.03 em | Bricolage Grotesque, hero H1 |
+| `text-h1` | 32 px | 600 | 1.1 | −0.02 em | Page titles |
+| `text-h2` | 24 px | 600 | 1.2 | −0.015 em | Section headings |
+| `text-h3` | 18 px | 600 | 1.3 | −0.01 em | Sub-section headings |
+| `text-h4` | 15 px | 500 | 1.4 | −0.005 em | Card headings, sidebar groups |
+| `text-body` | 14 px | 400 | 1.5 | 0 | Default body copy |
+| `text-body-sm` | 13 px | 400 | 1.5 | 0 | Secondary body copy |
+| `text-small` | 12 px | 400 | 1.4 | +0.01 em | Metadata, timestamps |
+| `text-caption` | 11 px | 400 | 1.4 | +0.02 em | Captions, footnotes |
+| `text-label` | 12 px | 500 | 1.3 | +0.04 em | Uppercase labels, table headers |
+| `text-mono-kpi` | 28 px | 500 | 1.0 | −0.02 em | KPI metric values, mono font, tabular-nums |
+
+### Shadow / Elevation Scale
+
+Five raw steps plus four semantic aliases. Use semantic names in components; use raw steps only
+when no semantic name fits.
+
+| Utility | Semantic role |
+|---------|--------------|
+| `shadow-xs` | Subtle inset lift (chip, tag) |
+| `shadow-sm` | → `shadow-card` — cards, panels |
+| `shadow-md` | → `shadow-popover` — dropdowns, tooltips |
+| `shadow-lg` | → `shadow-elevated` — sheets, drawers |
+| `shadow-xl` | → `shadow-modal` — dialogs, command palette |
+| `shadow-focus-halo` | Outer glow on focused interactive elements (`var(--focus-halo)`) |
+
+Shadows are crisp with no warm tint. Dark mode overrides increase opacity to compensate for reduced
+ambient light perception.
+
+### Status-Pill System
+
+9 workflow statuses, each with 3 sub-tokens that style the three parts of a status pill:
+background (`bg-status-*`), text (`text-status-*-fg`), and indicator dot (`bg-status-*-dot`).
+
+| Status | Background | Text | Dot | Meaning |
+|--------|-----------|------|-----|---------|
+| `draft` | `bg-status-draft` | `text-status-draft-fg` | `bg-status-draft-dot` | Unpublished, not started |
+| `planned` | `bg-status-planned` | `text-status-planned-fg` | `bg-status-planned-dot` | Scheduled, not active |
+| `active` | `bg-status-active` | `text-status-active-fg` | `bg-status-active-dot` | In progress (brand red-orange) |
+| `review` | `bg-status-review` | `text-status-review-fg` | `bg-status-review-dot` | Awaiting review (amber) |
+| `ontrack` | `bg-status-ontrack` | `text-status-ontrack-fg` | `bg-status-ontrack-dot` | On schedule (green) |
+| `risk` | `bg-status-risk` | `text-status-risk-fg` | `bg-status-risk-dot` | At risk (orange) |
+| `blocked` | `bg-status-blocked` | `text-status-blocked-fg` | `bg-status-blocked-dot` | Blocked (destructive red) |
+| `done` | `bg-status-done` | `text-status-done-fg` | `bg-status-done-dot` | Completed (desaturated green) |
+| `archived` | `bg-status-archived` | `text-status-archived-fg` | `bg-status-archived-dot` | Read-only, fully muted |
+
+Use `StatusBadge` (`packages/ui/src/components/StatusBadge.tsx`) rather than assembling these
+tokens manually. It accepts a discriminated union and resolves `tone` + `label` automatically.
+
+### Surfaces
+
+| Token | Utility | Use |
+|-------|---------|-----|
+| `--background` | `bg-background` | App canvas (paper `#f5f5f0`) |
+| `--card` | `bg-card` | Cards, table rows |
+| `--elevated` | `bg-elevated` | Floating menus, sheets, command palette |
+| `--elevated-foreground` | `text-elevated-foreground` | Text on elevated surface |
+
+In light mode `--elevated` is pure white; depth comes from `shadow-elevated`. In dark mode it
+steps one stop lighter than `--card` (`#242422`).
+
+### Semantic Color Pairs
+
+| Role | Background token | Foreground token |
+|------|-----------------|-----------------|
+| Destructive | `bg-destructive` | `text-destructive-foreground` |
+| Success | `bg-success` | `text-success-foreground` |
+| Warning | `bg-warning` | `text-warning-foreground` |
+| Info | `bg-info` | `text-info-foreground` |
+
+---
+
+## Component Conventions
+
+### Button
+
+- Variants: `default` (brand fill), `destructive`, `outline`, `ghost`, `link`, `secondary`.
+- Focus: `focus-visible:ring-ring/50 focus-visible:ring-[3px] focus-visible:shadow-[var(--focus-halo)]`.
+- Loading state: replace label with spinner, disable pointer events, `aria-busy="true"`.
+- Size: `sm` / `default` / `lg` / `icon`. Never a fourth custom size inline — extend CVA variants.
+
+### Card
+
+- Background: `bg-card`, border: `border`, shadow: `shadow-card`, radius: `rounded-[calc(var(--radius)+2px)]`.
+- Slots: `CardHeader` (title + description), `CardContent`, `CardFooter`.
+- No inline shadow overrides — use the semantic token.
+
+### Input / Select / Textarea
+
+- Base: `border-input bg-background ring-offset-background`.
+- Focus: same `focus-visible` cluster as Button.
+- Error state: `aria-invalid="true"` + `border-destructive` + helper text via `FormMessage`.
+- Never nest interactive elements inside a label — use `htmlFor` / `id` pairing.
+
+### Table
+
+- `TableHead` + `TableCell` with `data-numeric` attribute → auto right-align + tabular-nums (see §Numeric Values).
+- Use `text-label` scale for `<th>` content (uppercase, tracked).
+- Zebra striping via `[&_tr:nth-child(even)]:bg-muted/40` on `TableBody` when row count > 10.
+- Sort indicator: chevron icon inline with header text, `aria-sort` on `<th>`.
+
+### Badge and StatusBadge
+
+- `Badge` accepts a `tone` prop (`draft | planned | active | review | ontrack | risk | blocked | done | archived`). When `tone` is set, CVA variants are bypassed and `--status-{tone}` tokens apply directly.
+- Dot sub-element: `<span className="size-1.5 rounded-full bg-status-{tone}-dot" />` rendered inside badge.
+- `StatusBadge` is a discriminated-union adapter: pass `{ kind: 'api-key'; value: string }` etc. — it resolves tone and label. Use `StatusBadge` in product code, never raw `Badge` with hardcoded colors.
+
+### KpiCard
+
+- Anatomy: label (`text-label` scale, `text-muted-foreground`) → value (`text-mono-kpi` scale, `text-foreground`) → delta pill (`StatTrend`) → optional inline sparkline bleeding to card edges.
+- `KpiMetric` type: `{ label, value, format: 'money' | 'percent' | 'hours' | 'number', delta?, invertDelta?, spark?: number[] }`.
+- Card shadow: `shadow-card`. No custom elevation.
+- Value formatting: `formatValue()` utility from `packages/ui/src/lib/chart-utils.ts`.
+
+### Charts (AreaChart, BarChart, DonutChart, Sparkline)
+
+- Hand-rolled SVG — no charting library dependency.
+- Color: `--color-chart-1` through `--color-chart-5` CSS vars. Do not hardcode hex values.
+- Primitives from `packages/ui/src/lib/chart-utils.ts`: `linearScale`, `niceTicks`, `buildLinePath`, `buildAreaPath`, `donutArcPath`, `nearestIndex`, `chartColorVar`.
+- All draw animations guarded by `prefers-reduced-motion`: if `window.matchMedia('(prefers-reduced-motion: reduce)').matches`, skip transition, render final state immediately.
+- `Sparkline` is a minimal inline variant (no axes, no tooltip) used inside `KpiCard`.
+
+### Skeleton and Empty State
+
+- Every route with async data must have a co-located `<RouteNameSkeleton>` built from `<Skeleton>` primitives. No inline `animate-pulse` divs.
+- `SkeletonCard` and `SkeletonTable` are pre-composed helpers in `@repo/ui` for the most common shapes.
+- `EmptyState` handles the zero-results case. Props: `title`, `description`, `action`, `hint` (contextual "what to do next"). The `action` button must be focusable — required for WCAG empty-state accessibility.
+- Every data-bound route exposes three states: **skeleton** (loading) → **empty state** (zero results) → **error state** (`EmptyState` with `variant="error"`). This triad is mandatory, not optional.
+
+---
+
+## Numeric Values
+
+Numeric data (money, counts, percentages, durations) must render with consistent digit widths so
+columns align correctly and values do not reflow as they update.
+
+**Rule:** add `data-numeric` to any `<th>` or `<td>` containing a number.
+
+```tsx
+<TableHead data-numeric>Revenue</TableHead>
+<TableCell data-numeric>{formatCurrency(row.revenue)}</TableCell>
+```
+
+The `[data-numeric]` CSS selector (defined in `@layer base` of `packages/ui/src/theme.css`)
+automatically applies:
+
+```
+text-align: right
+font-variant-numeric: tabular-nums
+font-feature-settings: "tnum"
+```
+
+For inline numeric display outside tables (KPI values, counters, money in prose), add the
+`.tabular` class instead. It also applies `font-family: var(--font-mono)` to use the mono stack.
+
+`text-mono-kpi` already includes `tabular-nums` as part of its scale definition — no extra class
+needed on `KpiCard` values.
