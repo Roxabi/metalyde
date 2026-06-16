@@ -36,3 +36,7 @@ pre-push:
       run: bash .lefthook/run-quiet.sh 'bun run license:check'
     lint-custom:
       run: bash .lefthook/run-quiet.sh 'bun run lint:custom'
+    trufflehog:
+      # Secret scan before push (defense-in-depth atop pre-commit + CI `secrets` job).
+      # Worktrees: `.git` is a file → trufflehog git can't resolve the index, so defer to CI.
+      run: '[ -f .git ] && echo "TruffleHog: git worktree — CI will scan" || trufflehog git file://. --only-verified --fail --no-update'
