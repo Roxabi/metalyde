@@ -17,7 +17,7 @@ export class LandingPage {
   // ---------------------------------------------------------------------------
 
   get heroBadge(): Locator {
-    return this.page.getByText('Open-Source SaaS Boilerplate')
+    return this.page.getByText('Open-Source SaaS Framework')
   }
 
   get heroTitle(): Locator {

@@ -215,7 +215,7 @@ describe('parseWorktreeBlock', () => {
   it('should return null issueNumber for main branch', () => {
     // Arrange
     const block = [
-      'worktree /home/user/projects/roxabi_boilerplate',
+      'worktree /home/user/projects/metalyde',
       'HEAD abc123',
       'branch refs/heads/main',
     ].join('\n')
@@ -232,7 +232,7 @@ describe('parseWorktreeBlock', () => {
   it('should return null issueNumber for staging branch', () => {
     // Arrange
     const block = [
-      'worktree /home/user/projects/roxabi_boilerplate',
+      'worktree /home/user/projects/metalyde',
       'HEAD def456',
       'branch refs/heads/staging',
     ].join('\n')
