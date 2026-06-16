@@ -1,56 +1,43 @@
-import { render, screen } from '@testing-library/react'
-import { afterEach, describe, expect, it, vi } from 'vitest'
-
-const mockClientEnv = vi.hoisted(() => ({
-  VITE_DOCS_URL: undefined as string | undefined,
-}))
-
-vi.mock('@repo/ui', () => ({
-  Button: ({ children, asChild }: React.PropsWithChildren<{ asChild?: boolean; size?: string }>) =>
-    asChild ? children : <button type="button">{children}</button>,
-  cn: (...args: unknown[]) => args.filter(Boolean).join(' '),
-}))
+import { fireEvent, render, screen } from '@testing-library/react'
+import { describe, expect, it, vi } from 'vitest'
 
 vi.mock('@/paraglide/messages', () => ({
   m: {
-    cta_title: () => 'Ready to Start?',
-    cta_subtitle: () => 'Get started building your SaaS today',
-    cta_button: () => 'Get Started',
+    landing_cta_title_a: () => 'Get ',
+    landing_cta_title_em: () => 'early access',
+    landing_cta_title_b: () => ' today.',
+    landing_cta_sub: () => 'Join the waitlist for Metalyde.',
+    landing_cta_email_label: () => 'Email address',
+    landing_cta_placeholder: () => 'you@example.com',
+    landing_cta_button: () => 'Request access',
+    landing_cta_submitted: () => "You're on the list",
+    landing_cta_micro: () => 'No spam. Cancel anytime.',
   },
-}))
-
-vi.mock('@/lib/env.shared', () => ({
-  clientEnv: mockClientEnv,
 }))
 
 import { CtaSection } from './CtaSection'
 
 describe('CtaSection', () => {
-  afterEach(() => {
-    mockClientEnv.VITE_DOCS_URL = undefined
+  it('renders the "Request access" region with the submit button', () => {
+    // Arrange & Act
+    render(<CtaSection />)
+
+    // Assert
+    expect(screen.getByRole('region', { name: 'Request access' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /request access/i })).toBeInTheDocument()
   })
 
-  it('should render the section heading', () => {
+  it('shows submitted text after form submission', () => {
+    // Arrange
     render(<CtaSection />)
-    expect(screen.getByText('Ready to Start?')).toBeInTheDocument()
-  })
+    const input = screen.getByRole('textbox')
+    const button = screen.getByRole('button', { name: /request access/i })
 
-  it('should render the subtitle', () => {
-    render(<CtaSection />)
-    expect(screen.getByText('Get started building your SaaS today')).toBeInTheDocument()
-  })
+    // Act
+    fireEvent.change(input, { target: { value: 'test@example.com' } })
+    fireEvent.click(button)
 
-  it('should not render the CTA button when VITE_DOCS_URL is unset', () => {
-    render(<CtaSection />)
-    expect(screen.queryByText('Get Started')).not.toBeInTheDocument()
-  })
-
-  it('should render the CTA button linking to docs URL when VITE_DOCS_URL is set', () => {
-    mockClientEnv.VITE_DOCS_URL = 'https://docs.metalyde.roxabi.dev'
-    render(<CtaSection />)
-    const link = screen.getByRole('link', { name: 'Get Started' })
-    expect(link).toHaveAttribute('href', 'https://docs.metalyde.roxabi.dev')
-    expect(link).toHaveAttribute('target', '_blank')
-    expect(link).toHaveAttribute('rel', 'noopener noreferrer')
+    // Assert
+    expect(screen.getByRole('button', { name: /you're on the list/i })).toBeInTheDocument()
   })
 })

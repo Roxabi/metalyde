@@ -16,40 +16,46 @@ export class LandingPage {
   // Hero section
   // ---------------------------------------------------------------------------
 
-  get heroBadge(): Locator {
-    return this.page.getByText('Open-Source SaaS Framework')
+  get heroEyebrow(): Locator {
+    return this.page.getByText('Profitability-led agency OS')
   }
 
   get heroTitle(): Locator {
-    return this.page.getByText('Skip the infrastructure.')
+    return this.page.getByRole('heading', { level: 1 })
   }
 
-  get getStartedLink(): Locator {
-    return this.page.getByRole('link', { name: 'Get Started' }).first()
+  get requestAccessCta(): Locator {
+    return this.page.getByRole('link', { name: 'Request access' }).first()
   }
 
-  get githubLink(): Locator {
-    return this.page.getByRole('link', { name: 'GitHub' }).first()
+  get marginViewCta(): Locator {
+    return this.page.getByRole('link', { name: /See the margin view/i })
   }
 
   // ---------------------------------------------------------------------------
-  // Features section
+  // Pillars section
   // ---------------------------------------------------------------------------
 
-  get featuresSectionHeading(): Locator {
-    return this.page.getByText('Everything you need to ship')
+  get pillarsSectionHeading(): Locator {
+    return this.page.getByRole('heading', {
+      name: 'One system for how an agency actually runs.',
+    })
   }
 
-  get fullStackTypeScriptCard(): Locator {
-    return this.page.getByText('Full-Stack TypeScript')
+  get pillar1Title(): Locator {
+    return this.page.getByRole('heading', { name: 'The margin view, shown first' })
   }
 
-  get authAndUsersCard(): Locator {
-    return this.page.getByText('Auth & Users')
+  get pillar2Title(): Locator {
+    return this.page.getByRole('heading', { name: 'Brief to invoice, one system' })
   }
 
-  get aiPoweredDevCard(): Locator {
-    return this.page.getByText('AI-Powered Dev', { exact: true })
+  // ---------------------------------------------------------------------------
+  // CTA section
+  // ---------------------------------------------------------------------------
+
+  get ctaSection(): Locator {
+    return this.page.locator('#access')
   }
 
   // ---------------------------------------------------------------------------

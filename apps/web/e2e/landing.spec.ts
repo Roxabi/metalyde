@@ -10,13 +10,13 @@ test.describe('Landing Page', () => {
     await landing.goto()
 
     // Assert
-    await expect(landing.heroBadge).toBeVisible()
+    await expect(landing.heroEyebrow).toBeVisible()
     await expect(landing.heroTitle).toBeVisible()
-    await expect(landing.getStartedLink).toBeVisible()
-    await expect(landing.githubLink).toBeVisible()
+    await expect(landing.requestAccessCta).toBeVisible()
+    await expect(landing.marginViewCta).toBeVisible()
   })
 
-  test('should display feature cards when page loads', async ({ page }) => {
+  test('should display pillars section when page loads', async ({ page }) => {
     // Arrange
     const landing = new LandingPage(page)
 
@@ -24,10 +24,9 @@ test.describe('Landing Page', () => {
     await landing.goto()
 
     // Assert
-    await expect(landing.featuresSectionHeading).toBeVisible()
-    await expect(landing.fullStackTypeScriptCard).toBeVisible()
-    await expect(landing.authAndUsersCard).toBeVisible()
-    await expect(landing.aiPoweredDevCard).toBeVisible()
+    await expect(landing.pillarsSectionHeading).toBeVisible()
+    await expect(landing.pillar1Title).toBeVisible()
+    await expect(landing.pillar2Title).toBeVisible()
   })
 
   test('should display header navigation when page loads', async ({ page }) => {
@@ -42,15 +41,15 @@ test.describe('Landing Page', () => {
     await expect(landing.brandLink).toBeVisible()
   })
 
-  test('should have Get Started link pointing to docs URL', async ({ page }) => {
+  test('should have Request access CTA pointing to the access section anchor', async ({ page }) => {
     // Arrange
     const landing = new LandingPage(page)
     await landing.goto()
 
-    // Assert — link opens in a new tab (target="_blank"), so verify href
-    // rather than navigation. VITE_DOCS_URL may be unset in CI (falls back to #).
-    await expect(landing.getStartedLink).toHaveAttribute('target', '_blank')
-    await expect(landing.getStartedLink).toHaveAttribute('href', /.+/)
+    // The primary CTA is an in-page anchor (<a href="#access">) — no target="_blank".
+    // Verify the CTA link and the target section it points to both exist.
+    await expect(landing.requestAccessCta).toHaveAttribute('href', '#access')
+    await expect(landing.ctaSection).toBeAttached()
   })
 
   test('should display footer with links when page loads', async ({ page }) => {

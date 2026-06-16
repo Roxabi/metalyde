@@ -111,7 +111,7 @@ describe('Header', () => {
     render(<Header />)
 
     // Assert
-    expect(screen.getByText('App')).toBeInTheDocument()
+    expect(screen.getByText('Metalyde')).toBeInTheDocument()
   })
 
   it('should render navigation links', () => {
@@ -148,33 +148,8 @@ describe('Header', () => {
     render(<Header />)
 
     // Assert
-    const logoLink = screen.getByRole('link', { name: /app/i })
+    const logoLink = screen.getByRole('link', { name: /metalyde/i })
     expect(logoLink).toHaveAttribute('href', '/')
-  })
-
-  it('should render the Design System link in desktop nav', () => {
-    // Arrange & Act
-    render(<Header />)
-
-    // Assert
-    const links = screen.getAllByText('nav_design_system')
-    expect(links.length).toBeGreaterThanOrEqual(1)
-
-    const desktopLink = links[0]?.closest('a')
-    expect(desktopLink).toHaveAttribute('href', '/design-system')
-  })
-
-  it('should render the Design System link in mobile nav when open', () => {
-    // Arrange
-    render(<Header />)
-    const menuButton = screen.getByLabelText('menu_open')
-
-    // Act
-    fireEvent.click(menuButton)
-
-    // Assert
-    const links = screen.getAllByText('nav_design_system')
-    expect(links.length).toBeGreaterThanOrEqual(2)
   })
 
   it('should close mobile menu when Escape key is pressed', () => {
