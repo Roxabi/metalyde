@@ -4,3 +4,12 @@
 @plugin "tailwindcss-animate";
 
 @custom-variant dark (&:is(.dark *));
+
+@layer base {
+  /* ── Numeric / tabular figures convention (§2.6) ── */
+  [data-numeric],
+  .tabular {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum' 1;
+  }
+}
