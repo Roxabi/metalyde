@@ -1,6 +1,6 @@
 ---
 title: Issue Management
-description: GitHub project setup, issue lifecycle, triage, labels, board automation, and dependencies
+description: GitHub issue lifecycle, triage, labels, and dependencies — labels-first, no board required
 ---
 
 ## Issue Lifecycle
@@ -11,64 +11,30 @@ Create → Triage → Prioritize → Assign → Implement → Review → Close
 
 ---
 
-## Project Board Setup
+## Issue Metadata — Labels-First Model
 
-### Create the project
+Issue metadata lives on **GitHub labels + native issue fields** — there is no required project board. All label families are already bootstrapped in the repo.
 
-```bash
-gh project create --owner @me --title "My Project"
-```
+### Label families
 
-### Status columns
+| Family | Labels | Purpose |
+|--------|--------|---------|
+| **Priority** | `P0-critical` `P1-high` `P2-medium` `P3-low` | Urgency |
+| **Size** | `size:S` `size:F-lite` `size:F-full` | Dev tier / effort |
+| **Status** | `status:Backlog` `status:Analysis` `status:Specs` `status:In Progress` `status:Review` `status:Done` | Seeded on create by `/issue-triage`; not written on `set` |
+| **Lane** | `graph:lane/<lane>` | Dep-graph swim-lanes (a1 a2 a3 b c1 … standalone) |
+| **Blocked** | `blocked` | Issue is waiting on another issue |
 
-| Status | Description |
-|--------|-------------|
-| **Backlog** | Not yet started, waiting to be picked up |
-| **Analysis** | Being researched / analyzed |
-| **Specs** | Specification in progress or done |
-| **In Progress** | Active development (has worktree/branch) |
-| **Review** | In code review / PR open |
-| **Done** | Completed and merged |
+### Native GitHub fields
 
-### Custom fields
+| Field | Storage |
+|-------|---------|
+| **Issue Type** | Org-level native types (`feat fix refactor docs test chore ci perf epic research`) — inherited per repo |
+| **Milestone** | Native GitHub milestone (per-repo) |
+| **Sub-issues** | Native GitHub sub-issue relations (REST `…/sub_issues`, `…/parent`) |
+| **Blocked-by / Blocking** | Native GitHub dependency relations (`…/dependencies/*`) |
 
-Add these in **Project Settings > Fields**:
-
-| Field | Type | Values |
-|-------|------|--------|
-| Priority | Single select | P0 - Urgent, P1 - High, P2 - Medium, P3 - Low |
-| Size | Single select | XS, S, M, L, XL |
-
-### Labels
-
-Labels are included in the template repo. To create them manually:
-
-```bash
-# Type labels
-gh label create setup --color "0E8A16" --description "Infrastructure & setup"
-gh label create feature --color "A2EEEF" --description "New feature"
-gh label create bug --color "D73A4A" --description "Bug fix"
-gh label create dx --color "1D76DB" --description "Developer Experience"
-gh label create docs --color "D4C5F9" --description "Documentation"
-gh label create ai --color "FBCA04" --description "AI agents & skills"
-gh label create workflow --color "C2E0C6" --description "Workflow & processes"
-
-# Priority labels
-gh label create P0 --color "7A0000" --description "Priority 0 - Urgent (blocking)"
-gh label create P1 --color "B60205" --description "Priority 1 - High"
-gh label create P2 --color "D93F0B" --description "Priority 2 - Medium"
-gh label create P3 --color "FBCA04" --description "Priority 3 - Low"
-
-# Status labels
-gh label create blocked --color "B60205" --description "Issue is blocked by another issue"
-
-# Size labels
-gh label create XS --color "E6E6E6" --description "Size: Extra Small"
-gh label create S --color "C5DEF5" --description "Size: Small"
-gh label create M --color "BFD4F2" --description "Size: Medium"
-gh label create L --color "7057FF" --description "Size: Large"
-gh label create XL --color "D876E3" --description "Size: Extra Large"
-```
+> Status is tracked primarily via the **native open/closed state**. `/issue-triage set` does not write `status:*` labels; only `/issue-triage create` seeds one on creation.
 
 ---
 
@@ -83,7 +49,7 @@ Use the provided GitHub templates:
 
 ### From the CLI
 
-Use `/issue-triage create` to create an issue, add it to the project board, and set all fields in one shot:
+Use `/issue-triage create` to create an issue with all fields set in one shot:
 
 ```bash
 /issue-triage create \
@@ -112,22 +78,20 @@ Triage ensures every issue has a **Size** and **Priority** assigned.
 
 ### Size
 
-| Size | Description | Example |
-|------|-------------|---------|
-| **XS** | Trivial change, &lt;1 hour | Typo fix, config tweak |
-| **S** | Small task, &lt;4 hours | Single file change, simple feature |
-| **M** | Medium task, 1-2 days | Multi-file feature, requires testing |
-| **L** | Large task, 3-5 days | Complex feature, architectural changes |
-| **XL** | Very large, >1 week | Major refactor, new system |
+| Size | Label | Description |
+|------|-------|-------------|
+| **S** | `size:S` | Small — ≤3 files, single domain, no unknowns |
+| **F-lite** | `size:F-lite` | Feature lite — clear scope, 4–10 files |
+| **F-full** | `size:F-full` | Feature full — multi-domain, new arch, or unknowns |
 
 ### Priority
 
 | Priority | Label | Description | Action |
 |----------|-------|-------------|--------|
-| **Urgent** | `P0` | Blocking or critical | Do immediately |
-| **High** | `P1` | Important for current milestone | Do this sprint |
-| **Medium** | `P2` | Should be done soon | Plan for next sprint |
-| **Low** | `P3` | Nice to have | Backlog |
+| **Critical** | `P0-critical` | Blocking or critical | Do immediately |
+| **High** | `P1-high` | Important for current milestone | Do this sprint |
+| **Medium** | `P2-medium` | Should be done soon | Plan for next sprint |
+| **Low** | `P3-low` | Nice to have | Backlog |
 
 ### Triage Process
 
@@ -158,35 +122,14 @@ Use the `/issue-triage` skill (provided by `dev-core` plugin) to list untriaged 
 
 ---
 
-## Project Board Automation
+## Issue Lifecycle Automation
 
-The [GitHub Project board](https://github.com/users/MickaelV0/projects/6) uses built-in workflows to automate status transitions. All 8 workflows are enabled:
+There is no project board. Lifecycle is driven by native GitHub state:
 
-| Workflow | Trigger | Action |
-|----------|---------|--------|
-| **Item added to project** | Issue/PR added to board | Set Status = **Backlog** |
-| **Auto-add to project** | Issue/PR created in repo | Add to project board |
-| **Auto-add sub-issues to project** | Sub-issue created | Add to project board |
-| **Item closed** | Issue/PR closed (not planned) | Set Status = **Done** |
-| **Auto-close issue** | Issue marked Done on board | Close the GitHub issue |
-| **Pull request merged** | PR merged | Set Status = **Done** |
-| **Pull request linked to issue** | PR linked to issue | Set Status = **In Progress** |
-| **Auto-archive items** | Item closed for 2+ weeks | Archive from board |
+- **Open** = active (Backlog → Analysis → Specs → In Progress → Review)
+- **Closed** = done or won't-do
 
-### Configuration
-
-Workflow rules are **UI-only** — the GitHub API does not support creating, updating, or reading workflow configuration. Only `name` and `enabled` status are exposed via GraphQL.
-
-To view or edit workflows: **Project Settings > Workflows**
-
-```bash
-# Read-only: list workflow names and enabled status
-gh api graphql -f query='query($pid: ID!) {
-  node(id: $pid) { ... on ProjectV2 {
-    workflows(first: 20) { nodes { name enabled } }
-  }}
-}' -f pid="PVT_kwHODEqYK84BOId3"
-```
+PR→issue closing is handled by closing keywords in PR descriptions (`Closes #N`). The `auto-merge` workflow merges on green and the closing keyword automatically closes the linked issue on merge.
 
 ---
 
@@ -258,18 +201,18 @@ The output shows block status for each issue:
 
 ### Type Labels
 
-| Label | Color | Description |
-|-------|-------|-------------|
-| `setup` | green | Infrastructure & setup |
-| `feature` | cyan | New feature |
-| `bug` | red | Bug fix |
-| `dx` | blue | Developer Experience |
-| `docs` | purple | Documentation |
-| `ai` | yellow | AI agents & skills |
-| `workflow` | green | Workflow & processes |
-| `blocked` | - | Issue is blocked by another issue |
+| Label | Description |
+|-------|-------------|
+| `setup` | Infrastructure & setup |
+| `feature` | New feature |
+| `bug` | Bug fix |
+| `dx` | Developer Experience |
+| `docs` | Documentation |
+| `ai` | AI agents & skills |
+| `workflow` | Workflow & processes |
+| `blocked` | Issue is blocked by another issue |
 
-> Priority labels (`P0`–`P3`) and Size labels (`XS`–`XL`) mirror the project board fields. See [Triage](#triage) for definitions.
+> Priority labels (`P0-critical`–`P3-low`) and Size labels (`size:S`, `size:F-lite`, `size:F-full`) are the source of truth. See [Triage](#triage) for definitions.
 
 ---
 
@@ -278,5 +221,5 @@ The output shows block status for each issue:
 - **One issue per concern**: Don't bundle unrelated changes
 - **Link related issues**: Use GitHub references (`#42`) and `blockedBy`
 - **Close with PR**: Reference the issue in your PR (`Closes #42`)
-- **Update status**: Move issues on the project board as work progresses
-- **Break down XL**: Issues sized XL should be broken into smaller issues
+- **Update status**: Close issues when done; use `status:*` labels only if finer-grained tracking is needed
+- **Break down F-full**: Issues sized `size:F-full` should be broken into smaller sub-issues where possible

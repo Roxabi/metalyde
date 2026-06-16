@@ -1,6 +1,6 @@
 ---
 title: Troubleshooting
-description: Common issues and solutions for Roxabi Boilerplate development
+description: Common issues and solutions for Metalyde development
 ---
 
 Common issues encountered during development and their solutions.
@@ -219,9 +219,9 @@ bun run db:setup-app-user
 This creates the `roxabi_app` user with RLS-enforced permissions. Without it, tenant-scoped
 queries will fail with "permission denied to set role app_user".
 
-Alternative: delete your Docker volume and recreate: `bun run db:down && docker volume rm roxabi_boilerplate_postgres_data && bun run db:up`
+Alternative: delete your Docker volume and recreate: `bun run db:down && docker volume rm metalyde_postgres_data && bun run db:up`
 
-> **Note:** If `POSTGRES_VOLUME` is set to a custom value (e.g. `myapp_data`), the Docker volume name will be `roxabi_boilerplate_myapp_data` — adjust the `docker volume rm` command accordingly.
+> **Note:** If `POSTGRES_VOLUME` is set to a custom value (e.g. `myapp_data`), the Docker volume name will be `metalyde_myapp_data` — adjust the `docker volume rm` command accordingly.
 
 ## Pre-commit Hook Failures
 

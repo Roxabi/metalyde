@@ -96,13 +96,13 @@ export function applyRlsPolicies(dbName: string): void {
 }
 
 /**
- * Grant the roxabi_app user permissions on a branch database.
+ * Grant the metalyde_app user permissions on a branch database.
  *
- * The roxabi_app role is a cluster-level role created by Docker's init script
+ * The metalyde_app role is a cluster-level role created by Docker's init script
  * (or by `db:setup-app-user`). Branch databases need per-database grants.
  */
 export function setupAppUserForBranch(dbName: string): void {
-  const appUser = process.env.POSTGRES_APP_USER ?? 'roxabi_app'
+  const appUser = process.env.POSTGRES_APP_USER ?? 'metalyde_app'
 
   // Validate app user to prevent SQL injection in interpolated SQL strings
   const IDENTIFIER_REGEX = /^[a-z_][a-z0-9_]*$/
@@ -139,7 +139,7 @@ export function setupAppUserForBranch(dbName: string): void {
   if (result.status !== 0) {
     // Non-fatal: the app user may not exist yet (e.g., fresh Docker setup before init ran)
     log(`Warning: Failed to grant permissions to '${appUser}': ${result.stderr}`)
-    log("If roxabi_app doesn't exist yet, run: cd apps/api && bun run db:setup-app-user")
+    log("If metalyde_app doesn't exist yet, run: cd apps/api && bun run db:setup-app-user")
   } else {
     log(`Permissions granted to '${appUser}'.`)
   }
@@ -198,7 +198,7 @@ export function runMigrations(databaseUrl: string, dbName: string): void {
   // We call the helper function for each table that has a tenant_id column.
   applyRlsPolicies(dbName)
 
-  // Step 2b: Set up roxabi_app user permissions on the branch database
+  // Step 2b: Set up metalyde_app user permissions on the branch database
   setupAppUserForBranch(dbName)
 
   // Step 3: Stamp all migrations as applied

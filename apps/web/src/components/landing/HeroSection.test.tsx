@@ -9,7 +9,7 @@ vi.mock('@/paraglide/messages', () => ({
   m: {
     hero_badge: () => 'Open Source',
     hero_title: () => 'Build Your SaaS Faster',
-    hero_subtitle: () => 'A modern SaaS boilerplate',
+    hero_subtitle: () => 'A modern SaaS framework',
     hero_cta_start: () => 'Get Started',
     hero_cta_github: () => 'View on GitHub',
     stat_setup: () => '5 min',
@@ -45,7 +45,7 @@ describe('HeroSection', () => {
     render(<HeroSection />)
 
     // Assert
-    expect(screen.getByText('A modern SaaS boilerplate')).toBeInTheDocument()
+    expect(screen.getByText('A modern SaaS framework')).toBeInTheDocument()
   })
 
   it('should render the badge', () => {

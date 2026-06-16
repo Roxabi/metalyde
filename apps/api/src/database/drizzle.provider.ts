@@ -16,7 +16,7 @@ export const postgresClientProvider = {
   inject: [ConfigService],
   useFactory: (config: ConfigService): PostgresClient | null => {
     const logger = new Logger('DrizzleProvider')
-    // Prefer DATABASE_APP_URL (connects as roxabi_app, RLS enforced)
+    // Prefer DATABASE_APP_URL (connects as metalyde_app, RLS enforced)
     // Fall back to DATABASE_URL for backwards compatibility
     const connectionString =
       config.get<string>('DATABASE_APP_URL') ?? config.get<string>('DATABASE_URL')

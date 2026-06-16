@@ -8,10 +8,11 @@ import { buildDatabaseUrl as buildDatabaseUrlUtil, redactUrl } from './dbBranch.
 // Environment
 // ---------------------------------------------------------------------------
 
-export const POSTGRES_USER = process.env.POSTGRES_USER ?? 'roxabi'
-export const POSTGRES_PASSWORD = process.env.POSTGRES_PASSWORD ?? 'roxabi'
-export const CONTAINER_NAME = process.env.POSTGRES_CONTAINER ?? 'roxabi-postgres'
-export const DB_BRANCH_PREFIX = process.env.DB_BRANCH_PREFIX ?? process.env.POSTGRES_DB ?? 'roxabi'
+export const POSTGRES_USER = process.env.POSTGRES_USER ?? 'metalyde'
+export const POSTGRES_PASSWORD = process.env.POSTGRES_PASSWORD ?? 'metalyde'
+export const CONTAINER_NAME = process.env.POSTGRES_CONTAINER ?? 'metalyde-postgres'
+export const DB_BRANCH_PREFIX =
+  process.env.DB_BRANCH_PREFIX ?? process.env.POSTGRES_DB ?? 'metalyde'
 
 // Validate credentials to prevent shell injection in docker exec commands
 const SAFE_CREDENTIAL_PATTERN = /^[a-zA-Z0-9_-]+$/
@@ -188,10 +189,10 @@ export function buildDatabaseUrl(dbName: string): string {
   return buildDatabaseUrlUtil(dbName, POSTGRES_USER, POSTGRES_PASSWORD)
 }
 
-/** Build the DATABASE_APP_URL for a branch database using the roxabi_app user. */
+/** Build the DATABASE_APP_URL for a branch database using the metalyde_app user. */
 export function buildAppDatabaseUrl(dbName: string): string {
-  const appUser = process.env.POSTGRES_APP_USER ?? 'roxabi_app'
-  const appPassword = process.env.POSTGRES_APP_PASSWORD ?? 'roxabi_app'
+  const appUser = process.env.POSTGRES_APP_USER ?? 'metalyde_app'
+  const appPassword = process.env.POSTGRES_APP_PASSWORD ?? 'metalyde_app'
   return buildDatabaseUrlUtil(dbName, appUser, appPassword)
 }
 

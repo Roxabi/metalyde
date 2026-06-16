@@ -9,7 +9,7 @@ Deferred
 
 ## Context
 
-The Roxabi Boilerplate project currently manages releases through a custom `/promote` skill that handles the full staging-to-main promotion lifecycle: pre-flight checks, version computation, changelog generation, deploy preview verification, PR creation, and post-merge tagging via `--finalize`. This workflow is well-established, human-reviewed at every step, and produces a `CHANGELOG.md` in Keep a Changelog format plus Fumadocs changelog pages grouped by minor version.
+The Metalyde project currently manages releases through a custom `/promote` skill that handles the full staging-to-main promotion lifecycle: pre-flight checks, version computation, changelog generation, deploy preview verification, PR creation, and post-merge tagging via `--finalize`. This workflow is well-established, human-reviewed at every step, and produces a `CHANGELOG.md` in Keep a Changelog format plus Fumadocs changelog pages grouped by minor version.
 
 As the project scales, the manual release process could become a bottleneck. Conventional Commits are already enforced locally via lefthook/commitlint, and Task 1 of this PR adds CI-level enforcement via PR title validation. With deterministic commit history in place, the project has the foundation required for automated release tooling.
 
@@ -51,7 +51,7 @@ Release-please supports monorepos via manifest mode, requiring two configuration
   "release-type": "node",
   "packages": {
     ".": {
-      "component": "roxabi-boilerplate",
+      "component": "metalyde",
       "changelog-path": "CHANGELOG.md"
     },
     "apps/web": {

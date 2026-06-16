@@ -33,8 +33,8 @@ describe('postgresClientProvider', () => {
 
   it('should prefer DATABASE_APP_URL over DATABASE_URL when both are set', () => {
     const config = createMockConfig({
-      DATABASE_APP_URL: 'postgresql://roxabi_app:roxabi_app@localhost:5432/roxabi',
-      DATABASE_URL: 'postgresql://roxabi:roxabi@localhost:5432/roxabi',
+      DATABASE_APP_URL: 'postgresql://metalyde_app:metalyde_app@localhost:5432/metalyde',
+      DATABASE_URL: 'postgresql://metalyde:metalyde@localhost:5432/metalyde',
       NODE_ENV: 'development',
     })
     // When DATABASE_APP_URL is set, it should be used and DATABASE_URL should not be queried
@@ -46,7 +46,7 @@ describe('postgresClientProvider', () => {
   it('should fall back to DATABASE_URL when DATABASE_APP_URL is not set', () => {
     const config = createMockConfig({
       DATABASE_APP_URL: undefined,
-      DATABASE_URL: 'postgresql://roxabi:roxabi@localhost:5432/roxabi',
+      DATABASE_URL: 'postgresql://metalyde:metalyde@localhost:5432/metalyde',
       NODE_ENV: 'development',
     })
     postgresClientProvider.useFactory(config as never)

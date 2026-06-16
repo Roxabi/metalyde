@@ -60,7 +60,7 @@ Project-specific aliases in a separate file (sourced by `.bashrc`):
 
 ```bash
 # Navigation
-alias cdb='cd ~/projects/roxabi_boilerplate; clear'
+alias cdb='cd ~/projects/metalyde; clear'
 
 # Claude Code
 alias cc='claude'
@@ -302,7 +302,7 @@ EOF
 
 # 7. Configure aliases
 cat >> ~/.bash_aliases << 'EOF'
-alias cdb='cd ~/projects/roxabi_boilerplate; clear'
+alias cdb='cd ~/projects/metalyde; clear'
 alias cc='claude'
 alias ccc='claude --dangerously-skip-permissions'
 alias ccusage='npx ccusage@latest'
@@ -316,8 +316,8 @@ EOF
 echo 'export CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1' >> ~/.bashrc
 
 # 9. Clone and install
-git clone <repo-url> ~/projects/roxabi_boilerplate
-cd ~/projects/roxabi_boilerplate
+git clone <repo-url> ~/projects/metalyde
+cd ~/projects/metalyde
 bun install
 
 # 10. Reload shell
