@@ -4,7 +4,11 @@
   "installCommand": "bun install --ignore-scripts",
   "buildCommand": "turbo run build",
   "redirects": [
-    { "source": "/docs/(.*)", "destination": "https://docs.metalyde.roxabi.dev/$1", "permanent": true },
+    {
+      "source": "/docs/(.*)",
+      "destination": "https://docs.metalyde.roxabi.dev/$1",
+      "permanent": true
+    },
     { "source": "/docs", "destination": "https://docs.metalyde.roxabi.dev", "permanent": true }
   ]
 }
