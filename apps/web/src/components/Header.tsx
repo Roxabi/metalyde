@@ -63,7 +63,7 @@ function DesktopNavLinks() {
       {clientEnv.VITE_DOCS_URL && (
         <Button variant="ghost" size="sm" asChild>
           <a href={clientEnv.VITE_DOCS_URL} target="_blank" rel="noopener noreferrer">
-            <BookOpen className="size-4" />
+            <BookOpen className="size-4" aria-hidden="true" />
             <span className="font-mono text-xs uppercase tracking-wide">{m.nav_docs()}</span>
           </a>
         </Button>
@@ -117,7 +117,7 @@ function MobileNavPanel({
               rel="noopener noreferrer"
               onClick={onClose}
             >
-              <BookOpen className="size-4" />
+              <BookOpen className="size-4" aria-hidden="true" />
               {m.nav_docs()}
             </a>
           </Button>
