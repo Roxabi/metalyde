@@ -62,8 +62,8 @@ reports/
 # Claude Code hooks state
 .claude/security_warnings/
 
-# Brand signals/strategy research — internal, not published in this public repo
-brand/
+# Claude Code worktrees (per-issue, local)
+.claude/worktrees/
 
 # dev-core stack config (project-local, not committed — commit .claude/stack.yml.example)
 .claude/stack.yml

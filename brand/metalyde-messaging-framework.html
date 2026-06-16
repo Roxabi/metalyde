@@ -1,0 +1,1726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Metalyde — Brand Voice & Messaging Framework</title>
+<style>
+  :root {
+    --bg: oklch(97% 0.005 250);
+    --surface: oklch(100% 0 0);
+    --surface-2: oklch(96% 0.008 250);
+    --border: oklch(88% 0.01 250);
+    --border-strong: oklch(78% 0.015 250);
+    --text: oklch(20% 0.01 250);
+    --text-2: oklch(45% 0.015 250);
+    --text-3: oklch(65% 0.01 250);
+
+    --accent: oklch(55% 0.22 265);
+    --accent-light: oklch(93% 0.06 265);
+    --accent-mid: oklch(72% 0.14 265);
+
+    --green: oklch(55% 0.18 145);
+    --green-light: oklch(93% 0.06 145);
+    --red: oklch(55% 0.2 25);
+    --red-light: oklch(95% 0.05 25);
+    --amber: oklch(68% 0.18 65);
+    --amber-light: oklch(95% 0.06 65);
+    --teal: oklch(60% 0.14 195);
+    --teal-light: oklch(94% 0.05 195);
+
+    --font: system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+    --font-mono: 'SF Mono', 'Fira Mono', 'Cascadia Mono', Consolas, monospace;
+    --radius: 10px;
+    --radius-sm: 6px;
+    --shadow: 0 1px 3px oklch(0% 0 0 / 0.08), 0 4px 16px oklch(0% 0 0 / 0.04);
+    --shadow-md: 0 2px 8px oklch(0% 0 0 / 0.1), 0 8px 32px oklch(0% 0 0 / 0.06);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ─── HEADER ─── */
+  .header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 40px 0 32px;
+    text-align: center;
+  }
+  .header-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .header h1 {
+    font-size: clamp(26px, 4vw, 40px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+  .header-sub {
+    font-size: 16px;
+    color: var(--text-2);
+    max-width: 560px;
+    margin: 0 auto 24px;
+  }
+  .header-meta {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    font-size: 12px;
+    color: var(--text-3);
+  }
+  .header-meta span { display: flex; align-items: center; gap: 6px; }
+
+  /* ─── NAV TABS ─── */
+  .nav-wrap {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 1px 4px oklch(0% 0 0 / 0.05);
+  }
+  .nav {
+    display: flex;
+    gap: 2px;
+    overflow-x: auto;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+    scrollbar-width: none;
+  }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav-tab {
+    flex-shrink: 0;
+    padding: 14px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-3);
+    cursor: pointer;
+    border: none;
+    background: none;
+    border-bottom: 2px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+    white-space: nowrap;
+  }
+  .nav-tab:hover { color: var(--text-2); }
+  .nav-tab.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  /* ─── LAYOUT ─── */
+  .main { max-width: 1100px; margin: 0 auto; padding: 40px 24px 80px; }
+  .section { display: none; }
+  .section.active { display: block; }
+
+  .section-header {
+    margin-bottom: 32px;
+  }
+  .section-title {
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .section-desc {
+    font-size: 14px;
+    color: var(--text-2);
+    max-width: 620px;
+  }
+
+  /* ─── CARDS ─── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .card-header {
+    padding: 18px 22px 14px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+  .card-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .card-subtitle {
+    font-size: 12px;
+    color: var(--text-3);
+  }
+  .card-body { padding: 20px 22px; }
+
+  /* ─── GRID ─── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+
+  @media (max-width: 780px) {
+    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  }
+
+  /* ─── THIS / NOT THAT ─── */
+  .tnt-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    margin-bottom: 12px;
+  }
+  .tnt-this {
+    background: var(--green-light);
+    padding: 14px 16px;
+    border-right: 1px solid var(--border);
+  }
+  .tnt-not {
+    background: var(--red-light);
+    padding: 14px 16px;
+  }
+  .tnt-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .tnt-this .tnt-label { color: var(--green); }
+  .tnt-not .tnt-label { color: var(--red); }
+  .tnt-text {
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--text);
+  }
+  .tnt-reason {
+    font-size: 12px;
+    color: var(--text-3);
+    margin-top: 5px;
+    font-style: italic;
+  }
+
+  /* ─── VOICE ATTRIBUTE ─── */
+  .voice-attr {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+  .voice-attr-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 22px;
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--border);
+  }
+  .attr-num {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+  .attr-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .attr-tagline {
+    font-size: 13px;
+    color: var(--text-2);
+    margin-top: 1px;
+  }
+  .voice-attr-body { padding: 20px 22px; }
+
+  /* ─── TONE SPECTRUM ─── */
+  .tone-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .tone-header {
+    padding: 14px 18px 12px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .tone-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+  }
+  .tone-context-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .tone-body { padding: 16px 18px; }
+  .tone-trait {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    align-items: flex-start;
+  }
+  .tone-trait-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    width: 64px;
+    flex-shrink: 0;
+    padding-top: 1px;
+  }
+  .tone-trait-val {
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.5;
+  }
+  .tone-example {
+    margin-top: 14px;
+    padding: 12px 14px;
+    background: var(--surface-2);
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.5;
+    border-left: 3px solid var(--accent-mid);
+    font-style: italic;
+  }
+
+  /* ─── WRITING RULES ─── */
+  .rule-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  .rule-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 20px;
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--border);
+  }
+  .rule-num {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    background: var(--accent-light);
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+  .rule-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .rule-body { padding: 18px 20px; }
+  .rule-principle {
+    font-size: 14px;
+    color: var(--text-2);
+    margin-bottom: 16px;
+    line-height: 1.6;
+  }
+  .before-after {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  @media (max-width: 600px) { .before-after { grid-template-columns: 1fr; } }
+  .ba-box {
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+  }
+  .ba-before { background: var(--red-light); }
+  .ba-after { background: var(--green-light); }
+  .ba-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .ba-before .ba-label { color: var(--red); }
+  .ba-after .ba-label { color: var(--green); }
+  .ba-text {
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--text);
+  }
+  .ba-note {
+    font-size: 12px;
+    color: var(--text-3);
+    margin-top: 6px;
+    font-style: italic;
+  }
+
+  /* ─── VOCABULARY ─── */
+  .vocab-section { margin-bottom: 32px; }
+  .vocab-title {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-2);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .vocab-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 10px;
+  }
+  .vocab-item {
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .vocab-item.use { border-color: oklch(80% 0.12 145); }
+  .vocab-item.avoid { border-color: oklch(80% 0.12 25); }
+  .vocab-word {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .vocab-item.use .vocab-word { color: var(--green); }
+  .vocab-item.avoid .vocab-word { color: var(--red); }
+  .vocab-reason {
+    font-size: 12px;
+    color: var(--text-2);
+    line-height: 1.5;
+  }
+  .vocab-sub {
+    font-size: 12px;
+    color: var(--text-3);
+    margin-top: 3px;
+    font-style: italic;
+  }
+
+  /* ─── PILLARS ─── */
+  .pillar {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+  .pillar-head {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 20px 24px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .pillar-badge {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    margin-top: 2px;
+  }
+  .pillar-title { font-size: 18px; font-weight: 800; letter-spacing: -0.01em; color: var(--text); }
+  .pillar-claim { font-size: 13px; color: var(--text-2); margin-top: 3px; }
+  .pillar-body { padding: 20px 24px; }
+  .pillar-stat {
+    background: var(--accent-light);
+    border: 1px solid oklch(85% 0.1 265);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    font-size: 13px;
+    color: var(--accent);
+    margin-bottom: 16px;
+    font-weight: 600;
+  }
+  .pillar-copy-group { margin-bottom: 16px; }
+  .pillar-copy-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    margin-bottom: 8px;
+  }
+  .copy-example {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 12px 16px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+  .copy-example strong { color: var(--accent); }
+  .copy-context {
+    font-size: 12px;
+    color: var(--text-3);
+    font-style: italic;
+  }
+
+  /* ─── TAGLINES ─── */
+  .angle-group { margin-bottom: 36px; }
+  .angle-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .angle-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 20px;
+    background: var(--surface-2);
+    color: var(--text-2);
+    border: 1px solid var(--border);
+  }
+  .angle-desc { font-size: 13px; color: var(--text-3); }
+  .tagline-list { display: flex; flex-direction: column; gap: 10px; }
+  .tagline-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px 18px;
+    box-shadow: var(--shadow);
+    cursor: default;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .tagline-item:hover {
+    border-color: var(--accent-mid);
+    box-shadow: var(--shadow-md);
+  }
+  .tagline-star {
+    font-size: 18px;
+    padding-top: 1px;
+    flex-shrink: 0;
+  }
+  .tagline-text {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+  .tagline-note { font-size: 12px; color: var(--text-3); }
+
+  /* ─── NARRATIVE ARC ─── */
+  .arc-step {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 32px;
+    align-items: flex-start;
+  }
+  .arc-step-num {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 800;
+    color: white;
+    margin-top: 2px;
+  }
+  .arc-step:nth-child(1) .arc-step-num { background: oklch(52% 0.18 25); }
+  .arc-step:nth-child(2) .arc-step-num { background: oklch(55% 0.2 35); }
+  .arc-step:nth-child(3) .arc-step-num { background: var(--accent); }
+  .arc-step:nth-child(4) .arc-step-num { background: var(--green); }
+  .arc-step:nth-child(5) .arc-step-num { background: oklch(50% 0.18 300); }
+  .arc-content { flex: 1; }
+  .arc-phase {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    margin-bottom: 6px;
+  }
+  .arc-headline {
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    margin-bottom: 10px;
+    line-height: 1.2;
+  }
+  .arc-copy {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text-2);
+    margin-bottom: 14px;
+    max-width: 680px;
+  }
+  .arc-pull-quote {
+    background: var(--surface-2);
+    border-left: 3px solid var(--accent);
+    padding: 12px 16px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    margin-bottom: 10px;
+    max-width: 680px;
+  }
+  .arc-pull-quote em { color: var(--text-2); font-size: 12px; display: block; margin-top: 6px; }
+  .arc-connector {
+    height: 32px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 0;
+    padding-left: 19px;
+  }
+  .arc-connector-line {
+    width: 2px;
+    height: 32px;
+    background: var(--border);
+  }
+
+  /* ─── SCATTER MINI-VIZ ─── */
+  .viz-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+  .viz-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .viz-desc {
+    font-size: 12px;
+    color: var(--text-3);
+    margin-bottom: 20px;
+  }
+
+  /* ─── TABLE ─── */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .data-table th {
+    text-align: left;
+    padding: 10px 14px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    border-bottom: 1px solid var(--border-strong);
+    background: var(--surface-2);
+  }
+  .data-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: var(--surface-2); }
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 20px;
+  }
+  .badge-green { background: var(--green-light); color: var(--green); }
+  .badge-red { background: var(--red-light); color: var(--red); }
+  .badge-amber { background: var(--amber-light); color: var(--amber); }
+
+  /* ─── MISC ─── */
+  .divider { height: 1px; background: var(--border); margin: 32px 0; }
+  .stack { display: flex; flex-direction: column; gap: 14px; }
+  .callout {
+    display: flex;
+    gap: 12px;
+    padding: 14px 16px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--text-2);
+    background: var(--surface-2);
+    margin-bottom: 24px;
+  }
+  .callout-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-eyebrow">Metalyde — Phase 2 · Brand Voice & Messaging</div>
+  <h1>Messaging Framework</h1>
+  <p class="header-sub">Voice guide, tone spectrum, writing rules, vocabulary, pillars, taglines, and narrative arc — grounded in real operator language.</p>
+  <div class="header-meta">
+    <span>June 2026</span>
+    <span>·</span>
+    <span>Divergent exploration — react to options, don't converge yet</span>
+  </div>
+</header>
+
+<nav class="nav-wrap">
+  <div class="nav">
+    <button class="nav-tab active" onclick="show('voice')">Voice</button>
+    <button class="nav-tab" onclick="show('tone')">Tone Spectrum</button>
+    <button class="nav-tab" onclick="show('rules')">Writing Rules</button>
+    <button class="nav-tab" onclick="show('vocab')">Vocabulary</button>
+    <button class="nav-tab" onclick="show('pillars')">Pillars</button>
+    <button class="nav-tab" onclick="show('taglines')">Taglines</button>
+    <button class="nav-tab" onclick="show('arc')">Narrative Arc</button>
+  </div>
+</nav>
+
+<main class="main">
+
+  <!-- ══════════════════════════════════════════════════════
+       VOICE
+  ══════════════════════════════════════════════════════ -->
+  <section id="voice" class="section active">
+    <div class="section-header">
+      <div class="section-title">Marketing Voice</div>
+      <div class="section-desc">Five attributes that define how Metalyde speaks. Each is specific, not aspirational — grounded in what the product actually does and who it's for.</div>
+    </div>
+
+    <div class="callout">
+      <span class="callout-icon">◎</span>
+      <span>The buyer is a 2–10 person marketing agency running $50K–$500K in client revenue, wearing every role, and actively hostile to generic all-in-one bloat. They identify as operators, not users. Voice must match that — no hand-holding, no hype.</span>
+    </div>
+
+    <!-- ATTR 1 -->
+    <div class="voice-attr">
+      <div class="voice-attr-head">
+        <div class="attr-num">1</div>
+        <div>
+          <div class="attr-name">Sharp, Not Clever</div>
+          <div class="attr-tagline">We say what we mean, once. No puns. No wordplay that slows a scan.</div>
+        </div>
+      </div>
+      <div class="voice-attr-body">
+        <div class="tnt-pair">
+          <div class="tnt-this">
+            <div class="tnt-label">This</div>
+            <div class="tnt-text">57% of agencies lose $1,000–$5,000 a month to scope creep they never bill. Metalyde captures it automatically.</div>
+            <div class="tnt-reason">Specific, sourced, active. One sentence per idea.</div>
+          </div>
+          <div class="tnt-not">
+            <div class="tnt-label">Not this</div>
+            <div class="tnt-text">Your agency's invisible enemy is lurking in every "quick tweak." Let's slay the scope creep dragon together.</div>
+            <div class="tnt-reason">Metaphors add syllables, not meaning. Sounds like a startup explainer video.</div>
+          </div>
+        </div>
+        <div class="tnt-pair">
+          <div class="tnt-this">
+            <div class="tnt-label">This</div>
+            <div class="tnt-text">Know your margin before the invoice goes out — not after.</div>
+          </div>
+          <div class="tnt-not">
+            <div class="tnt-label">Not this</div>
+            <div class="tnt-text">Empowering agencies to unlock profitability insights for a brighter financial future.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ATTR 2 -->
+    <div class="voice-attr">
+      <div class="voice-attr-head">
+        <div class="attr-num">2</div>
+        <div>
+          <div class="attr-name">Profitability-Led</div>
+          <div class="attr-tagline">Every claim connects to revenue. We measure in dollars and hours, not "streamlined workflows."</div>
+        </div>
+      </div>
+      <div class="voice-attr-body">
+        <div class="tnt-pair">
+          <div class="tnt-this">
+            <div class="tnt-label">This</div>
+            <div class="tnt-text">The average agency loses $32,000/year to untracked hours. Metalyde auto-logs time from the brief forward — nothing falls off.</div>
+          </div>
+          <div class="tnt-not">
+            <div class="tnt-label">Not this</div>
+            <div class="tnt-text">Improve your team's time tracking habits with flexible, intuitive tools that fit your workflow.</div>
+          </div>
+        </div>
+        <div class="tnt-pair">
+          <div class="tnt-this">
+            <div class="tnt-label">This</div>
+            <div class="tnt-text">Which client made you money this week? Metalyde tells you by Tuesday morning.</div>
+          </div>
+          <div class="tnt-not">
+            <div class="tnt-label">Not this</div>
+            <div class="tnt-text">Comprehensive reporting dashboards to keep your business on track.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ATTR 3 -->
+    <div class="voice-attr">
+      <div class="voice-attr-head">
+        <div class="attr-num">3</div>
+        <div>
+          <div class="attr-name">Agency-Specific, Not Generic</div>
+          <div class="attr-tagline">We name the role, the pain, the retainer. Never "teams" and "projects" when we mean accounts and briefs.</div>
+        </div>
+      </div>
+      <div class="voice-attr-body">
+        <div class="tnt-pair">
+          <div class="tnt-this">
+            <div class="tnt-label">This</div>
+            <div class="tnt-text">Retainer + project + milestone billing in one model. No spreadsheet workaround required.</div>
+          </div>
+          <div class="tnt-not">
+            <div class="tnt-label">Not this</div>
+            <div class="tnt-text">Flexible billing options to match how your business operates.</div>
+          </div>
+        </div>
+        <div class="tnt-pair">
+          <div class="tnt-this">
+            <div class="tnt-label">This</div>
+            <div class="tnt-text">Brief to invoice — in one system. Not Notion + ClickUp + Harvest + FreshBooks stitched with Zapier prayers.</div>
+          </div>
+          <div class="tnt-not">
+            <div class="tnt-label">Not this</div>
+            <div class="tnt-text">All your work, in one place. From task creation to final delivery.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ATTR 4 -->
+    <div class="voice-attr">
+      <div class="voice-attr-head">
+        <div class="attr-num">4</div>
+        <div>
+          <div class="attr-name">Opinionated, Not Neutral</div>
+          <div class="attr-tagline">We have positions. ClickUp is bloat. Scope creep is preventable. Resource planning shouldn't cost $50/seat extra.</div>
+        </div>
+      </div>
+      <div class="voice-attr-body">
+        <div class="tnt-pair">
+          <div class="tnt-this">
+            <div class="tnt-label">This</div>
+            <div class="tnt-text">"A worse version of Google Sheets with integrations you'll never use." — That's how agency owners actually describe Monday and ClickUp. We built the opposite.</div>
+          </div>
+          <div class="tnt-not">
+            <div class="tnt-label">Not this</div>
+            <div class="tnt-text">Metalyde is a great alternative to other project management tools on the market.</div>
+          </div>
+        </div>
+        <div class="tnt-pair">
+          <div class="tnt-this">
+            <div class="tnt-label">This</div>
+            <div class="tnt-text">Profitability shouldn't be a premium feature. It should be the first thing you see when you log in.</div>
+          </div>
+          <div class="tnt-not">
+            <div class="tnt-label">Not this</div>
+            <div class="tnt-text">We offer advanced reporting and analytics for teams that need deeper insights.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ATTR 5 -->
+    <div class="voice-attr">
+      <div class="voice-attr-head">
+        <div class="attr-num">5</div>
+        <div>
+          <div class="attr-name">Calm Under Load</div>
+          <div class="attr-tagline">The agency operator is already overwhelmed. We don't add urgency or hype. We project control.</div>
+        </div>
+      </div>
+      <div class="voice-attr-body">
+        <div class="tnt-pair">
+          <div class="tnt-this">
+            <div class="tnt-label">This</div>
+            <div class="tnt-text">Eight clients. Four campaigns live. One source of truth.</div>
+          </div>
+          <div class="tnt-not">
+            <div class="tnt-label">Not this</div>
+            <div class="tnt-text">Stop drowning in chaos! Finally, a tool that saves your agency from tool overload! 🚀</div>
+          </div>
+        </div>
+        <div class="tnt-pair">
+          <div class="tnt-this">
+            <div class="tnt-label">This</div>
+            <div class="tnt-text">The brief lands. The plan is already drafted. The budget starts counting. No setup required.</div>
+          </div>
+          <div class="tnt-not">
+            <div class="tnt-label">Not this</div>
+            <div class="tnt-text">Supercharge your agency's productivity with game-changing AI-powered automation!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       TONE
+  ══════════════════════════════════════════════════════ -->
+  <section id="tone" class="section">
+    <div class="section-header">
+      <div class="section-title">Tone Spectrum</div>
+      <div class="section-desc">Same voice, different register. The attributes stay constant — what shifts is density, formality, and permission to editorialize.</div>
+    </div>
+
+    <!-- Spectrum SVG -->
+    <div class="viz-wrap" style="margin-bottom: 32px;">
+      <div class="viz-title">Tone calibration across contexts</div>
+      <div class="viz-desc">Horizontal axis: editorial intensity (how much we editorialize). Vertical axis: density (how compressed the prose is).</div>
+      <svg viewBox="0 0 680 220" style="width:100%;max-width:680px;display:block;" xmlns="http://www.w3.org/2000/svg">
+        <!-- Grid -->
+        <line x1="40" y1="20" x2="40" y2="180" stroke="oklch(88% 0.01 250)" stroke-width="1"/>
+        <line x1="40" y1="180" x2="650" y2="180" stroke="oklch(88% 0.01 250)" stroke-width="1"/>
+        <!-- Axis labels -->
+        <text x="340" y="210" font-size="11" fill="oklch(65% 0.01 250)" text-anchor="middle" font-family="system-ui">← Neutral / Instructive — Editorial Intensity — Opinionated / Sharp →</text>
+        <text x="12" y="100" font-size="11" fill="oklch(65% 0.01 250)" text-anchor="middle" font-family="system-ui" transform="rotate(-90,12,100)">← Sparse — Density — Rich →</text>
+        <!-- Quadrant lines -->
+        <line x1="345" y1="20" x2="345" y2="180" stroke="oklch(92% 0.01 250)" stroke-width="1" stroke-dasharray="4,3"/>
+        <line x1="40" y1="100" x2="650" y2="100" stroke="oklch(92% 0.01 250)" stroke-width="1" stroke-dasharray="4,3"/>
+        <!-- Bubbles: x=editorial(40=neutral,650=editorial), y=density(180=sparse,20=rich) -->
+        <!-- Docs: neutral+rich (top-left) -->
+        <circle cx="140" cy="55" r="28" fill="oklch(55% 0.22 265 / 0.15)" stroke="oklch(55% 0.22 265)" stroke-width="1.5"/>
+        <text x="140" y="50" font-size="11" font-weight="700" fill="oklch(45% 0.18 265)" text-anchor="middle" font-family="system-ui">Docs</text>
+        <text x="140" y="64" font-size="10" fill="oklch(55% 0.22 265)" text-anchor="middle" font-family="system-ui">In-product</text>
+        <!-- Landing: editorial+sparse (bottom-right) -->
+        <circle cx="540" cy="148" r="28" fill="oklch(55% 0.22 265 / 0.15)" stroke="oklch(55% 0.22 265)" stroke-width="1.5"/>
+        <text x="540" y="143" font-size="11" font-weight="700" fill="oklch(45% 0.18 265)" text-anchor="middle" font-family="system-ui">Landing</text>
+        <text x="540" y="157" font-size="10" fill="oklch(55% 0.22 265)" text-anchor="middle" font-family="system-ui">page</text>
+        <!-- Social: editorial+sparse (bottom-far right) -->
+        <circle cx="590" cy="78" r="22" fill="oklch(60% 0.14 195 / 0.15)" stroke="oklch(60% 0.14 195)" stroke-width="1.5"/>
+        <text x="590" y="73" font-size="11" font-weight="700" fill="oklch(40% 0.12 195)" text-anchor="middle" font-family="system-ui">Social</text>
+        <text x="590" y="86" font-size="10" fill="oklch(60% 0.14 195)" text-anchor="middle" font-family="system-ui">&amp; community</text>
+        <!-- In-app: neutral+sparse (bottom-left) -->
+        <circle cx="200" cy="148" r="22" fill="oklch(55% 0.18 145 / 0.15)" stroke="oklch(55% 0.18 145)" stroke-width="1.5"/>
+        <text x="200" y="143" font-size="11" font-weight="700" fill="oklch(35% 0.14 145)" text-anchor="middle" font-family="system-ui">In-app</text>
+        <text x="200" y="157" font-size="10" fill="oklch(55% 0.18 145)" text-anchor="middle" font-family="system-ui">UI copy</text>
+      </svg>
+    </div>
+
+    <div class="grid-2">
+      <!-- LANDING PAGE -->
+      <div class="tone-card">
+        <div class="tone-header">
+          <div class="tone-icon" style="background:var(--accent-light);">🌐</div>
+          <div class="tone-context-name">Landing Page</div>
+        </div>
+        <div class="tone-body">
+          <div class="tone-trait"><div class="tone-trait-label">Register</div><div class="tone-trait-val">Opinionated, direct, slightly combative. We have a position.</div></div>
+          <div class="tone-trait"><div class="tone-trait-label">Density</div><div class="tone-trait-val">Sparse. One idea per line. Scannable at 3 seconds.</div></div>
+          <div class="tone-trait"><div class="tone-trait-label">Person</div><div class="tone-trait-val">Second person ("you / your agency"). Never royal "we" as subject.</div></div>
+          <div class="tone-trait"><div class="tone-trait-label">Numbers</div><div class="tone-trait-val">Lead with them. $1,000–$5,000. 57%. $32K. Real sources.</div></div>
+          <div class="tone-trait"><div class="tone-trait-label">Avoid</div><div class="tone-trait-val">Exclamation points. Superlatives ("best", "most powerful"). Future-tense promises.</div></div>
+          <div class="tone-example">"57% of marketing agencies lose $1,000–$5,000 a month to scope creep they never invoice. Metalyde catches it before it leaves the brief."</div>
+        </div>
+      </div>
+
+      <!-- DOCS -->
+      <div class="tone-card">
+        <div class="tone-header">
+          <div class="tone-icon" style="background:var(--teal-light);">📖</div>
+          <div class="tone-context-name">Documentation</div>
+        </div>
+        <div class="tone-body">
+          <div class="tone-trait"><div class="tone-trait-label">Register</div><div class="tone-trait-val">Neutral, instructive, precise. No opinion — only fact and procedure.</div></div>
+          <div class="tone-trait"><div class="tone-trait-label">Density</div><div class="tone-trait-val">Rich. Complete sentences. All edge cases addressed.</div></div>
+          <div class="tone-trait"><div class="tone-trait-label">Person</div><div class="tone-trait-val">Second person for instructions. Passive for system behavior. Never "I".</div></div>
+          <div class="tone-trait"><div class="tone-trait-label">Numbers</div><div class="tone-trait-val">Exact values, units always present. Never approximations in technical specs.</div></div>
+          <div class="tone-trait"><div class="tone-trait-label">Avoid</div><div class="tone-trait-val">Marketing language. Adjectives that evaluate. Claims without evidence.</div></div>
+          <div class="tone-example">"Time entries created from a brief inherit the brief's budget ceiling. The system flags any entry that would push cumulative hours past 90% of the ceiling before submission."</div>
+        </div>
+      </div>
+
+      <!-- IN-PRODUCT -->
+      <div class="tone-card">
+        <div class="tone-header">
+          <div class="tone-icon" style="background:var(--green-light);">⚙️</div>
+          <div class="tone-context-name">In-Product UI Copy</div>
+        </div>
+        <div class="tone-body">
+          <div class="tone-trait"><div class="tone-trait-label">Register</div><div class="tone-trait-val">Functional, minimal, non-condescending. Trust the operator to know their job.</div></div>
+          <div class="tone-trait"><div class="tone-trait-label">Density</div><div class="tone-trait-val">As sparse as possible. Labels, not sentences. CTAs = verbs, not nouns.</div></div>
+          <div class="tone-trait"><div class="tone-trait-label">Person</div><div class="tone-trait-val">Imperative for actions ("Log time", "Send brief"). Avoid "Please" — it softens intent.</div></div>
+          <div class="tone-trait"><div class="tone-trait-label">Numbers</div><div class="tone-trait-val">Show the number, label it. "Over by $340" — not "budget exceeded".</div></div>
+          <div class="tone-trait"><div class="tone-trait-label">Avoid</div><div class="tone-trait-val">"Successfully submitted!" Emoji in functional states. Ellipsis abuse. "N/A" when the data doesn't exist — just show —.</div></div>
+          <div class="tone-example">"Scope change detected — $420 unbilled. Add to invoice?"</div>
+        </div>
+      </div>
+
+      <!-- SOCIAL / COMMUNITY -->
+      <div class="tone-card">
+        <div class="tone-header">
+          <div class="tone-icon" style="background:var(--amber-light);">💬</div>
+          <div class="tone-context-name">Community / Social</div>
+        </div>
+        <div class="tone-body">
+          <div class="tone-trait"><div class="tone-trait-label">Register</div><div class="tone-trait-val">Peer-to-peer. Agency-operator-to-agency-operator. We're one of them, not above them.</div></div>
+          <div class="tone-trait"><div class="tone-trait-label">Density</div><div class="tone-trait-val">Short. Twitter-discipline. One idea, no scaffolding.</div></div>
+          <div class="tone-trait"><div class="tone-trait-label">Person</div><div class="tone-trait-val">First or second. Stories are OK. "We shipped X" or "You know that moment when..."</div></div>
+          <div class="tone-trait"><div class="tone-trait-label">Numbers</div><div class="tone-trait-val">Use them as hooks. "$32K/year. Gone. Unlogged hours." Numbers stop the scroll.</div></div>
+          <div class="tone-trait"><div class="tone-trait-label">Avoid</div><div class="tone-trait-val">Founder-bro energy. Hustle framing. "Drop a 🔥 if you agree." Corporate announcements dressed as conversation.</div></div>
+          <div class="tone-example">"Running 8 clients. Taking 4am calls. All for a $1,200 retainer. The golden handcuffs are real. Here's what we're building to cut them."</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       WRITING RULES
+  ══════════════════════════════════════════════════════ -->
+  <section id="rules" class="section">
+    <div class="section-header">
+      <div class="section-title">Writing Rules</div>
+      <div class="section-desc">Eight rules with before/after examples. Each rule has a first-principle behind it — not a style preference, a communication decision.</div>
+    </div>
+
+    <div class="rule-card">
+      <div class="rule-head"><span class="rule-num">R1</span><span class="rule-name">Lead with the number, not the concept</span></div>
+      <div class="rule-body">
+        <div class="rule-principle">When a stat exists, it replaces the adjective. "Significant revenue loss" costs zero attention. "$1,000–$5,000 a month" stops a scan.</div>
+        <div class="before-after">
+          <div class="ba-box ba-before"><div class="ba-label">Before</div><div class="ba-text">Scope creep causes significant financial losses for agencies of all sizes every month.</div></div>
+          <div class="ba-box ba-after"><div class="ba-label">After</div><div class="ba-text">57% of agencies lose $1,000–$5,000 a month to scope creep they never invoice. Only 1% bill for all of it. (Ignition, 2025)</div><div class="ba-note">The stat is the argument. No adjectives needed.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rule-card">
+      <div class="rule-head"><span class="rule-num">R2</span><span class="rule-name">Name the seam, not the category</span></div>
+      <div class="rule-body">
+        <div class="rule-principle">Agencies know their pain as a specific moment of friction — not as a "workflow problem." Name the seam where things break, not the category it belongs to.</div>
+        <div class="before-after">
+          <div class="ba-box ba-before"><div class="ba-label">Before</div><div class="ba-text">Metalyde solves project management, billing, and reporting challenges for modern agencies.</div></div>
+          <div class="ba-box ba-after"><div class="ba-label">After</div><div class="ba-text">The brief lands in Slack. The budget lives in a spreadsheet. The invoice goes out two weeks late — missing half the scope. Metalyde closes those seams.</div><div class="ba-note">The reader recognizes their Tuesday in this description.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rule-card">
+      <div class="rule-head"><span class="rule-num">R3</span><span class="rule-name">Anti-positioning is a sentence, not a section</span></div>
+      <div class="rule-body">
+        <div class="rule-principle">The foil — Monday, ClickUp, the 17-tool stack — is a gift. Use it once, precisely. Do not dwell. Make the contrast, move on.</div>
+        <div class="before-after">
+          <div class="ba-box ba-before"><div class="ba-label">Before</div><div class="ba-text">Unlike Monday.com, ClickUp, Asana, Jira, and other generic project management tools that agencies have tried and found lacking in their specific needs and requirements...</div></div>
+          <div class="ba-box ba-after"><div class="ba-label">After</div><div class="ba-text">Built for marketing agencies — not repurposed from generic work management software your team abandoned within six months.</div><div class="ba-note">One hit. No list. The reader fills in their own tool.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rule-card">
+      <div class="rule-head"><span class="rule-num">R4</span><span class="rule-name">AI is a verb, not a noun</span></div>
+      <div class="rule-body">
+        <div class="rule-principle">Never say "AI-powered." Say what the AI does. The product of the AI is the claim — not the technology. Buyers in 2026 are fatigued by "AI" as a badge.</div>
+        <div class="before-after">
+          <div class="ba-box ba-before"><div class="ba-label">Before</div><div class="ba-text">Metalyde's AI-powered platform brings intelligent automation to your agency's operations.</div></div>
+          <div class="ba-box ba-after"><div class="ba-label">After</div><div class="ba-text">The brief lands. A project plan is already drafted. Budget tracking starts. The AI caught the scope change before you noticed it.</div><div class="ba-note">Describe the outcome sequence. The AI is invisible because it worked.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rule-card">
+      <div class="rule-head"><span class="rule-num">R5</span><span class="rule-name">CTAs are verbs, not invitations</span></div>
+      <div class="rule-body">
+        <div class="rule-principle">The call-to-action names the action, not the feeling. No "Discover." No "Explore." Agency operators don't browse — they evaluate and decide.</div>
+        <div class="before-after">
+          <div class="ba-box ba-before"><div class="ba-label">Before</div><div class="ba-text">Discover the future of agency management → Explore Now</div></div>
+          <div class="ba-box ba-after"><div class="ba-label">After</div><div class="ba-text">Start your first client brief — free for 14 days → Start free</div><div class="ba-note">Anchors to the first concrete moment of value, not a vague promise.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rule-card">
+      <div class="rule-head"><span class="rule-num">R6</span><span class="rule-name">The retainer is real — name it</span></div>
+      <div class="rule-body">
+        <div class="rule-principle">Generic tools say "recurring billing." We say "retainer." Generic tools say "projects." We say "campaigns." Agency-specific vocabulary signals that we understand the domain — not that we're trying to.</div>
+        <div class="before-after">
+          <div class="ba-box ba-before"><div class="ba-label">Before</div><div class="ba-text">Manage your recurring revenue streams alongside one-time project billing.</div></div>
+          <div class="ba-box ba-after"><div class="ba-label">After</div><div class="ba-text">Retainer, project, milestone, and value-based billing — in a single data model. Not four invoicing approaches duct-taped together.</div><div class="ba-note">Names the exact billing modes agencies actually use.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rule-card">
+      <div class="rule-head"><span class="rule-num">R7</span><span class="rule-name">Profitability is a view, not a report</span></div>
+      <div class="rule-body">
+        <div class="rule-principle">Competitors bury margin data in reports nobody opens. Our messaging frames profitability as a surface — the thing you see first, not the thing you run at month end.</div>
+        <div class="before-after">
+          <div class="ba-box ba-before"><div class="ba-label">Before</div><div class="ba-text">Generate powerful profitability reports with our advanced analytics dashboard.</div></div>
+          <div class="ba-box ba-after"><div class="ba-label">After</div><div class="ba-text">Monday morning: you know which client made you money last week, which one is burning it, and exactly where.</div><div class="ba-note">Surface as default state — not a report you have to run.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rule-card">
+      <div class="rule-head"><span class="rule-num">R8</span><span class="rule-name">No future promises — describe what exists</span></div>
+      <div class="rule-body">
+        <div class="rule-principle">Every sentence should describe a current state or current behavior. Future tense ("will help you," "can enable") creates distance. Present tense closes it.</div>
+        <div class="before-after">
+          <div class="ba-box ba-before"><div class="ba-label">Before</div><div class="ba-text">Metalyde will transform how your agency runs — from client onboarding to final invoice, you'll finally have a system that works.</div></div>
+          <div class="ba-box ba-after"><div class="ba-label">After</div><div class="ba-text">From brief to final invoice — one system. No integrations to maintain, no spreadsheet bridges, no missing hours at month-end.</div><div class="ba-note">Present tense. The product exists. Describe it.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       VOCABULARY
+  ══════════════════════════════════════════════════════ -->
+  <section id="vocab" class="section">
+    <div class="section-header">
+      <div class="section-title">Vocabulary</div>
+      <div class="section-desc">Words to use and avoid — each with a reason. Vocabulary is positioning. The words you refuse to use signal as much as the words you embrace.</div>
+    </div>
+
+    <div class="callout">
+      <span class="callout-icon">⚠️</span>
+      <span><strong>On agency jargon:</strong> Embrace domain vocabulary (retainer, brief, scope, utilization, realization, CPL, ROAS, account) — it signals domain credibility. Avoid jargon that sounds like it was adopted from another industry (PSA, professional services automation, ticketing). The buyer is a marketing agency owner, not a consulting firm partner.</span>
+    </div>
+
+    <!-- USE -->
+    <div class="vocab-section">
+      <div class="vocab-title">Use</div>
+      <div class="vocab-grid">
+        <div class="vocab-item use">
+          <div class="vocab-word">Brief</div>
+          <div class="vocab-reason">Where agency work actually starts. Not "task" or "ticket" or "project request." The brief is a domain artifact with real meaning.</div>
+        </div>
+        <div class="vocab-item use">
+          <div class="vocab-word">Retainer</div>
+          <div class="vocab-reason">The dominant billing model for marketing agencies. Not "subscription," not "recurring payment." Retainer carries relationship connotation — monthly trust, not SaaS renewal.</div>
+        </div>
+        <div class="vocab-item use">
+          <div class="vocab-word">Scope creep</div>
+          <div class="vocab-reason">The buyer already uses this phrase. It names a specific fear (getting stuck doing more for the same fee). Own it, don't soften it.</div>
+        </div>
+        <div class="vocab-item use">
+          <div class="vocab-word">Utilization</div>
+          <div class="vocab-reason">Agency operators know their utilization rate. The healthy range (65–80%) is an industry benchmark. Naming it signals domain literacy.</div>
+          <div class="vocab-sub">Also use: billable utilization, realization rate</div>
+        </div>
+        <div class="vocab-item use">
+          <div class="vocab-word">Account</div>
+          <div class="vocab-reason">Agency language for a client relationship. Not "client" uniformly — an account implies ongoing management, retainer, and strategic responsibility.</div>
+        </div>
+        <div class="vocab-item use">
+          <div class="vocab-word">Campaign</div>
+          <div class="vocab-reason">The deliverable unit in marketing agencies. More specific than "project." Content calendars, media buys, paid campaigns — all live under this word.</div>
+        </div>
+        <div class="vocab-item use">
+          <div class="vocab-word">Margin</div>
+          <div class="vocab-reason">Sharper than "profit." Margin is a rate — the thing agencies actually track when they want to know if a client is worth keeping.</div>
+          <div class="vocab-sub">Use alongside: gross margin, account margin, realization</div>
+        </div>
+        <div class="vocab-item use">
+          <div class="vocab-word">Seam</div>
+          <div class="vocab-reason">Names the gap between tools. "The seam between brief and invoice" is visual and specific. Avoids the overloaded "gap" or "disconnect."</div>
+        </div>
+        <div class="vocab-item use">
+          <div class="vocab-word">Lever (as a metaphor)</div>
+          <div class="vocab-reason">Signals leverage-not-labor thinking — the identity many AI-native agency operators are adopting. Use sparingly, at headline level.</div>
+          <div class="vocab-sub">Ref: @Jacobsklug "labor → leverage" thesis, YC AI-native agency signal</div>
+        </div>
+        <div class="vocab-item use">
+          <div class="vocab-word">Operating layer</div>
+          <div class="vocab-reason">Positions Metalyde as infrastructure, not a feature. "The operating layer for your agency" beats "all-in-one tool" for gravity. Use in positioning context.</div>
+        </div>
+        <div class="vocab-item use">
+          <div class="vocab-word">Client portal</div>
+          <div class="vocab-reason">Specific artifact buyers recognize and want. Not "client view" or "external dashboard." Portal has a professional, relationship-implies-access connotation.</div>
+        </div>
+        <div class="vocab-item use">
+          <div class="vocab-word">Capture</div>
+          <div class="vocab-reason">For AI behavior: "Metalyde captures scope changes." Active, specific. Implies automated detection — not that the user has to notice and log it.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AVOID -->
+    <div class="vocab-section">
+      <div class="vocab-title">Avoid</div>
+      <div class="vocab-grid">
+        <div class="vocab-item avoid">
+          <div class="vocab-word">All-in-one</div>
+          <div class="vocab-reason">The most over-promised phrase in SaaS. Every competitor uses it. Agency operators (@anothercohen) associate it with horizontal bloat — not with solving their problem.</div>
+        </div>
+        <div class="vocab-item avoid">
+          <div class="vocab-word">Streamline</div>
+          <div class="vocab-reason">Meaningless consulting vocabulary. It implies slow before and fast after but names no mechanism. Replace with the actual outcome: "capture," "close," "surface."</div>
+        </div>
+        <div class="vocab-item avoid">
+          <div class="vocab-word">Empower</div>
+          <div class="vocab-reason">Classic corporate filler. It says "we believe in you" while naming nothing about the product. Use if you must quote someone else. Never as our own voice.</div>
+        </div>
+        <div class="vocab-item avoid">
+          <div class="vocab-word">AI-powered</div>
+          <div class="vocab-reason">A 2023 badge. In 2026, it's background noise — every tool claims it. Describe what the AI does (captures, flags, drafts, reconciles) instead.</div>
+        </div>
+        <div class="vocab-item avoid">
+          <div class="vocab-word">Seamless</div>
+          <div class="vocab-reason">The adjective agencies use sarcastically about integrations that break. When you say "seamless," buyers hear "it will probably break."</div>
+        </div>
+        <div class="vocab-item avoid">
+          <div class="vocab-word">PSA / Professional Services Automation</div>
+          <div class="vocab-reason">Analyst category term. Buyers don't search for PSA. It also signals consultancy/IT services rather than marketing agency — wrong domain feel entirely.</div>
+        </div>
+        <div class="vocab-item avoid">
+          <div class="vocab-word">Holistic</div>
+          <div class="vocab-reason">No sentence that needs "holistic" has said anything specific. Drop the word, tighten the claim.</div>
+        </div>
+        <div class="vocab-item avoid">
+          <div class="vocab-word">Game-changing / Revolutionary</div>
+          <div class="vocab-reason">Self-awarded superlatives. The reader's brain automatically discounts them. If it's actually game-changing, the stat does the work.</div>
+        </div>
+        <div class="vocab-item avoid">
+          <div class="vocab-word">Ecosystem</div>
+          <div class="vocab-reason">Enterprise language. Agencies don't want to join an ecosystem — they want to stop using five tools. Frame as consolidation, not expansion.</div>
+        </div>
+        <div class="vocab-item avoid">
+          <div class="vocab-word">Solution</div>
+          <div class="vocab-reason">"Solution" is what a vendor says when they don't know the problem. Name the thing — the OS, the system, the layer. Not "solution."</div>
+        </div>
+        <div class="vocab-item avoid">
+          <div class="vocab-word">Leverage (as hustle-bro noun)</div>
+          <div class="vocab-reason">The identity framing works ("labor → leverage") but over-using "leverage" tips into motivational speaker territory. One use at headline level; not a recurring word.</div>
+        </div>
+        <div class="vocab-item avoid">
+          <div class="vocab-word">Supercharge</div>
+          <div class="vocab-reason">Energy-drink marketing language. Tone is calm confidence, not hype. "Supercharge" is the opposite of the mental state we're selling.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- JARGON JUDGMENTS TABLE -->
+    <div class="card" style="margin-top: 8px;">
+      <div class="card-header">
+        <div class="card-title">Agency Jargon: Embrace or Avoid?</div>
+        <div class="card-subtitle">Domain vocabulary that needs a call</div>
+      </div>
+      <div class="card-body" style="padding: 0;">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Term</th>
+              <th>Verdict</th>
+              <th>Rationale</th>
+              <th>Context</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Retainer</strong></td><td><span class="badge badge-green">Embrace</span></td><td>Core billing model. Naming it signals domain literacy.</td><td>Everywhere</td></tr>
+            <tr><td><strong>Scope creep</strong></td><td><span class="badge badge-green">Embrace</span></td><td>Pain point operators already name this way. Don't soften it.</td><td>Landing, social</td></tr>
+            <tr><td><strong>Utilization</strong></td><td><span class="badge badge-green">Embrace</span></td><td>Benchmark metric (65–80% healthy). Name it and own it.</td><td>Product, docs</td></tr>
+            <tr><td><strong>Brief</strong></td><td><span class="badge badge-green">Embrace</span></td><td>The domain starting point. Use instead of "task" or "project."</td><td>Everywhere</td></tr>
+            <tr><td><strong>ROAS / CPL / CPA</strong></td><td><span class="badge badge-amber">Context</span></td><td>Performance agency vocabulary — correct but alienates PR/brand agencies. Use in performance-specific surfaces only.</td><td>Vertical-specific</td></tr>
+            <tr><td><strong>Deliverables</strong></td><td><span class="badge badge-amber">Context</span></td><td>Valid but slightly corporate. Prefer "output" or the specific thing (copy, creative, report).</td><td>Docs, product</td></tr>
+            <tr><td><strong>SOW (Statement of Work)</strong></td><td><span class="badge badge-amber">Context</span></td><td>Correct for mid-market. Freelancer segment says "proposal" or "contract." Match audience.</td><td>Mid-market surfaces</td></tr>
+            <tr><td><strong>Bandwidth</strong></td><td><span class="badge badge-red">Avoid</span></td><td>Tech jargon repurposed as HR-speak. Say "team capacity" or "open hours."</td><td>Never</td></tr>
+            <tr><td><strong>Stakeholder</strong></td><td><span class="badge badge-red">Avoid</span></td><td>Enterprise consulting vocabulary. Agencies say "client," "account," or by name.</td><td>Never</td></tr>
+            <tr><td><strong>Synergy</strong></td><td><span class="badge badge-red">Avoid</span></td><td>No rationale needed.</td><td>Never</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       PILLARS
+  ══════════════════════════════════════════════════════ -->
+  <section id="pillars" class="section">
+    <div class="section-header">
+      <div class="section-title">Messaging Pillars</div>
+      <div class="section-desc">Four pillars — each with a clear claim, the evidence behind it, and copy examples across landing, sales, and product surfaces. Pillars should recur across every channel; they are not campaign themes.</div>
+    </div>
+
+    <!-- PILLAR 1 -->
+    <div class="pillar">
+      <div class="pillar-head">
+        <div class="pillar-badge" style="background:var(--red-light);">💸</div>
+        <div>
+          <div class="pillar-title">Pillar 1: Profitability Is a View, Not a Report</div>
+          <div class="pillar-claim">No tool makes "which clients made me money this week" the default surface. Metalyde does.</div>
+        </div>
+      </div>
+      <div class="pillar-body">
+        <div class="pillar-stat">Anchor stat: 57% of agencies lose $1K–$5K/month to unbilled scope creep. Only 1% bill for all out-of-scope work. (Ignition 2025 State of Billing)</div>
+        <div class="pillar-copy-group">
+          <div class="pillar-copy-label">Landing Page Headline</div>
+          <div class="copy-example">The agency profitability view that competitors lock behind their most expensive tier. <strong>Metalyde shows it first.</strong></div>
+          <div class="copy-context">Above the fold. No scrolling required to see the product's primary claim.</div>
+        </div>
+        <div class="pillar-copy-group">
+          <div class="pillar-copy-label">Supporting Body Copy</div>
+          <div class="copy-example">57% of agencies lose $1,000–$5,000 a month to scope creep they never invoice. The hours leak between brief and delivery — tracked in one tool, invoiced in another, lost somewhere in between. Metalyde closes that gap automatically. Not in a report you run at month-end. Every day, on your dashboard: which accounts are margin-positive, which are burning, and exactly where the hours went.</div>
+        </div>
+        <div class="pillar-copy-group">
+          <div class="pillar-copy-label">In-Product Empty State</div>
+          <div class="copy-example">No active briefs yet. When your first brief is live, you'll see real-time margin here — before the invoice goes out.</div>
+          <div class="copy-context">Sets expectation without hype. The promise is already written into the UI.</div>
+        </div>
+        <div class="pillar-copy-group">
+          <div class="pillar-copy-label">Social Hook</div>
+          <div class="copy-example">Most agencies don't know their real margin until the invoice goes out. By then it's too late to fix it. Here's what we built instead.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PILLAR 2 -->
+    <div class="pillar">
+      <div class="pillar-head">
+        <div class="pillar-badge" style="background:var(--accent-light);">⚡</div>
+        <div>
+          <div class="pillar-title">Pillar 2: Brief to Invoice — One System</div>
+          <div class="pillar-claim">The four broken seams agencies stitch across tools — Brief → Production → Billing → Client Reporting — are a single workflow in Metalyde.</div>
+        </div>
+      </div>
+      <div class="pillar-body">
+        <div class="pillar-stat">Anchor stat: 4–6 hours/week manually bridging Slack + PM tools ("the two-tool problem"). Average agency uses 4–6 tools per active campaign. (@convoeai, Jun 2026)</div>
+        <div class="pillar-copy-group">
+          <div class="pillar-copy-label">Landing Page Headline</div>
+          <div class="copy-example">From brief to final invoice — <strong>one system</strong>. Not Notion + ClickUp + Harvest + FreshBooks stitched with Zapier prayers.</div>
+        </div>
+        <div class="pillar-copy-group">
+          <div class="pillar-copy-label">Flow Description</div>
+          <div class="copy-example">A brief lands. A project plan is auto-drafted. Time starts counting against budget. Deliverables move through review. Scope changes are flagged before they become surprises. The client sees their portal update in real time. The invoice closes automatically. Your team did the work — Metalyde ran the paperwork.</div>
+        </div>
+        <div class="pillar-copy-group">
+          <div class="pillar-copy-label">Feature Surface Copy</div>
+          <div class="copy-example">Brief → Campaign → Invoice. Three steps. One place. No export required.</div>
+        </div>
+        <div class="pillar-copy-group">
+          <div class="pillar-copy-label">Objection Handling</div>
+          <div class="copy-example">If you're thinking "we already have a system" — check how many tools are in it. Four tools with manual bridges is not a system. It's a maintenance job.</div>
+          <div class="copy-context">Sales page or FAQ context. Direct, not defensive.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PILLAR 3 -->
+    <div class="pillar">
+      <div class="pillar-head">
+        <div class="pillar-badge" style="background:var(--green-light);">🤖</div>
+        <div>
+          <div class="pillar-title">Pillar 3: AI That Runs the Admin, Not the Creative</div>
+          <div class="pillar-claim">AI handles the operational loop — scope capture, brief drafting, budget flagging, client reporting — so the team does what agencies actually sell: thinking and making.</div>
+        </div>
+      </div>
+      <div class="pillar-body">
+        <div class="pillar-stat">Anchor stat: One senior manager with 3 custom AI agents can now do the data analysis, operational routing, and reporting of a 5-person junior team. (@MLewisson10, Jun 2026)</div>
+        <div class="pillar-copy-group">
+          <div class="pillar-copy-label">Landing Page Position</div>
+          <div class="copy-example">The agencies winning in 2026 aren't hiring more people. They're building systems that replace the overhead. <strong>Metalyde is that system.</strong></div>
+        </div>
+        <div class="pillar-copy-group">
+          <div class="pillar-copy-label">AI Feature Description (plain voice)</div>
+          <div class="copy-example">When a brief comes in, Metalyde drafts the project plan, assigns budget, and surfaces any similar past work. When a client adds scope mid-campaign, it flags the change, prices it, and drops a line in the invoice draft. When the campaign closes, the client report writes itself from the data already in the system. You review. You approve. You send.</div>
+        </div>
+        <div class="pillar-copy-label">Identity Frame (for aspirational buyers)</div>
+        <div class="copy-example">YC is looking for AI-native agencies. The question isn't whether to be one. It's whether your operating system is built for it.</div>
+        <div class="copy-context">Use carefully — activates identity, not features. Works for ICP who have already adopted the AI-native agency framing.</div>
+      </div>
+    </div>
+
+    <!-- PILLAR 4 -->
+    <div class="pillar">
+      <div class="pillar-head">
+        <div class="pillar-badge" style="background:var(--amber-light);">🎯</div>
+        <div>
+          <div class="pillar-title">Pillar 4: Built for Lean Agencies — Not Repurposed for Them</div>
+          <div class="pillar-claim">The 2–10 person marketing agency with sophisticated clients has no purpose-built tool. Every competitor is either a freelancer app (Bonsai, Plutio) or a 30-seat implementation project (Scoro, Productive).</div>
+        </div>
+      </div>
+      <div class="pillar-body">
+        <div class="pillar-stat">Anchor stat: PSA onboarding timelines = 2–6 weeks minimum. Lean Agency 2.0 launch cadence = campaigns in 3 weeks. The tools are slower than the work.</div>
+        <div class="pillar-copy-group">
+          <div class="pillar-copy-label">Landing Page Positioning</div>
+          <div class="copy-example">If you're 2–10 people running 6–15 marketing accounts, you're either under-tooled (Bonsai breaks at team scale) or over-tooled (Scoro takes 6 weeks to configure). Metalyde is sized for exactly where you are.</div>
+        </div>
+        <div class="pillar-copy-group">
+          <div class="pillar-copy-label">Competitive Frame</div>
+          <div class="copy-example">You don't need a resource planning module that requires a dedicated operations hire to maintain. You need a system that runs while you're billing — and surfaces what matters in the time you have.</div>
+        </div>
+        <div class="pillar-copy-group">
+          <div class="pillar-copy-label">Bonsai Migration Hook (time-sensitive)</div>
+          <div class="copy-example">Bonsai was acquired by Zoom in December 2025. If you're wondering what that means for your data, your pricing, and your roadmap — you're not alone. Metalyde is the migration path built for boutique agency work.</div>
+          <div class="copy-context">Use in targeted outbound/landing only. Window is time-sensitive — 6–9 months max before Zoom clarifies direction.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       TAGLINES
+  ══════════════════════════════════════════════════════ -->
+  <section id="taglines" class="section">
+    <div class="section-header">
+      <div class="section-title">Tagline Options</div>
+      <div class="section-desc">8–12 options across 5 angles. These are genuinely different — not safe variations. React to angles, not just lines. The right tagline depends on which positioning angle you commit to.</div>
+    </div>
+
+    <div class="callout">
+      <span class="callout-icon">◎</span>
+      <span>Evaluation criteria: (1) Is it specific to marketing agencies — not "any team, any business"? (2) Does a competitor already own this line or could they? (3) Does it hold up as a domain name, a T-shirt, a company tagline? (4) Is it still true at 50 employees?</span>
+    </div>
+
+    <!-- ANGLE 1: OS -->
+    <div class="angle-group">
+      <div class="angle-header">
+        <div class="angle-label">Angle 1: The OS</div>
+        <div class="angle-desc">Claim the "Agency OS" category directly — most assertive, highest differentiation, highest risk if category becomes crowded fast.</div>
+      </div>
+      <div class="tagline-list">
+        <div class="tagline-item">
+          <div class="tagline-star">🏆</div>
+          <div>
+            <div class="tagline-text">The OS for a marketing agency.</div>
+            <div class="tagline-note">Direct category claim. Vertical-specific — "marketing agency" blocks generic competitors. Pairs with "The OS for how a marketing agency runs its business" as expanded form. No competitor owns this line.</div>
+          </div>
+        </div>
+        <div class="tagline-item">
+          <div class="tagline-star">⬡</div>
+          <div>
+            <div class="tagline-text">Marketing agency software that thinks like a marketing agency.</div>
+            <div class="tagline-note">Anti-generic framing. "Thinks like" implies domain-native design, not horizontal repurposing. Slightly longer — better as a subhead than a primary tagline.</div>
+          </div>
+        </div>
+        <div class="tagline-item">
+          <div class="tagline-star">⬡</div>
+          <div>
+            <div class="tagline-text">How a marketing agency actually runs.</div>
+            <div class="tagline-note">Declarative and slightly editorial. Implies competitors don't understand how agencies actually run. Works as a landing page section header too.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ANGLE 2: PROFITABILITY -->
+    <div class="angle-group">
+      <div class="angle-header">
+        <div class="angle-label">Angle 2: Profitability</div>
+        <div class="angle-desc">Lead with the financial pain. Sharpest hook because it's measurable. Risk: sounds like an accounting product if not grounded in agency context.</div>
+      </div>
+      <div class="tagline-list">
+        <div class="tagline-item">
+          <div class="tagline-star">🏆</div>
+          <div>
+            <div class="tagline-text">Know your agency's margin before the invoice goes out.</div>
+            <div class="tagline-note">Specific, present-tense, anchored to a real moment in the agency workflow. The "before" contrast is implicit — competitors surface this too late. Strong. Length is acceptable for a subhead; tight enough for a headline.</div>
+          </div>
+        </div>
+        <div class="tagline-item">
+          <div class="tagline-star">⬡</div>
+          <div>
+            <div class="tagline-text">Stop losing $5,000 a month to work you forgot to bill.</div>
+            <div class="tagline-note">Uses the Ignition stat directly. Hard to ignore if the number lands. Risk: feels more like an ad than a tagline. Better as a hero subheadline than a primary company tagline.</div>
+          </div>
+        </div>
+        <div class="tagline-item">
+          <div class="tagline-star">⬡</div>
+          <div>
+            <div class="tagline-text">Run a profitable agency. Not just a busy one.</div>
+            <div class="tagline-note">Captures the agency trap — activity vs. margin. Conversational. "Busy" is exactly how over-loaded agency owners describe themselves. Clean enough for a tagline, grounded in the persona.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ANGLE 3: AI-NATIVE -->
+    <div class="angle-group">
+      <div class="angle-header">
+        <div class="angle-label">Angle 3: AI-Native</div>
+        <div class="angle-desc">Identity play — sell the AI-native agency identity, not the feature. Highest ceiling (Jacobsklug/YC thesis), highest risk of sounding like every other AI-for-X startup.</div>
+      </div>
+      <div class="tagline-list">
+        <div class="tagline-item">
+          <div class="tagline-star">🏆</div>
+          <div>
+            <div class="tagline-text">Built for the agency that sells leverage, not labor.</div>
+            <div class="tagline-note">References the Jacobsklug labor→leverage thesis directly. Speaks to the identity shift. A buyer who's adopted this frame will feel seen immediately. Risk: alienates traditional agencies who don't identify with this framing yet.</div>
+          </div>
+        </div>
+        <div class="tagline-item">
+          <div class="tagline-star">⬡</div>
+          <div>
+            <div class="tagline-text">The agency admin is done. Your agents ran it.</div>
+            <div class="tagline-note">Describes the AI outcome (admin handled, invisibly) without naming "AI." Confident, slightly aspirational. Better as a section header than a company tagline.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ANGLE 4: UNIFICATION -->
+    <div class="angle-group">
+      <div class="angle-header">
+        <div class="angle-label">Angle 4: Unification / Anti-Sprawl</div>
+        <div class="angle-desc">Directly target the "5 tools" pain. Easiest to understand, lowest differentiation ceiling — every all-in-one claims this. Only works if anti-positioned sharply against the tools.</div>
+      </div>
+      <div class="tagline-list">
+        <div class="tagline-item">
+          <div class="tagline-star">🏆</div>
+          <div>
+            <div class="tagline-text">Brief to invoice. One system. Not five.</div>
+            <div class="tagline-note">Names the journey, names the contrast, names the number. Tight. The "not five" is the only anti-positioning needed. Works as a landing page H2. Strong candidate.</div>
+          </div>
+        </div>
+        <div class="tagline-item">
+          <div class="tagline-star">⬡</div>
+          <div>
+            <div class="tagline-text">Your agency runs on 5 tools. Or 1.</div>
+            <div class="tagline-note">The structural contrast does the work. Short enough to be a billboard. "Or 1" is the product offer. Risk: "or 1" could sound like "yet another all-in-one" without the right context around it.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ANGLE 5: CALM / CONTROL -->
+    <div class="angle-group">
+      <div class="angle-header">
+        <div class="angle-label">Angle 5: Calm / Control</div>
+        <div class="angle-desc">Emotional differentiation — sell the mental state, not the features. Highest brand longevity, slowest to convert. Works better as voice attribute than as primary tagline.</div>
+      </div>
+      <div class="tagline-list">
+        <div class="tagline-item">
+          <div class="tagline-star">🏆</div>
+          <div>
+            <div class="tagline-text">Eight clients. One view. Monday morning.</div>
+            <div class="tagline-note">Sells the mental state: operational clarity. No chaos language, no urgency. The "Monday morning" anchors it to the routine moment when agency owners most need visibility. Minimalist — strong for brand-aware contexts, weaker for cold acquisition.</div>
+          </div>
+        </div>
+        <div class="tagline-item">
+          <div class="tagline-star">⬡</div>
+          <div>
+            <div class="tagline-text">You run the agency. Not the other way around.</div>
+            <div class="tagline-note">Agency founder voice — resonates with the @blvckledge "golden handcuffs" sentiment. Slightly too generic; works better as a section headline than a company tagline.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Comparison table -->
+    <div class="card" style="margin-top: 16px;">
+      <div class="card-header">
+        <div class="card-title">Tagline Comparison Matrix</div>
+        <div class="card-subtitle">Evaluate candidates across four dimensions</div>
+      </div>
+      <div class="card-body" style="padding: 0;">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Tagline</th>
+              <th>Specificity</th>
+              <th>Distinctiveness</th>
+              <th>Conversion pull</th>
+              <th>Longevity</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>"The OS for a marketing agency."</td><td><span class="badge badge-green">High</span></td><td><span class="badge badge-green">High</span></td><td><span class="badge badge-amber">Medium</span></td><td><span class="badge badge-green">High</span></td></tr>
+            <tr><td>"Know your margin before the invoice goes out."</td><td><span class="badge badge-green">High</span></td><td><span class="badge badge-green">High</span></td><td><span class="badge badge-green">High</span></td><td><span class="badge badge-amber">Medium</span></td></tr>
+            <tr><td>"Built for the agency that sells leverage, not labor."</td><td><span class="badge badge-green">High</span></td><td><span class="badge badge-green">High</span></td><td><span class="badge badge-amber">Medium</span></td><td><span class="badge badge-green">High</span></td></tr>
+            <tr><td>"Brief to invoice. One system. Not five."</td><td><span class="badge badge-green">High</span></td><td><span class="badge badge-amber">Medium</span></td><td><span class="badge badge-green">High</span></td><td><span class="badge badge-amber">Medium</span></td></tr>
+            <tr><td>"Run a profitable agency. Not just a busy one."</td><td><span class="badge badge-amber">Medium</span></td><td><span class="badge badge-amber">Medium</span></td><td><span class="badge badge-green">High</span></td><td><span class="badge badge-green">High</span></td></tr>
+            <tr><td>"Eight clients. One view. Monday morning."</td><td><span class="badge badge-amber">Medium</span></td><td><span class="badge badge-green">High</span></td><td><span class="badge badge-amber">Medium</span></td><td><span class="badge badge-green">High</span></td></tr>
+            <tr><td>"Stop losing $5,000 a month to work you forgot to bill."</td><td><span class="badge badge-green">High</span></td><td><span class="badge badge-amber">Medium</span></td><td><span class="badge badge-green">High</span></td><td><span class="badge badge-red">Low</span></td></tr>
+            <tr><td>"How a marketing agency actually runs."</td><td><span class="badge badge-green">High</span></td><td><span class="badge badge-amber">Medium</span></td><td><span class="badge badge-amber">Medium</span></td><td><span class="badge badge-green">High</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       NARRATIVE ARC
+  ══════════════════════════════════════════════════════ -->
+  <section id="arc" class="section">
+    <div class="section-header">
+      <div class="section-title">Narrative Arc</div>
+      <div class="section-desc">Problem → Agitate → Solution → Proof → CTA — written as real copy, not a template. This is the long-form backbone from which landing page, sales deck, and onboarding email sequences are cut.</div>
+    </div>
+
+    <div class="callout">
+      <span class="callout-icon">◎</span>
+      <span>Voice note: The arc is written in second person, present tense. No "imagine if." No "you deserve better." The buyer is a rational operator — speak to their situation precisely, then move.</span>
+    </div>
+
+    <!-- PROBLEM -->
+    <div class="arc-step">
+      <div class="arc-step-num">P</div>
+      <div class="arc-content">
+        <div class="arc-phase">Problem</div>
+        <div class="arc-headline">Your agency is busy. That doesn't mean it's profitable.</div>
+        <div class="arc-copy">You're running six client accounts. Some have retainers. Some are project-based. One is a hybrid — retainer for strategy, project for production. You have a PM tool for tasks, a spreadsheet for budget tracking, an invoicing tool for billing, and Slack for everything that doesn't fit in the others. On paper, utilization looks fine. You're booked. But at the end of the month, when you look at actual margin, something doesn't add up.</div>
+        <div class="arc-pull-quote">
+          "Running an agency is about being able to keep about five different things moving at the same time without any of them falling apart." — @habeeb_taj19252
+        </div>
+      </div>
+    </div>
+
+    <div class="arc-connector"><div class="arc-connector-line"></div></div>
+
+    <!-- AGITATE -->
+    <div class="arc-step">
+      <div class="arc-step-num">A</div>
+      <div class="arc-content">
+        <div class="arc-phase">Agitate</div>
+        <div class="arc-headline">The hours are there. You just can't see them.</div>
+        <div class="arc-copy">Here's what's actually happening: 57% of agencies lose $1,000–$5,000 a month to scope creep they never invoice. The hours leaked between the brief in Notion and the task in ClickUp. The extra revision round no one logged. The "quick strategy call" that ran 90 minutes. The average agency loses $32,000 a year to untracked hours — not because the work wasn't done, but because no system connected the doing to the billing.</div>
+        <div class="arc-copy">And the tools that are supposed to fix this? Every PM tool on the market was built for software teams, reskinned for agencies, and sold with a 6-week onboarding timeline your team doesn't have. Monday, ClickUp, Asana — agency owners have a phrase for this category: "a worse version of Google Sheets with integrations you'll never use and a more confusing UI."</div>
+        <div class="arc-pull-quote">
+          "57% of agencies lose $1,000–$5,000/month to unbilled scope creep. Only 1% bill for all out-of-scope work." — Ignition 2025 State of Billing
+          <em>Note: Cite in full on first use. In second or third use, "the Ignition stat" is sufficient shorthand.</em>
+        </div>
+        <div class="arc-copy">Meanwhile, your clients are asking for real-time dashboards and AI-generated performance insights. You're still sending a PDF at month-end. And your five-tool stack can't produce a single coherent view without a manual export cycle that takes three hours.</div>
+      </div>
+    </div>
+
+    <div class="arc-connector"><div class="arc-connector-line"></div></div>
+
+    <!-- SOLUTION -->
+    <div class="arc-step">
+      <div class="arc-step-num">S</div>
+      <div class="arc-content">
+        <div class="arc-phase">Solution</div>
+        <div class="arc-headline">Metalyde is the operating system a marketing agency actually needs.</div>
+        <div class="arc-copy">Not a generic work management tool with an agency template. Not a PSA built for 50-seat consulting firms. Not a freelancer billing app you've outgrown. Metalyde was designed from first principles around one question: how does a 2–10 person marketing agency run eight client accounts, mix retainer and project billing, deliver client reporting, and know its margin — without four people spending 20% of their time doing administrative coordination?</div>
+        <div class="arc-copy">The answer starts with the brief. When a client brief lands in Metalyde, a project plan is auto-drafted, budget tracking begins, and the system starts watching for scope. When the client asks for "one more revision," Metalyde flags it, prices it, and drops a line in the invoice draft. When the campaign closes, the client report is built from the data already in the system. You review, approve, send.</div>
+        <div class="arc-copy">Retainer, project, milestone, and value-based billing live in a single data model. No spreadsheet bridges. No export-to-invoice workflow. The client portal updates in real time. And every Monday morning, you know exactly which accounts made you money last week and which ones burned it — before the month closes, not after.</div>
+      </div>
+    </div>
+
+    <div class="arc-connector"><div class="arc-connector-line"></div></div>
+
+    <!-- PROOF -->
+    <div class="arc-step">
+      <div class="arc-step-num">✓</div>
+      <div class="arc-content">
+        <div class="arc-phase">Proof</div>
+        <div class="arc-headline">Built on the infrastructure that makes this possible — not a roadmap item.</div>
+        <div class="arc-copy">Metalyde is built on a multi-tenant architecture with production-grade permissions (per-client data isolation, role-based access for your team and your clients' team members) — the infrastructure most SaaS companies build in year three. The AI agent layer is built into the operating system, not bolted on as a premium add-on in 2025 beta.</div>
+        <div class="arc-copy">The pricing model is designed for lean agencies — not for 30-seat implementations that require a dedicated operations hire to configure. You can be live with your first client brief in under an hour.</div>
+        <div class="arc-pull-quote">
+          "AI-native agencies don't scale by hiring more people. They scale by building systems that replace people — turn repeated work into proprietary IP." — @Jacobsklug, Feb 2026
+          <em>Context: YC actively recruiting AI-native agencies. The segment exists, is growing, and has no purpose-built tool.</em>
+        </div>
+        <div class="arc-copy">The marketing agency operating system category is forming right now — multiple builders are claiming "agency OS" as of June 2026. None of them are AI-native and marketing-agency-specific and profitability-led. That intersection is where Metalyde lives.</div>
+      </div>
+    </div>
+
+    <div class="arc-connector"><div class="arc-connector-line"></div></div>
+
+    <!-- CTA -->
+    <div class="arc-step">
+      <div class="arc-step-num">→</div>
+      <div class="arc-content">
+        <div class="arc-phase">Call to Action</div>
+        <div class="arc-headline">Start your first brief — free for 14 days.</div>
+        <div class="arc-copy">No implementation project. No onboarding call required unless you want one. No per-seat pricing that penalizes you for growing. Log in, create your first client brief, and see the margin surface in real time.</div>
+
+        <div style="display: flex; flex-direction: column; gap: 10px; max-width: 480px;">
+          <div style="background: var(--accent); color: white; padding: 14px 24px; border-radius: 8px; font-size: 15px; font-weight: 700; text-align: center; cursor: pointer; user-select: none;">
+            Start free — 14 days, no card required
+          </div>
+          <div style="background: var(--surface-2); border: 1px solid var(--border); padding: 14px 24px; border-radius: 8px; font-size: 14px; font-weight: 600; text-align: center; color: var(--text); cursor: pointer; user-select: none;">
+            Book a 20-minute walkthrough
+          </div>
+          <div style="font-size: 12px; color: var(--text-3); text-align: center; padding-top: 2px;">
+            Switching from Bonsai? Migration takes under 30 minutes.
+          </div>
+        </div>
+
+        <div style="margin-top: 24px; padding: 16px 20px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); max-width: 480px;">
+          <div style="font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-3); margin-bottom: 10px;">CTA Variants by context</div>
+          <div style="display: flex; flex-direction: column; gap: 8px; font-size: 13px;">
+            <div><span style="color:var(--text-3);font-weight:600;">Landing primary:</span> Start free → <em>start the brief loop immediately</em></div>
+            <div><span style="color:var(--text-3);font-weight:600;">Profitability landing:</span> See your margin → <em>anchors to the core claim</em></div>
+            <div><span style="color:var(--text-3);font-weight:600;">Bonsai migration:</span> Migrate in 30 minutes → <em>removes the friction fear</em></div>
+            <div><span style="color:var(--text-3);font-weight:600;">Social / bottom of thread:</span> Try it → <em>lightest ask; link does the work</em></div>
+            <div><span style="color:var(--text-3);font-weight:600;">Sales deck close:</span> Let's run your first brief together → <em>collaborative, low-stakes first step</em></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+</main>
+
+<script>
+  function show(id) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    event.currentTarget.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>
