@@ -17,7 +17,7 @@ staging → PR to main → CI runs → Vercel auto-deploys to production
 |-----------|----------|---------|
 | Web (TanStack Start + Nitro) | Vercel | SSR, edge caching, Fluid compute |
 | API (NestJS + Fastify) | Vercel | Zero-config NestJS, Fluid compute, auto-scaling |
-| Docs (Fumadocs + Next.js) | Vercel | Static/ISR — deployed to `docs.metalyde.roxabi.dev` |
+| Docs (Fumadocs + Next.js) | Vercel | Static/ISR — `docs.metalyde.roxabi.dev`, published from `main` only (no staging environment) |
 | Database | Neon | Serverless PostgreSQL, not managed by Vercel |
 
 No Docker is needed for deployment. Docker configurations (Dockerfiles, `docker-compose.prod.yml`, Nginx configs, `deploy/`) remain in the repo for local development only.
@@ -34,6 +34,7 @@ No Docker is needed for deployment. Docker configurations (Dockerfiles, `docker-
 - `staging` is the default integration branch — all feature PRs target it
 - Automatic preview deployments are **disabled** at the Vercel project level — pushes to non-`main` branches do not trigger any Vercel build
 - Use the **Deploy Preview** GitHub Action or Vercel CLI for on-demand preview URLs
+- Web and API have a standing **staging** preview environment (`staging.metalyde.roxabi.dev`); the **docs** site has no staging environment — docs changes are reviewed on `main` after promotion
 - Only merges to `main` trigger production auto-deploys
 
 ---

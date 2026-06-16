@@ -100,7 +100,7 @@ MUST read [code-review.mdx](docs/standards/code-review.mdx). Conventional Commen
 | Product & vision | [product/index.mdx](docs/product/index.mdx) |
 | Frames / Analyses / Specs / Plans | [artifacts/frames/](artifacts/frames/) / [artifacts/analyses/](artifacts/analyses/) / [artifacts/specs/](artifacts/specs/) / [artifacts/plans/](artifacts/plans/) |
 
-**Deploy:** `main` → Vercel prod. `staging` → preview. Details in [apps/web/CLAUDE.md](apps/web/CLAUDE.md) and [apps/api/CLAUDE.md](apps/api/CLAUDE.md).
+**Deploy:** `main` → Vercel prod. `staging` → preview for **web + API** only; the **docs** site publishes from `main` only (no staging preview). Details in [apps/web/CLAUDE.md](apps/web/CLAUDE.md) and [apps/api/CLAUDE.md](apps/api/CLAUDE.md).
 
 **Hooks (Claude Code):** Biome auto-format (PostToolUse) | Security warn (PreToolUse) | `bun test` blocker (PreToolUse)
 **Hooks (Git/Lefthook):** pre-commit (Biome) | commit-msg (Commitlint) | pre-push (lint+typecheck+tests+i18n+license)
