@@ -20,8 +20,8 @@ bun run dev          # web :3000 · api :4000 · email :3001
 All development uses **worktrees**. `main` is production, `staging` is the integration branch.
 
 ```bash
-git worktree add ../roxabi-XXX -b feat/XXX-slug staging
-cd ../roxabi-XXX && cp .env.example .env && bun install
+git worktree add ../metalyde-XXX -b feat/XXX-slug staging
+cd ../metalyde-XXX && cp .env.example .env && bun install
 cd apps/api && bun run db:branch:create --force XXX
 ```
 
