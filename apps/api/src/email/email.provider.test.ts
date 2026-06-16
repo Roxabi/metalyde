@@ -44,7 +44,7 @@ describe('ResendEmailProvider', () => {
       // Arrange
       const config = createMockConfig({
         RESEND_API_KEY: 're_test_123',
-        EMAIL_FROM: 'support@roxabi.com',
+        EMAIL_FROM: 'support@metalyde.roxabi.dev',
       })
 
       // Act
@@ -127,7 +127,7 @@ describe('ResendEmailProvider', () => {
       // Arrange
       const config = createMockConfig({
         RESEND_API_KEY: 're_test_123',
-        EMAIL_FROM: 'hello@roxabi.com',
+        EMAIL_FROM: 'hello@metalyde.roxabi.dev',
       })
       const provider = new ResendEmailProvider(config as never)
 
@@ -141,7 +141,7 @@ describe('ResendEmailProvider', () => {
 
       // Assert
       expect(mockSend).toHaveBeenCalledWith({
-        from: 'hello@roxabi.com',
+        from: 'hello@metalyde.roxabi.dev',
         to: 'user@example.com',
         subject: 'Welcome',
         html: '<h1>Welcome!</h1>',
@@ -158,7 +158,7 @@ describe('ResendEmailProvider', () => {
       const errorSpy = vi.spyOn(Logger.prototype, 'error').mockImplementation(() => {})
       const config = createMockConfig({
         RESEND_API_KEY: 're_test_123',
-        EMAIL_FROM: 'hello@roxabi.com',
+        EMAIL_FROM: 'hello@metalyde.roxabi.dev',
       })
       const provider = new ResendEmailProvider(config as never)
 
@@ -181,7 +181,7 @@ describe('ResendEmailProvider', () => {
       const errorSpy = vi.spyOn(Logger.prototype, 'error').mockImplementation(() => {})
       const config = createMockConfig({
         RESEND_API_KEY: 're_test_123',
-        EMAIL_FROM: 'hello@roxabi.com',
+        EMAIL_FROM: 'hello@metalyde.roxabi.dev',
       })
       const provider = new ResendEmailProvider(config as never)
 

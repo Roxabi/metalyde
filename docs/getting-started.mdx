@@ -1,9 +1,9 @@
 ---
 title: Getting Started
-description: Quick start guide to use the Roxabi Boilerplate
+description: Quick start guide to get up and running with Metalyde
 ---
 
-Quick start guide to use the Roxabi Boilerplate.
+Quick start guide to get up and running with Metalyde.
 
 ## Prerequisites
 
@@ -16,27 +16,12 @@ Quick start guide to use the Roxabi Boilerplate.
 
 ## 1. Create the Project
 
-### Clone the boilerplate
+### Clone the repository
 
 ```bash
-# Option A: Direct clone (to contribute to the boilerplate)
-git clone https://github.com/MickaelV0/roxabi_boilerplate.git my-project
-cd my-project
-
-# Option B: Use as template (for a new project)
-gh repo create my-project --template MickaelV0/roxabi_boilerplate --private
-gh repo clone my-project
-cd my-project
-```
-
-### Configure the remote (if direct clone)
-
-```bash
-# Remove the boilerplate's origin remote
-git remote remove origin
-
-# Create your own GitHub repo
-gh repo create my-project --private --source=. --push
+# Clone Metalyde
+git clone https://github.com/Roxabi/metalyde.git
+cd metalyde
 ```
 
 ## 2. Configure GitHub Project & Labels
@@ -45,7 +30,7 @@ Set up the project board, status columns, custom fields (Size, Priority), labels
 
 > Full setup instructions: [Issue Management > Project Board Setup](./processes/issue-management#project-board-setup)
 
-Labels are included in the template repo. If creating manually, the issue management doc has the full `gh label create` commands.
+Labels are included in the repository. If creating manually, the issue management doc has the full `gh label create` commands.
 
 ## 3. Configure GitHub Repository
 
@@ -222,5 +207,5 @@ bun --filter @repo/api dev
 
 1. Read the [Vision](./product/vision) to understand the project
 2. Check the [Architecture](./architecture)
-3. Check the [open issues](https://github.com/MickaelV0/roxabi_boilerplate/issues)
+3. Check the [open issues](https://github.com/Roxabi/metalyde/issues)
 4. Set up [Deployment](./guides/deployment) when ready for production
