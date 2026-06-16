@@ -239,16 +239,7 @@ jobs:
           # Slug limit: 63 (DNS label max) - 17 ("metalyde-app-git-") - 7 ("-roxabi") = 39.
           BRANCH_SLUG=$(printf '%s' "${GITHUB_REF_NAME}" | tr -d '\n\r' | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g' | sed 's/-\{2,\}/-/g' | sed 's/^-//;s/-$//' | cut -c1-39 | sed 's/-$//')
           WEB_PREVIEW_URL="https://${VERCEL_WEB_PROJECT_NAME}-git-${BRANCH_SLUG}-${VERCEL_TEAM_SLUG}.vercel.app"
-          # Branches with custom domain aliases need APP_URL set to the custom
-          # domain so better-auth's CSRF origin check passes. The branch alias
-          # is kept as a secondary CORS_ORIGIN so both URLs accept requests.
           CORS_EXTRA=""
-          case "$GITHUB_REF_NAME" in
-            staging)
-              CORS_EXTRA=",$WEB_PREVIEW_URL"
-              WEB_PREVIEW_URL="https://staging.metalyde.roxabi.dev"
-              ;;
-          esac
           echo "Web preview URL: $WEB_PREVIEW_URL"
           # Generate once — reusing across retries keeps session signing keys consistent.
           BETTER_AUTH_SECRET_VAL=$(openssl rand -base64 32)
