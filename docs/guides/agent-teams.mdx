@@ -146,16 +146,16 @@ Once all tasks are complete, review the deliverables and create the PR.
 
 | Agent | Color | Domain | Standards |
 |-------|-------|--------|-----------|
-| **frontend-dev** | white | `apps/web/`, `packages/ui/` | [Frontend Patterns](../standards/frontend-patterns) |
-| **backend-dev** | white | `apps/api/`, `packages/types/` | [Backend Patterns](../standards/backend-patterns) |
-| **devops** | white | `packages/config/`, root configs | [Configuration](../configuration) |
+| **frontend-dev** | white | `apps/web/`, `packages/ui/` | Frontend Patterns |
+| **backend-dev** | white | `apps/api/`, `packages/types/` | Backend Patterns |
+| **devops** | white | `packages/config/`, root configs | — |
 
 ### Quality Agents (verification and fixing)
 
 | Agent | Color | Role | Standards |
 |-------|-------|------|-----------|
-| **fixer** | white | Fullstack quick fixer — applies accepted review comments. Spawned in parallel (one per domain) when fixes span multiple domains. | [Code Review](../standards/code-review) |
-| **tester** | white | Test generation &amp; validation | [Testing](../standards/testing) |
+| **fixer** | white | Fullstack quick fixer — applies accepted review comments. Spawned in parallel (one per domain) when fixes span multiple domains. | Code Review |
+| **tester** | white | Test generation &amp; validation | Testing |
 | **security-auditor** | white | Vulnerability detection | OWASP Top 10 |
 
 ### Strategy Agents (planning &amp; alignment)
@@ -164,7 +164,7 @@ Once all tasks are complete, review the deliverables and create the PR.
 |-------|-------|------|-----------|
 | **architect** | white | System design, tier classification | [Architecture](../architecture/) |
 | **product-lead** | white | Product ownership, requirements, triage | [Issue Management](../processes/issue-management) |
-| **doc-writer** | white | Documentation maintenance | [Contributing](../contributing) |
+| **doc-writer** | white | Documentation maintenance | — |
 
 ---
 
@@ -330,8 +330,8 @@ Single-domain fixes still use one fixer that commits and pushes directly.
 
 ```bash
 # Phase 2 — Create worktree and start working
-git worktree add ../roxabi-XXX -b feat/XXX-slug staging
-cd ../roxabi-XXX && bun install
+git worktree add ../metalyde-XXX -b feat/XXX-slug staging
+cd ../metalyde-XXX && bun install
 ```
 
 Spawn subagents via `Task` tool: `frontend-dev` + `tester`.

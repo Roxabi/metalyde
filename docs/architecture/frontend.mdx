@@ -121,7 +121,7 @@ export const Route = createFileRoute('/login')({
   loader: fetchEnabledProviders,
   component: LoginPage,
   head: () => ({
-    meta: [{ title: 'Sign In | Roxabi' }],
+    meta: [{ title: 'Sign In | Metalyde' }],
   }),
 })
 ```
@@ -520,6 +520,6 @@ These are tree-shaken from production builds.
 
 - [Architecture overview](./index) -- Monorepo structure and data flow
 - [Database architecture](./database) -- Drizzle ORM and schema conventions
-- [Frontend patterns](../standards/frontend-patterns) -- Coding standards for React and TanStack
+- [Dev Environment](../guides/dev-environment) -- Local setup and tooling
 - [Authentication guide](../guides/authentication) -- Better Auth integration details
 - [Deployment guide](../guides/deployment) -- Vercel deployment for web and API

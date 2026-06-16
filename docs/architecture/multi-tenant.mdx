@@ -5,7 +5,7 @@ description: Organization-based tenancy model, Row-Level Security implementation
 
 ## Overview
 
-Roxabi uses an **organization-based multi-tenancy** model where each Better Auth organization represents a tenant. Data isolation is enforced at the database level through PostgreSQL Row-Level Security (RLS), not at the application query level. This means a missing `WHERE tenant_id = ?` clause cannot cause a data leak -- the database itself rejects cross-tenant access.
+Metalyde uses an **organization-based multi-tenancy** model where each Better Auth organization represents a tenant. Data isolation is enforced at the database level through PostgreSQL Row-Level Security (RLS), not at the application query level. This means a missing `WHERE tenant_id = ?` clause cannot cause a data leak -- the database itself rejects cross-tenant access.
 
 Key design decisions:
 

@@ -109,7 +109,7 @@ The original analysis flagged a concern that release-please Release PRs "must no
 However, there is a real (though different) interaction concern:
 
 - **Release-please creates its Release PR targeting `main`** (triggered by pushes to `main`)
-- **The Roxabi workflow uses staging as the integration branch**, with `/promote` creating the staging-to-main PR
+- **The Metalyde workflow uses staging as the integration branch**, with `/promote` creating the staging-to-main PR
 - Release-please expects a direct trunk-based workflow: feature branches merge to `main`, and release-please reads those commits to generate the Release PR
 
 **The fundamental mismatch is branching strategy, not merge strategy.** Release-please is designed for trunk-based development where commits land directly on `main`. In this project, commits land on `staging` first, then are promoted to `main` via a promotion PR. This means:
