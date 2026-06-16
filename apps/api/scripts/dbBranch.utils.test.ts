@@ -9,13 +9,13 @@ import { buildDatabaseUrl, parseWorktreeBlock, redactUrl } from './dbBranch.util
 describe('redactUrl', () => {
   it('should redact password from a standard DATABASE_URL', () => {
     // Arrange
-    const url = 'postgresql://roxabi:supersecret@localhost:5432/roxabi_42'
+    const url = 'postgresql://metalyde:supersecret@localhost:5432/metalyde_42'
 
     // Act
     const result = redactUrl(url)
 
     // Assert
-    expect(result).toBe('postgresql://roxabi:***@localhost:5432/roxabi_42')
+    expect(result).toBe('postgresql://metalyde:***@localhost:5432/metalyde_42')
   })
 
   it('should redact password containing special characters', () => {
@@ -31,13 +31,13 @@ describe('redactUrl', () => {
 
   it('should handle URL without password gracefully', () => {
     // Arrange
-    const url = 'postgresql://localhost:5432/roxabi_42'
+    const url = 'postgresql://localhost:5432/metalyde_42'
 
     // Act
     const result = redactUrl(url)
 
     // Assert — no colon-before-@ pattern, so nothing is replaced
-    expect(result).toBe('postgresql://localhost:5432/roxabi_42')
+    expect(result).toBe('postgresql://localhost:5432/metalyde_42')
   })
 
   it('should return empty string for empty input', () => {
@@ -47,13 +47,13 @@ describe('redactUrl', () => {
 
   it('should handle URL with default credentials', () => {
     // Arrange
-    const url = 'postgresql://roxabi:roxabi@localhost:5432/roxabi_150'
+    const url = 'postgresql://metalyde:metalyde@localhost:5432/metalyde_150'
 
     // Act
     const result = redactUrl(url)
 
     // Assert
-    expect(result).toBe('postgresql://roxabi:***@localhost:5432/roxabi_150')
+    expect(result).toBe('postgresql://metalyde:***@localhost:5432/metalyde_150')
   })
 })
 
@@ -64,27 +64,27 @@ describe('redactUrl', () => {
 describe('buildDatabaseUrl', () => {
   it('should build URL with provided credentials', () => {
     // Arrange
-    const dbName = 'roxabi_42'
-    const user = 'roxabi'
-    const password = 'roxabi'
+    const dbName = 'metalyde_42'
+    const user = 'metalyde'
+    const password = 'metalyde'
 
     // Act
     const result = buildDatabaseUrl(dbName, user, password)
 
     // Assert
-    expect(result).toBe('postgresql://roxabi:roxabi@localhost:5432/roxabi_42')
+    expect(result).toBe('postgresql://metalyde:metalyde@localhost:5432/metalyde_42')
   })
 
   it('should include the dbName in the URL path', () => {
     // Arrange
-    const dbName = 'roxabi_150'
+    const dbName = 'metalyde_150'
 
     // Act
     const result = buildDatabaseUrl(dbName, 'user', 'pass')
 
     // Assert
-    expect(result).toContain('/roxabi_150')
-    expect(result.endsWith('/roxabi_150')).toBe(true)
+    expect(result).toContain('/metalyde_150')
+    expect(result.endsWith('/metalyde_150')).toBe(true)
   })
 
   it('should use default host and port when not specified', () => {
@@ -215,7 +215,7 @@ describe('parseWorktreeBlock', () => {
   it('should return null issueNumber for main branch', () => {
     // Arrange
     const block = [
-      'worktree /home/user/projects/roxabi_boilerplate',
+      'worktree /home/user/projects/metalyde',
       'HEAD abc123',
       'branch refs/heads/main',
     ].join('\n')
@@ -232,7 +232,7 @@ describe('parseWorktreeBlock', () => {
   it('should return null issueNumber for staging branch', () => {
     // Arrange
     const block = [
-      'worktree /home/user/projects/roxabi_boilerplate',
+      'worktree /home/user/projects/metalyde',
       'HEAD def456',
       'branch refs/heads/staging',
     ].join('\n')

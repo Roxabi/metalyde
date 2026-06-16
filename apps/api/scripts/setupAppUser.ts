@@ -1,25 +1,25 @@
 /**
- * Creates the roxabi_app application user on an existing database.
+ * Creates the metalyde_app application user on an existing database.
  *
  * This script is for databases that were created BEFORE the Docker init script
  * was added. For new databases, the Docker init script handles this automatically.
  *
- * The roxabi_app user:
+ * The metalyde_app user:
  * - Has LOGIN + NOBYPASSRLS so RLS policies are enforced
  * - Gets SELECT, INSERT, UPDATE, DELETE on all public tables
  * - Gets SELECT on drizzle schema (for migration status checks)
  * - Is used by the NestJS application at runtime (via DATABASE_APP_URL)
  *
  * Usage:
- *   DATABASE_URL=postgresql://roxabi:roxabi@localhost:5432/roxabi tsx scripts/setupAppUser.ts
+ *   DATABASE_URL=postgresql://metalyde:metalyde@localhost:5432/metalyde tsx scripts/setupAppUser.ts
  *   bun run db:setup-app-user  (reads DATABASE_URL from .env)
  */
 
 import postgres from 'postgres'
 import { assertNotProduction, requireDatabaseUrl } from './guards.js'
 
-const APP_USER = process.env.POSTGRES_APP_USER ?? 'roxabi_app'
-const APP_PASSWORD = process.env.POSTGRES_APP_PASSWORD ?? 'roxabi_app'
+const APP_USER = process.env.POSTGRES_APP_USER ?? 'metalyde_app'
+const APP_PASSWORD = process.env.POSTGRES_APP_PASSWORD ?? 'metalyde_app'
 
 // Validate credentials to prevent SQL injection in interpolated SQL strings
 const IDENTIFIER_REGEX = /^[a-z_][a-z0-9_]*$/

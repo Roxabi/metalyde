@@ -7,13 +7,13 @@
 ![TurboRepo](https://img.shields.io/badge/TurboRepo-monorepo-0ea5e9)
 ![Biome](https://img.shields.io/badge/Biome-linter-60a5fa)
 
-SaaS boilerplate with AI team integration. Docs powered by Next.js 16 + Fumadocs 16.
+SaaS product with AI team integration. Docs powered by Next.js 16 + Fumadocs 16.
 
 <!-- TODO: Add demo GIF once seed data is ready — see scripts/record-demo.ts -->
 
 ## Why
 
-Building SaaS products from scratch means wiring the same infrastructure every time — auth, multi-tenancy, API keys, permissions, email, CI, and documentation. Roxabi Boilerplate ships all of that production-ready so teams can skip to building their actual product.
+Metalyde is a SaaS product built on a modern foundation — auth, multi-tenancy, API keys, permissions, email, CI, and documentation all production-ready from day one.
 
 It pairs a modern TypeScript monorepo with an integrated AI agent team (Claude) for the full development lifecycle — from issue triage to code review to deployment.
 

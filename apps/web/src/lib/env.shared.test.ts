@@ -80,7 +80,7 @@ describe('clientEnvSchema', () => {
       // Arrange
       const input = {
         VITE_APP_URL: 'http://localhost:3000',
-        VITE_GITHUB_REPO_URL: 'https://github.com/roxabi/boilerplate',
+        VITE_GITHUB_REPO_URL: 'https://github.com/Roxabi/metalyde',
       }
 
       // Act
@@ -89,7 +89,7 @@ describe('clientEnvSchema', () => {
       // Assert
       expect(result).toEqual({
         VITE_APP_URL: 'http://localhost:3000',
-        VITE_GITHUB_REPO_URL: 'https://github.com/roxabi/boilerplate',
+        VITE_GITHUB_REPO_URL: 'https://github.com/Roxabi/metalyde',
       })
     })
 

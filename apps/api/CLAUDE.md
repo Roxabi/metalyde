@@ -70,7 +70,7 @@ Vercel — `main` = prod, `staging` = preview.
 ## Gotchas
 
 - `useImportType: off` in Biome for this package — NestJS DI needs runtime imports, not `import type`.
-- DB branches: each worktree gets its own schema via `db:branch:create --force XXX`. Run from `apps/api/`. Container name read from `POSTGRES_CONTAINER` (default `roxabi-postgres`); branch DB prefix from `DB_BRANCH_PREFIX` (default `POSTGRES_DB` value).
+- DB branches: each worktree gets its own schema via `db:branch:create --force XXX`. Run from `apps/api/`. Container name read from `POSTGRES_CONTAINER` (default `metalyde-postgres`); branch DB prefix from `DB_BRANCH_PREFIX` (default `POSTGRES_DB` value).
 - Global validation pipe: `whitelist + forbidNonWhitelisted + transform`. Unknown properties are stripped.
 - Correlation IDs tracked via `nestjs-cls`.
 - `// RLS-BYPASS: <reason>` — required on any `@Inject(DRIZZLE)` line outside `*.repository.ts` files. Allowed paths: `admin/**`, `rbac/permission.service.ts`, `auth/auth.service.ts`, `tenant/tenant.service.ts`, `tenant/tenant.interceptor.ts`, `purge/purge.service.ts`, `gdpr/gdpr.service.ts`. Enforced by `bun run lint:custom`. Adding a new DRIZZLE injector requires adding the path to `scripts/lint/checkDrizzleInjection.ts`.
