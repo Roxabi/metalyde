@@ -1,11 +1,11 @@
 ---
 title: Multi-tenant Architecture
-description: How tenant isolation works in Roxabi -- from the request interceptor through CLS context to PostgreSQL Row-Level Security.
+description: How tenant isolation works in Metalyde -- from the request interceptor through CLS context to PostgreSQL Row-Level Security.
 ---
 
 ## Overview
 
-Roxabi uses **PostgreSQL Row-Level Security (RLS)** for tenant data isolation. Every organization is a tenant, and business data is scoped by a `tenant_id` column that maps to `organizations.id`.
+Metalyde uses **PostgreSQL Row-Level Security (RLS)** for tenant data isolation. Every organization is a tenant, and business data is scoped by a `tenant_id` column that maps to `organizations.id`.
 
 The system follows a simple principle: **the organization IS the tenant**. There is no separate `tenants` table. The `activeOrganizationId` from the user's session determines which tenant's data is visible.
 

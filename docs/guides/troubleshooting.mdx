@@ -1,6 +1,6 @@
 ---
 title: Troubleshooting
-description: Common issues and solutions for Roxabi Boilerplate development
+description: Common issues and solutions for Metalyde development
 ---
 
 Common issues encountered during development and their solutions.
@@ -20,11 +20,11 @@ docker compose ps
 
 Confirm the `DATABASE_URL` in your `.env` file matches the port and credentials defined in `docker-compose.yml`.
 
-If you copied `.env.example` but changed nothing, verify the default credentials (`roxabi:roxabi`) match what `docker-compose.yml` defines. A common mistake is editing the password in one place but not the other:
+If you copied `.env.example` but changed nothing, verify the default credentials (`metalyde:metalyde`) match what `docker-compose.yml` defines. A common mistake is editing the password in one place but not the other:
 
 ```bash
-# Verify by connecting manually (replace roxabi-postgres if POSTGRES_CONTAINER is overridden)
-docker exec -it roxabi-postgres psql -U roxabi -d roxabi -c "SELECT 1"
+# Verify by connecting manually (replace metalyde-postgres if POSTGRES_CONTAINER is overridden)
+docker exec -it metalyde-postgres psql -U metalyde -d metalyde -c "SELECT 1"
 ```
 
 ## Bun Version Mismatch
@@ -172,13 +172,13 @@ For the full list of auth-related environment variables, see the [Authentication
 
 ## Worktree Database Not Found
 
-**Symptom:** After creating a git worktree, the API fails to start with a database error like `database "roxabi_<number>" does not exist` or migrations fail.
+**Symptom:** After creating a git worktree, the API fails to start with a database error like `database "metalyde_<number>" does not exist` or migrations fail.
 
-**Cause:** Each worktree is intended to use its own isolated branch database (`roxabi_<issue_number>`). The `db:branch:create` script creates this database, runs migrations, seeds it, and updates the worktree's `.env` with the correct `DATABASE_URL`. If you skipped this step, the worktree's `.env` still points to the default `roxabi` database (or worse, no database at all).
+**Cause:** Each worktree is intended to use its own isolated branch database (`metalyde_<issue_number>`). The `db:branch:create` script creates this database, runs migrations, seeds it, and updates the worktree's `.env` with the correct `DATABASE_URL`. If you skipped this step, the worktree's `.env` still points to the default `metalyde` database (or worse, no database at all).
 
 **Fix:**
 
-**Important:** Run this from inside your worktree directory (e.g., `../roxabi-42/`), not from the main repository checkout. Running from the wrong directory will update the wrong `.env` file.
+**Important:** Run this from inside your worktree directory (e.g., `../metalyde-42/`), not from the main repository checkout. Running from the wrong directory will update the wrong `.env` file.
 
 ```bash
 cd apps/api
@@ -186,9 +186,9 @@ bun run db:branch:create --force <issue_number>
 ```
 
 This will:
-- Create the `roxabi_<issue_number>` database in the Docker container
+- Create the `metalyde_<issue_number>` database in the Docker container
 - Run all migrations
-- Seed the database with dev data (`dev@roxabi.local` / `password123`)
+- Seed the database with dev data (`dev@metalyde.local` / `password123`)
 - Update your `.env` `DATABASE_URL` to point to the new database
 
 If you already started working and need to check which branch databases exist:
@@ -205,23 +205,23 @@ cd apps/api
 bun run db:branch:drop
 ```
 
-For more on branch databases, see [Configuration -- Branch Databases](../configuration#branch-databases-local-development).
+For more on branch databases, see [Developer Environment](./dev-environment).
 
 ## After Pulling Admin Panel Changes (PR #279)
 
-If you had an existing Docker Postgres setup before this PR, the `roxabi_app` database user
+If you had an existing Docker Postgres setup before this PR, the `metalyde_app` database user
 was not created automatically (Docker init scripts only run on first boot). Run:
 
 ```bash
 bun run db:setup-app-user
 ```
 
-This creates the `roxabi_app` user with RLS-enforced permissions. Without it, tenant-scoped
+This creates the `metalyde_app` user with RLS-enforced permissions. Without it, tenant-scoped
 queries will fail with "permission denied to set role app_user".
 
-Alternative: delete your Docker volume and recreate: `bun run db:down && docker volume rm roxabi_boilerplate_postgres_data && bun run db:up`
+Alternative: delete your Docker volume and recreate: `bun run db:down && docker volume rm metalyde_postgres_data && bun run db:up`
 
-> **Note:** If `POSTGRES_VOLUME` is set to a custom value (e.g. `myapp_data`), the Docker volume name will be `roxabi_boilerplate_myapp_data` — adjust the `docker volume rm` command accordingly.
+> **Note:** If `POSTGRES_VOLUME` is set to a custom value (e.g. `myapp_data`), the Docker volume name will be `myapp_data` — adjust the `docker volume rm` command accordingly.
 
 ## Pre-commit Hook Failures
 
@@ -235,7 +235,7 @@ Alternative: delete your Docker volume and recreate: `bun run db:down && docker 
 bunx biome check --write .
 ```
 
-For commit message rejections, use the Conventional Commits format: `type(scope): description` (e.g., `feat(web): add login page`). See the [Contributing guide](../contributing) for the full list of types.
+For commit message rejections, use the Conventional Commits format: `type(scope): description` (e.g., `feat(web): add login page`).
 
 ## TypeScript Build Errors After Dependency Updates
 
@@ -256,7 +256,7 @@ bun run clean:cache && bun run typecheck
 
 **Symptom:** `bun db:up` fails with `container name already in use` or `volume already exists` errors when another project (e.g. a fork or sibling repo) is already running its own Docker stack.
 
-**Cause:** `docker-compose.yml` defaults to fixed container names (`roxabi-postgres`, `roxabi-mailpit`) and a fixed volume name (`postgres_data`). Two projects sharing these names on the same Docker daemon will conflict.
+**Cause:** `docker-compose.yml` defaults to fixed container names (`metalyde-postgres`, `metalyde-mailpit`) and a fixed volume name (`postgres_data`). Two projects sharing these names on the same Docker daemon will conflict.
 
 **Fix:** Override the Docker identifiers in `.env` before running `bun db:up`:
 
@@ -270,7 +270,7 @@ DB_BRANCH_PREFIX=myapp
 
 `DB_BRANCH_PREFIX` also controls the naming of per-worktree branch databases (`db:branch:create`). Set it to a value unique to this project so branch databases from different projects don't collide inside the shared Postgres instance.
 
-See [Configuration — Docker Overrides](../configuration#docker-overrides-local-dev--multi-project) for the full list of overridable vars.
+Set these in `.env` before running `bun db:up` to avoid naming conflicts with sibling projects.
 
 ## Turbo Cache Staleness
 

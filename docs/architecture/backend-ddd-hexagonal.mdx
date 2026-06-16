@@ -5,11 +5,11 @@ description: Target-state patterns for DDD and Hexagonal Architecture — when t
 
 ## Overview
 
-This document describes the **target architecture** for Roxabi API modules when domain complexity warrants it. The current baseline is deliberate: pragmatic CRUD with NestJS services that directly use Drizzle ORM. That baseline is appropriate for modules with simple, well-understood operations and minimal cross-entity invariants.
+This document describes the **target architecture** for Metalyde API modules when domain complexity warrants it. The current baseline is deliberate: pragmatic CRUD with NestJS services that directly use Drizzle ORM. That baseline is appropriate for modules with simple, well-understood operations and minimal cross-entity invariants.
 
 As a module grows — more entities, more external integrations, more invariants to protect — the CRUD baseline begins to show cracks. Business rules scatter across service methods, tests start requiring a running database, and swapping an external service becomes a surgical operation. Domain-Driven Design (DDD) and Hexagonal Architecture (also called Ports and Adapters) are the structured response to this complexity.
 
-The upgrade is not a rewrite. Roxabi already has proto-DDD artifacts: Symbol-token ports in `apps/api/src/auth/email/email.provider.ts`, four domain events in `apps/api/src/common/events/`, cross-module event consumers, and 46 domain exception classes. This document shows how to build on those patterns systematically, and provides a worked migration using the `rbac` module as the example.
+The upgrade is not a rewrite. Metalyde already has proto-DDD artifacts: Symbol-token ports in `apps/api/src/auth/email/email.provider.ts`, four domain events in `apps/api/src/common/events/`, cross-module event consumers, and 46 domain exception classes. This document shows how to build on those patterns systematically, and provides a worked migration using the `rbac` module as the example.
 
 ## When to Adopt
 

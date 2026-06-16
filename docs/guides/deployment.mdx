@@ -1,11 +1,11 @@
 ---
 title: Deployment
-description: Deploy Roxabi on Vercel — both web and API on one platform
+description: Deploy Metalyde on Vercel — both web and API on one platform
 ---
 
 ## Overview
 
-Roxabi uses a **staging-based** deployment architecture with **Vercel** as the single platform for both the web app and API.
+Metalyde uses a **staging-based** deployment architecture with **Vercel** as the single platform for both the web app and API.
 
 ```
 Feature branch → PR to staging → CI runs
@@ -183,8 +183,8 @@ curl -s -H "Authorization: Bearer $TOKEN" \
 ```bash
 cd apps/web
 for env in production preview development; do
-  printf '%s' "https://api.roxabi.vercel.app" | vercel env add API_URL "$env"
-  printf '%s' "https://app.roxabi.vercel.app" | vercel env add APP_URL "$env"
+  printf '%s' "https://api.metalyde.vercel.app" | vercel env add API_URL "$env"
+  printf '%s' "https://app.metalyde.vercel.app" | vercel env add APP_URL "$env"
 done
 ```
 
@@ -204,11 +204,11 @@ cd apps/api
 SECRET=$(openssl rand -base64 32)
 
 for env in production preview development; do
-  printf '%s' "https://app.roxabi.vercel.app" | vercel env add CORS_ORIGIN "$env"
+  printf '%s' "https://app.metalyde.vercel.app" | vercel env add CORS_ORIGIN "$env"
   printf '%s' "$SECRET"                       | vercel env add BETTER_AUTH_SECRET "$env"
-  printf '%s' "https://api.roxabi.vercel.app" | vercel env add BETTER_AUTH_URL "$env"
-  printf '%s' "https://app.roxabi.vercel.app" | vercel env add APP_URL "$env"
-  printf '%s' "https://api.roxabi.vercel.app" | vercel env add API_URL "$env"
+  printf '%s' "https://api.metalyde.vercel.app" | vercel env add BETTER_AUTH_URL "$env"
+  printf '%s' "https://app.metalyde.vercel.app" | vercel env add APP_URL "$env"
+  printf '%s' "https://api.metalyde.vercel.app" | vercel env add API_URL "$env"
   printf '%s' "noreply@yourdomain.com"        | vercel env add EMAIL_FROM "$env"
 done
 ```
@@ -249,7 +249,7 @@ Rate limiting is **enabled by default** (`RATE_LIMIT_ENABLED=true`) and requires
 2. Select your Vercel team/account when prompted
 3. Choose **Redis** as the product
 4. Configure the database:
-   - **Name:** e.g. `roxabi-redis`
+   - **Name:** e.g. `metalyde-redis`
    - **Region:** choose the closest to your Neon database region
    - **Plan:** Free tier is sufficient for development
 5. Link the database to your **API project** (e.g. `metalyde-api`)
@@ -260,7 +260,7 @@ Rate limiting is **enabled by default** (`RATE_LIMIT_ENABLED=true`) and requires
 
 ```bash
 cd apps/api
-vercel integration add upstash/upstash-kv --name roxabi-redis
+vercel integration add upstash/upstash-kv --name metalyde-redis
 ```
 
 > **Note:** The CLI requires accepting the Upstash terms of service in the dashboard first. If you see a "Terms have not been accepted" prompt, visit the integration page above first.
@@ -327,7 +327,7 @@ cd apps/api && vercel env ls
 
 ## Fork Setup Checklist
 
-If you are forking the Roxabi Boilerplate to start your own SaaS project, follow this step-by-step checklist to get a fully working CI/CD pipeline.
+If you are forking Metalyde to start your own SaaS project, follow this step-by-step checklist to get a fully working CI/CD pipeline.
 
 ### 1. Create Vercel Projects
 
