@@ -66,6 +66,7 @@ reports/
 brand/
 
 # dev-core stack config (project-local, not committed — commit .claude/stack.yml.example)
+.claude/stack.yml
 
 # Retro session intelligence database
 .claude/skills/retro/data/
