@@ -50,18 +50,13 @@ function DesktopNavLinks() {
           activeProps={{ className: 'bg-accent font-medium' }}
           activeOptions={{ exact: true }}
         >
-          {m.nav_home()}
-        </Link>
-      </Button>
-      <Button variant="ghost" size="sm" asChild>
-        <Link to="/design-system" activeProps={{ className: 'bg-accent font-medium' }}>
-          {m.nav_design_system()}
+          <span className="font-mono text-xs uppercase tracking-wide">{m.nav_home()}</span>
         </Link>
       </Button>
       {clientEnv.VITE_TALKS_URL && (
         <Button variant="ghost" size="sm" asChild>
           <a href={clientEnv.VITE_TALKS_URL} target="_blank" rel="noopener noreferrer">
-            {m.nav_talks()}
+            <span className="font-mono text-xs uppercase tracking-wide">{m.nav_talks()}</span>
           </a>
         </Button>
       )}
@@ -69,7 +64,7 @@ function DesktopNavLinks() {
         <Button variant="ghost" size="sm" asChild>
           <a href={clientEnv.VITE_DOCS_URL} target="_blank" rel="noopener noreferrer">
             <BookOpen className="size-4" />
-            {m.nav_docs()}
+            <span className="font-mono text-xs uppercase tracking-wide">{m.nav_docs()}</span>
           </a>
         </Button>
       )}
@@ -100,15 +95,6 @@ function MobileNavPanel({
             onClick={onClose}
           >
             {m.nav_home()}
-          </Link>
-        </Button>
-        <Button variant="ghost" size="sm" className="justify-start" asChild>
-          <Link
-            to="/design-system"
-            activeProps={{ className: 'bg-accent font-medium' }}
-            onClick={onClose}
-          >
-            {m.nav_design_system()}
           </Link>
         </Button>
         {clientEnv.VITE_TALKS_URL && (

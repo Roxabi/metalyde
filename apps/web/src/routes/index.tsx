@@ -1,12 +1,13 @@
 import { AnimatedSection } from '@repo/ui'
 import { createFileRoute } from '@tanstack/react-router'
-import { AiTeamSection } from '@/components/landing/AiTeamSection'
+import { AntiPositioning } from '@/components/landing/AntiPositioning'
 import { CtaSection } from '@/components/landing/CtaSection'
-import { DxSection } from '@/components/landing/DxSection'
-import { FeaturesSection } from '@/components/landing/FeaturesSection'
 import { HeroSection } from '@/components/landing/HeroSection'
-import { StatsSection } from '@/components/landing/StatsSection'
-import { TechStackSection } from '@/components/landing/TechStackSection'
+import { MarginView } from '@/components/landing/MarginView'
+import { MetricsStrip } from '@/components/landing/MetricsStrip'
+import { Pillars } from '@/components/landing/Pillars'
+import { WhoItsFor } from '@/components/landing/WhoItsFor'
+
 export const Route = createFileRoute('/')({
   component: LandingPage,
 })
@@ -14,25 +15,25 @@ export const Route = createFileRoute('/')({
 function LandingPage() {
   return (
     <div className="bg-background text-foreground">
-      <HeroSection />
-      <AnimatedSection>
-        <FeaturesSection />
-      </AnimatedSection>
-      <AnimatedSection>
-        <AiTeamSection />
-      </AnimatedSection>
-      <AnimatedSection>
-        <DxSection />
-      </AnimatedSection>
-      <AnimatedSection>
-        <TechStackSection />
-      </AnimatedSection>
-      <AnimatedSection>
-        <StatsSection />
-      </AnimatedSection>
-      <AnimatedSection>
-        <CtaSection />
-      </AnimatedSection>
+      <div className="mx-auto max-w-[1200px] border-x border-border">
+        <HeroSection />
+        <MetricsStrip />
+        <AnimatedSection>
+          <MarginView />
+        </AnimatedSection>
+        <AnimatedSection>
+          <Pillars />
+        </AnimatedSection>
+        <AnimatedSection>
+          <AntiPositioning />
+        </AnimatedSection>
+        <AnimatedSection>
+          <WhoItsFor />
+        </AnimatedSection>
+        <AnimatedSection>
+          <CtaSection />
+        </AnimatedSection>
+      </div>
     </div>
   )
 }

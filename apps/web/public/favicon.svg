@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none">
+  <!-- Outer frame -->
+  <rect x="0.5" y="0.5" width="31" height="31" fill="none" stroke="#1a1a1a" stroke-opacity="0.4"/>
+  <!-- Left full-height bar -->
+  <rect x="5" y="5" width="4.5" height="22" fill="#1a1a1a"/>
+  <!-- Right full-height bar -->
+  <rect x="22.5" y="5" width="4.5" height="22" fill="#1a1a1a"/>
+  <!-- Left mid bar -->
+  <rect x="9.5" y="5" width="4" height="13" fill="#1a1a1a"/>
+  <!-- Right mid bar -->
+  <rect x="18.5" y="5" width="4" height="13" fill="#1a1a1a"/>
+  <!-- Centre brand-red accent -->
+  <rect x="13.5" y="14" width="5" height="4" fill="#e63000"/>
+</svg>

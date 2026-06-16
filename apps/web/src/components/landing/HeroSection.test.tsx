@@ -1,124 +1,51 @@
 import { render, screen } from '@testing-library/react'
-import { afterEach, describe, expect, it, vi } from 'vitest'
-
-const mockClientEnv = vi.hoisted(() => ({
-  VITE_DOCS_URL: undefined as string | undefined,
-}))
+import { describe, expect, it, vi } from 'vitest'
 
 vi.mock('@/paraglide/messages', () => ({
   m: {
-    hero_badge: () => 'Open Source',
-    hero_title: () => 'Build Your SaaS Faster',
-    hero_subtitle: () => 'A modern SaaS framework',
-    hero_cta_start: () => 'Get Started',
-    hero_cta_github: () => 'View on GitHub',
-    stat_setup: () => '5 min',
-    stat_setup_label: () => 'Setup time',
-    stat_config: () => 'Zero',
-    stat_config_label: () => 'Config needed',
-    stat_production: () => '100%',
-    stat_production_label: () => 'Production ready',
+    landing_hero_eyebrow: () => 'Control your margin',
+    landing_hero_title_a: () => 'Know your ',
+    landing_hero_title_em: () => 'real margin',
+    landing_hero_title_b: () => ' before it disappears.',
+    landing_hero_sub: () => 'The control room for agency profitability.',
+    landing_hero_cta_primary: () => 'Request access',
+    landing_hero_cta_secondary: () => 'See live margin view',
+    landing_hero_stat1_value: () => '23',
+    landing_hero_stat1_unit: () => '%',
+    landing_hero_stat1_label: () => 'Avg margin recovered',
+    landing_hero_stat1_src: () => 'Based on beta cohort',
+    landing_hero_stat2_value: () => '4×',
+    landing_hero_stat2_label: () => 'Faster scope decisions',
+    landing_hero_stat2_src: () => 'Internal benchmark',
   },
-}))
-
-vi.mock('@/lib/config', () => ({
-  GITHUB_REPO_URL: 'https://github.com/test/repo',
-}))
-
-vi.mock('@/lib/env.shared', () => ({
-  clientEnv: mockClientEnv,
 }))
 
 import { HeroSection } from './HeroSection'
 
 describe('HeroSection', () => {
-  it('should render the hero title', () => {
+  it('renders the Hero region with eyebrow text', () => {
     // Arrange & Act
     render(<HeroSection />)
 
     // Assert
-    expect(screen.getByText('Build Your SaaS Faster')).toBeInTheDocument()
+    expect(screen.getByRole('region', { name: 'Hero' })).toBeInTheDocument()
+    expect(screen.getByText('Control your margin')).toBeInTheDocument()
   })
 
-  it('should render the hero subtitle', () => {
+  it('renders both CTA links', () => {
     // Arrange & Act
     render(<HeroSection />)
 
     // Assert
-    expect(screen.getByText('A modern SaaS framework')).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /request access/i })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /see live margin view/i })).toBeInTheDocument()
   })
 
-  it('should render the badge', () => {
+  it('renders stat values', () => {
     // Arrange & Act
     render(<HeroSection />)
 
     // Assert
-    expect(screen.getByText('Open Source')).toBeInTheDocument()
-  })
-
-  it('should render CTA buttons', () => {
-    // Arrange & Act
-    render(<HeroSection />)
-
-    // Assert
-    expect(screen.getByRole('link', { name: /get started/i })).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: /view on github/i })).toBeInTheDocument()
-  })
-
-  it('should render GitHub link with correct href and rel attributes', () => {
-    // Arrange & Act
-    render(<HeroSection />)
-
-    // Assert
-    const githubLink = screen.getByRole('link', { name: /view on github/i })
-    expect(githubLink).toHaveAttribute('href', 'https://github.com/test/repo')
-    expect(githubLink).toHaveAttribute('rel', expect.stringContaining('noopener'))
-    expect(githubLink).toHaveAttribute('rel', expect.stringContaining('noreferrer'))
-    expect(githubLink).toHaveAttribute('target', '_blank')
-  })
-
-  it('should render stats', () => {
-    // Arrange & Act
-    render(<HeroSection />)
-
-    // Assert
-    expect(screen.getByText('5 min')).toBeInTheDocument()
-    expect(screen.getByText('Setup time')).toBeInTheDocument()
-    expect(screen.getByText('Zero')).toBeInTheDocument()
-    expect(screen.getByText('Config needed')).toBeInTheDocument()
-    expect(screen.getByText('100%')).toBeInTheDocument()
-    expect(screen.getByText('Production ready')).toBeInTheDocument()
-  })
-})
-
-describe('HeroSection — CTA link (VITE_DOCS_URL)', () => {
-  afterEach(() => {
-    mockClientEnv.VITE_DOCS_URL = undefined
-  })
-
-  it('should render CTA link with href="#" when VITE_DOCS_URL is undefined', () => {
-    // Arrange
-    mockClientEnv.VITE_DOCS_URL = undefined
-
-    // Act
-    render(<HeroSection />)
-
-    // Assert
-    const ctaLink = screen.getByRole('link', { name: /get started/i })
-    expect(ctaLink).toHaveAttribute('href', '#')
-  })
-
-  it('should render CTA link with correct URL when VITE_DOCS_URL is set', () => {
-    // Arrange
-    mockClientEnv.VITE_DOCS_URL = 'https://docs.example.com'
-
-    // Act
-    render(<HeroSection />)
-
-    // Assert
-    const ctaLink = screen.getByRole('link', { name: /get started/i })
-    expect(ctaLink).toHaveAttribute('href', 'https://docs.example.com')
-    expect(ctaLink).toHaveAttribute('target', '_blank')
-    expect(ctaLink).toHaveAttribute('rel', 'noopener noreferrer')
+    expect(screen.getByText('Avg margin recovered')).toBeInTheDocument()
   })
 })
