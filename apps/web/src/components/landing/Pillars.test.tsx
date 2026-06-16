@@ -34,5 +34,6 @@ describe('Pillars', () => {
     // Assert
     expect(screen.getByRole('region', { name: 'Why Metalyde' })).toBeInTheDocument()
     expect(screen.getByText('Ship faster than ever')).toBeInTheDocument()
+    expect(screen.getAllByRole('heading', { level: 3 })).toHaveLength(4)
   })
 })
