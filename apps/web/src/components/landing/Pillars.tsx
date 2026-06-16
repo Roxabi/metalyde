@@ -27,16 +27,18 @@ const pillars = [
   },
 ]
 
+type PillarItem = (typeof pillars)[number]
+
 export function Pillars() {
-  const [lead, ...rest] = pillars as [(typeof pillars)[0], ...typeof pillars]
+  const [lead, ...rest] = pillars as [PillarItem, ...PillarItem[]]
 
   return (
     <section aria-label="Why Metalyde">
       <div className="border-b border-border bg-card px-7 pt-12 md:px-14">
-        <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground">
+        <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-foreground/70">
           {m.landing_pillars_tag()}
         </p>
-        <h2 className="mb-0 mt-3 max-w-[24ch] text-2xl font-bold tracking-tight sm:text-3xl">
+        <h2 className="mb-0 mt-3 max-w-[24ch] font-display text-2xl font-bold tracking-tight sm:text-3xl">
           {m.landing_pillars_title()}
         </h2>
       </div>

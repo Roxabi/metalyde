@@ -15,6 +15,7 @@
   --popover-foreground: #1a1a1a;
 
   /* ── Display font (Bricolage Grotesque; mapped to font-display utility in @theme inline) ── */
+  /* requires '@fontsource-variable/bricolage-grotesque' to be imported by the consuming app (apps/web/src/styles.css) — falls back to system-ui otherwise */
   --font-display: 'Bricolage Grotesque Variable', 'Bricolage Grotesque', system-ui, sans-serif;
 
   /* ── Mono font stack (cascade var; mapped to the font-mono utility in @theme inline) ── */

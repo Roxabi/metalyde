@@ -6,7 +6,7 @@ export function AntiPositioning() {
       aria-label="What Metalyde is not"
       className="border-b border-border bg-foreground px-7 py-16 text-background md:px-14"
     >
-      <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-background/50">
+      <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-background/70">
         {m.landing_anti_tag()}
       </p>
       <div className="mt-7 grid gap-12 sm:grid-cols-2">

@@ -44,7 +44,7 @@ export function HeroSection() {
       {/* Right panel — stat cells */}
       <div className="relative grid grid-rows-2 bg-background">
         {/* LIVE indicator */}
-        <div className="absolute right-4 top-4 flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
+        <div className="absolute right-4 top-4 flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-foreground/70">
           <span
             aria-hidden="true"
             className="inline-block size-[6px] rounded-full bg-brand motion-safe:animate-pulse"

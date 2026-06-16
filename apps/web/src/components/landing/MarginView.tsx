@@ -81,7 +81,7 @@ export function MarginView() {
       className="border-b border-border bg-card px-7 py-14 md:px-14"
     >
       {/* Head */}
-      <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground">
+      <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.12em] text-foreground/70">
         {m.landing_margin_tag()}
       </p>
       <h2 className="max-w-[24ch] font-display text-2xl font-bold tracking-tight sm:text-3xl">
