@@ -19,32 +19,32 @@ vi.mock('@/lib/authClient', () => ({
   authClient: { getSession: vi.fn().mockResolvedValue({ data: null }) },
 }))
 
-vi.mock('@/components/landing/AiTeamSection', () => ({
-  AiTeamSection: () => <section aria-label="AI Team" />,
-}))
-
-vi.mock('@/components/landing/CtaSection', () => ({
-  CtaSection: () => <section aria-label="CTA" />,
-}))
-
-vi.mock('@/components/landing/DxSection', () => ({
-  DxSection: () => <section aria-label="DX" />,
-}))
-
-vi.mock('@/components/landing/FeaturesSection', () => ({
-  FeaturesSection: () => <section aria-label="Features" />,
-}))
-
 vi.mock('@/components/landing/HeroSection', () => ({
   HeroSection: () => <section aria-label="Hero" />,
 }))
 
-vi.mock('@/components/landing/StatsSection', () => ({
-  StatsSection: () => <section aria-label="Stats" />,
+vi.mock('@/components/landing/MetricsStrip', () => ({
+  MetricsStrip: () => <section aria-label="Live metrics" />,
 }))
 
-vi.mock('@/components/landing/TechStackSection', () => ({
-  TechStackSection: () => <section aria-label="Tech Stack" />,
+vi.mock('@/components/landing/MarginView', () => ({
+  MarginView: () => <section aria-label="Margin view" />,
+}))
+
+vi.mock('@/components/landing/Pillars', () => ({
+  Pillars: () => <section aria-label="Why Metalyde" />,
+}))
+
+vi.mock('@/components/landing/AntiPositioning', () => ({
+  AntiPositioning: () => <section aria-label="What Metalyde is not" />,
+}))
+
+vi.mock('@/components/landing/WhoItsFor', () => ({
+  WhoItsFor: () => <section aria-label="Who it's for" />,
+}))
+
+vi.mock('@/components/landing/CtaSection', () => ({
+  CtaSection: () => <section aria-label="Request access" />,
 }))
 
 import './index'
@@ -64,11 +64,11 @@ describe('LandingPage', () => {
 
     // Assert
     expect(screen.getByRole('region', { name: 'Hero' })).toBeInTheDocument()
-    expect(screen.getByRole('region', { name: 'Features' })).toBeInTheDocument()
-    expect(screen.getByRole('region', { name: 'AI Team' })).toBeInTheDocument()
-    expect(screen.getByRole('region', { name: 'DX' })).toBeInTheDocument()
-    expect(screen.getByRole('region', { name: 'Tech Stack' })).toBeInTheDocument()
-    expect(screen.getByRole('region', { name: 'Stats' })).toBeInTheDocument()
-    expect(screen.getByRole('region', { name: 'CTA' })).toBeInTheDocument()
+    expect(screen.getByRole('region', { name: 'Live metrics' })).toBeInTheDocument()
+    expect(screen.getByRole('region', { name: 'Margin view' })).toBeInTheDocument()
+    expect(screen.getByRole('region', { name: 'Why Metalyde' })).toBeInTheDocument()
+    expect(screen.getByRole('region', { name: 'What Metalyde is not' })).toBeInTheDocument()
+    expect(screen.getByRole('region', { name: "Who it's for" })).toBeInTheDocument()
+    expect(screen.getByRole('region', { name: 'Request access' })).toBeInTheDocument()
   })
 })

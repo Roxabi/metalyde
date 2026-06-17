@@ -4,7 +4,7 @@
   "type": "module",
   "private": true,
   "bin": {
-    "roxabi": "./dist/index.js"
+    "metalyde": "./dist/index.js"
   },
   "scripts": {
     "build": "tsc",

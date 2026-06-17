@@ -1,13 +1,13 @@
 ---
 title: Developer Environment
-description: Recommended shell, terminal, and tooling setup for working on Roxabi
+description: Recommended shell, terminal, and tooling setup for working on Metalyde
 ---
 
 ## Overview
 
 > **Note:** This guide is opinionated toward a **Windows + WSL2** setup (WezTerm, tmux, zsh). If you're on macOS or native Linux, the core requirements are the same (Bun, Node.js, PostgreSQL) — feel free to substitute your preferred terminal and shell.
 
-This guide documents the recommended developer environment for working on Roxabi. It covers shell configuration, terminal emulator, tmux, and CLI tooling.
+This guide documents the recommended developer environment for working on Metalyde. It covers shell configuration, terminal emulator, tmux, and CLI tooling.
 
 The project runs on **WSL2** (Ubuntu) with **Bun** as the primary runtime.
 
@@ -60,7 +60,7 @@ Project-specific aliases in a separate file (sourced by `.bashrc`):
 
 ```bash
 # Navigation
-alias cdb='cd ~/projects/roxabi_boilerplate; clear'
+alias cdb='cd ~/projects/metalyde; clear'
 
 # Claude Code
 alias cc='claude'
@@ -220,7 +220,7 @@ See [Agent Teams Guide](./agent-teams) for details on available agents and coord
 
 ### Hooks
 
-Claude Code hooks (auto-format, typecheck, security warnings) are configured in `.claude/settings.json` — no manual setup needed. See [Hooks](../hooks) for details.
+Claude Code hooks (auto-format, typecheck, security warnings) are configured in `.claude/settings.json` — no manual setup needed.
 
 ---
 
@@ -302,7 +302,7 @@ EOF
 
 # 7. Configure aliases
 cat >> ~/.bash_aliases << 'EOF'
-alias cdb='cd ~/projects/roxabi_boilerplate; clear'
+alias cdb='cd ~/projects/metalyde; clear'
 alias cc='claude'
 alias ccc='claude --dangerously-skip-permissions'
 alias ccusage='npx ccusage@latest'
@@ -316,8 +316,8 @@ EOF
 echo 'export CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1' >> ~/.bashrc
 
 # 9. Clone and install
-git clone <repo-url> ~/projects/roxabi_boilerplate
-cd ~/projects/roxabi_boilerplate
+git clone <repo-url> ~/projects/metalyde
+cd ~/projects/metalyde
 bun install
 
 # 10. Reload shell

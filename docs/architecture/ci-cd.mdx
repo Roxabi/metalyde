@@ -1,11 +1,11 @@
 ---
 title: CI/CD Architecture
-description: Pipeline stages, quality gates, caching strategy, git hooks, and deployment automation in Roxabi Boilerplate.
+description: Pipeline stages, quality gates, caching strategy, git hooks, and deployment automation in Metalyde.
 ---
 
 ## Overview
 
-Roxabi uses a **three-layer quality pipeline** to catch issues at progressively broader scopes: local git hooks enforce standards on every commit and push, GitHub Actions CI validates every pull request and branch push, and Vercel handles production deployment automatically on merge to `main`.
+Metalyde uses a **three-layer quality pipeline** to catch issues at progressively broader scopes: local git hooks enforce standards on every commit and push, GitHub Actions CI validates every pull request and branch push, and Vercel handles production deployment automatically on merge to `main`.
 
 ```mermaid
 flowchart LR
@@ -257,7 +257,7 @@ Commit messages are validated by [commitlint](https://commitlint.js.org/) using 
 - **Header max length**: 100 characters (more permissive than the conventional default of 72)
 - **Format**: `<type>(<scope>): <description>` -- scope is optional but recommended
 
-Commitlint runs as a Lefthook `commit-msg` hook. Messages that fail validation are rejected before the commit is created. See [Contributing](../contributing) for full conventions including scope guidelines and breaking change format.
+Commitlint runs as a Lefthook `commit-msg` hook. Messages that fail validation are rejected before the commit is created. See [Dev Process](../processes/dev-process) for full conventions including scope guidelines and breaking change format.
 
 ---
 
@@ -469,5 +469,5 @@ The complete quality pipeline from developer keystroke to production deployment:
 ## Related Documentation
 
 - [Architecture overview](./index) -- Monorepo structure and data flow
-- [Contributing](../contributing) -- Commit conventions and development workflow
+- [Dev Process](../processes/dev-process) -- Commit conventions and development workflow
 - [Deployment guide](../guides/deployment) -- Vercel deployment details

@@ -1,26 +1,47 @@
-import { Button } from '@repo/ui'
-import { SectionHeading } from '@/components/landing/SectionHeading'
-import { clientEnv } from '@/lib/env.shared'
+import { useState } from 'react'
 import { m } from '@/paraglide/messages'
 
 export function CtaSection() {
-  return (
-    <section className="relative overflow-hidden border-t border-border py-24">
-      {/* Background gradient */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-primary/5 via-muted/50 to-chart-1/5 dark:from-primary/10 dark:via-muted/30 dark:to-chart-1/10" />
+  const [submitted, setSubmitted] = useState(false)
 
-      <div className="relative mx-auto max-w-7xl px-6 text-center">
-        <SectionHeading title={m.cta_title()} subtitle={m.cta_subtitle()} />
-        <div className="mt-8">
-          {clientEnv.VITE_DOCS_URL && (
-            <Button size="lg" asChild>
-              <a href={clientEnv.VITE_DOCS_URL} target="_blank" rel="noopener noreferrer">
-                {m.cta_button()}
-              </a>
-            </Button>
-          )}
-        </div>
-      </div>
+  return (
+    <section
+      id="access"
+      aria-label="Request access"
+      className="border-b border-border bg-background px-7 py-20 text-center md:px-14"
+    >
+      <h2 className="mx-auto max-w-[18ch] font-display text-3xl font-bold tracking-tight [text-wrap:balance] sm:text-4xl">
+        {m.landing_cta_title_a()}
+        <span className="text-brand">{m.landing_cta_title_em()}</span>
+        {m.landing_cta_title_b()}
+      </h2>
+      <p className="mx-auto mt-4 max-w-[44ch] text-muted-foreground">{m.landing_cta_sub()}</p>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault()
+          setSubmitted(true)
+        }}
+        className="mx-auto mt-8 flex max-w-[460px] border border-border bg-card focus-within:ring-1 focus-within:ring-brand"
+      >
+        <input
+          type="email"
+          required
+          disabled={submitted}
+          aria-label={m.landing_cta_email_label()}
+          placeholder={m.landing_cta_placeholder()}
+          className="flex-1 border-none bg-transparent px-4.5 py-3.5 font-mono text-sm text-foreground outline-none disabled:opacity-60"
+        />
+        <button
+          type="submit"
+          disabled={submitted}
+          className="cursor-pointer border-none bg-primary px-6 font-mono text-xs font-bold uppercase tracking-wider text-primary-foreground transition-colors duration-normal ease-control hover:bg-brand disabled:cursor-default"
+        >
+          {submitted ? m.landing_cta_submitted() : m.landing_cta_button()}
+        </button>
+      </form>
+      <p className="mt-4 font-mono text-[11px] uppercase tracking-wide text-muted-foreground/70">
+        {m.landing_cta_micro()}
+      </p>
     </section>
   )
 }

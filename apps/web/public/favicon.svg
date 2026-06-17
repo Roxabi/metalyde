@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none">
+  <style>
+    .frame { stroke: #1a1a1a; stroke-opacity: 0.4; }
+    .bar { fill: #1a1a1a; }
+    @media (prefers-color-scheme: dark) {
+      .frame { stroke: #ededed; }
+      .bar { fill: #ededed; }
+    }
+  </style>
+  <!-- Outer frame -->
+  <rect class="frame" x="0.5" y="0.5" width="31" height="31" fill="none"/>
+  <!-- Left full-height bar -->
+  <rect class="bar" x="5" y="5" width="4.5" height="22"/>
+  <!-- Right full-height bar -->
+  <rect class="bar" x="22.5" y="5" width="4.5" height="22"/>
+  <!-- Left mid bar -->
+  <rect class="bar" x="9.5" y="5" width="4" height="13"/>
+  <!-- Right mid bar -->
+  <rect class="bar" x="18.5" y="5" width="4" height="13"/>
+  <!-- Centre brand-red accent -->
+  <rect x="13.5" y="14" width="5" height="4" fill="#e63000"/>
+</svg>

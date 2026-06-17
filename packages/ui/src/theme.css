@@ -1,89 +1,314 @@
 /*
  * Shared theme variables for @repo/ui components
- * Uses OKLch color space for perceptually uniform colors
+ * Swiss Control Room — Metalyde brand palette
+ * Light is primary; dark is a rebranded variant.
+ * dials: V6 M5 D4 · macrostructure: Stat-Led→Feature-Stack
  */
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.13 0.028 261.692);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.13 0.028 261.692);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.13 0.028 261.692);
-  --primary: oklch(0.60 0.10 185);
-  --primary-foreground: oklch(0.98 0.01 181);
-  --secondary: oklch(0.967 0.003 264.542);
-  --secondary-foreground: oklch(0.21 0.034 264.665);
-  --muted: oklch(0.967 0.003 264.542);
-  --muted-foreground: oklch(0.551 0.027 264.364);
-  --accent: oklch(0.967 0.003 264.542);
-  --accent-foreground: oklch(0.21 0.034 264.665);
+  /* ── Backgrounds ── */
+  --background: #f5f5f0;                  /* paper */
+  --foreground: #1a1a1a;                  /* ink */
+  --card: #ffffff;                        /* white surface */
+  --card-foreground: #1a1a1a;
+  --popover: #ffffff;
+  --popover-foreground: #1a1a1a;
+
+  /* ── Display font (Bricolage Grotesque; mapped to font-display utility in @theme inline) ── */
+  /* requires '@fontsource-variable/bricolage-grotesque' to be imported by the consuming app (apps/web/src/styles.css) — falls back to system-ui otherwise */
+  --font-display: 'Bricolage Grotesque Variable', 'Bricolage Grotesque', system-ui, sans-serif;
+
+  /* ── Mono font stack (cascade var; mapped to the font-mono utility in @theme inline) ── */
+  --font-mono: 'SF Mono', 'Fira Code', 'Cascadia Code', Consolas, 'Courier New', monospace;
+
+  /* ── Primary = ink (control-room typographic primary) ── */
+  --primary: #1a1a1a;
+  --primary-foreground: #ffffff;
+
+  /* ── Secondary / muted ── */
+  --secondary: #ebebeb;                   /* grid */
+  --secondary-foreground: #1a1a1a;
+  --muted: #ebebeb;
+  --muted-foreground: #888880;
+  --accent: #ebebeb;
+  --accent-foreground: #1a1a1a;
+
+  /* ── Semantic ── */
   --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.2 0.05 25);
-  --border: oklch(0.928 0.006 264.531);
-  --input: oklch(0.928 0.006 264.531);
-  --ring: oklch(0.707 0.022 261.325);
-  --chart-1: oklch(0.85 0.13 181);
-  --chart-2: oklch(0.78 0.13 182);
-  --chart-3: oklch(0.70 0.12 183);
-  --chart-4: oklch(0.60 0.10 185);
-  --chart-5: oklch(0.51 0.09 186);
+  --destructive-foreground: oklch(0.98 0 0);
   --success: oklch(0.55 0.2 145);
   --success-foreground: oklch(0.98 0 0);
   --warning: oklch(0.75 0.18 85);
   --warning-foreground: oklch(0.2 0.05 85);
   --info: oklch(0.55 0.2 250);
   --info-foreground: oklch(0.98 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0.002 247.839);
-  --sidebar-foreground: oklch(0.13 0.028 261.692);
-  --sidebar-primary: oklch(0.60 0.10 185);
-  --sidebar-primary-foreground: oklch(0.98 0.01 181);
-  --sidebar-accent: oklch(0.967 0.003 264.542);
-  --sidebar-accent-foreground: oklch(0.21 0.034 264.665);
-  --sidebar-border: oklch(0.928 0.006 264.531);
-  --sidebar-ring: oklch(0.707 0.022 261.325);
+
+  /* ── Borders / inputs ── */
+  --border: #d8d8d0;                      /* hairline */
+  --input: #d8d8d0;
+  --ring: #e63000;                        /* brand red-orange focus ring */
+
+  /* ── Brand tokens ── */
+  --brand: #e63000;
+  --brand-foreground: #ffffff;
+  --brand-dim: #ffeee8;
+
+  /* ── Charts — brand red-orange / neutral ramp ── */
+  --chart-1: #e63000;
+  --chart-2: #ff6a3d;
+  --chart-3: #1a1a1a;
+  --chart-4: #888880;
+  --chart-5: #b4b1a8;
+
+  /* ── Radius — crisp, near-square (control-room) ── */
+  --radius: 0.125rem;
+
+  /* ── Type scale — Swiss Control Room ── */
+  /* display: Bricolage Grotesque, used for hero headings and KPI labels */
+  --text-display-size: 3rem;
+  --text-display-weight: 560;
+  --text-display-lh: 1.05;
+  --text-display-ls: -0.03em;
+
+  --text-h1-size: 2rem;
+  --text-h1-weight: 600;
+  --text-h1-lh: 1.1;
+  --text-h1-ls: -0.02em;
+
+  --text-h2-size: 1.5rem;
+  --text-h2-weight: 600;
+  --text-h2-lh: 1.2;
+  --text-h2-ls: -0.015em;
+
+  --text-h3-size: 1.125rem;
+  --text-h3-weight: 600;
+  --text-h3-lh: 1.3;
+  --text-h3-ls: -0.01em;
+
+  --text-h4-size: 0.9375rem;
+  --text-h4-weight: 500;
+  --text-h4-lh: 1.4;
+  --text-h4-ls: -0.005em;
+
+  --text-body-size: 0.875rem;
+  --text-body-weight: 400;
+  --text-body-lh: 1.5;
+  --text-body-ls: 0;
+
+  --text-body-sm-size: 0.8125rem;
+  --text-body-sm-weight: 400;
+  --text-body-sm-lh: 1.5;
+  --text-body-sm-ls: 0;
+
+  --text-small-size: 0.75rem;
+  --text-small-weight: 400;
+  --text-small-lh: 1.4;
+  --text-small-ls: 0.01em;
+
+  --text-caption-size: 0.6875rem;
+  --text-caption-weight: 400;
+  --text-caption-lh: 1.4;
+  --text-caption-ls: 0.02em;
+
+  --text-label-size: 0.75rem;
+  --text-label-weight: 500;
+  --text-label-lh: 1.3;
+  --text-label-ls: 0.04em;
+
+  /* mono-kpi: mono stack, used for dashboard metric values */
+  --text-mono-kpi-size: 1.75rem;
+  --text-mono-kpi-weight: 500;
+  --text-mono-kpi-lh: 1.0;
+  --text-mono-kpi-ls: -0.02em;
+
+  /* ── Shadow scale — crisp, no warm tint (control-room) ── */
+  --shadow-xs: 0 1px 1px 0 rgb(0 0 0 / 0.04);
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.07), 0 1px 2px -1px rgb(0 0 0 / 0.04);
+  --shadow-md: 0 4px 8px -2px rgb(0 0 0 / 0.09), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+  --shadow-lg: 0 8px 24px -4px rgb(0 0 0 / 0.11), 0 4px 8px -4px rgb(0 0 0 / 0.06);
+  --shadow-xl: 0 20px 48px -8px rgb(0 0 0 / 0.14), 0 8px 16px -8px rgb(0 0 0 / 0.08);
+
+  /* Semantic elevation names — components reference these, not raw steps */
+  --shadow-card: var(--shadow-sm);
+  --shadow-popover: var(--shadow-md);
+  --shadow-elevated: var(--shadow-lg);
+  --shadow-modal: var(--shadow-xl);
+
+  /* ── Focus halo — outer diffuse glow from brand ring color ── */
+  --focus-halo: 0 0 0 6px rgb(230 48 0 / 0.12);
+
+  /* ── Elevated surface (floating menus, sheets, command palette) ── */
+  /* Light: pure white — shadow-elevated carries the depth, color token exists for canonical ref */
+  --elevated: #ffffff;
+  --elevated-foreground: #1a1a1a;
+
+  /* ── Status-pill tokens — 9 statuses × 3 sub-tokens ── */
+  /* bg = tinted surface ~12-15% opacity; fg = legible on bg; dot = saturated indicator */
+
+  /* draft — muted/neutral */
+  --status-draft: rgb(26 26 26 / 0.08);
+  --status-draft-fg: #555550;
+  --status-draft-dot: #888880;
+
+  /* planned — info blue, muted */
+  --status-planned: oklch(0.55 0.2 250 / 0.12);
+  --status-planned-fg: oklch(0.35 0.18 250);
+  --status-planned-dot: oklch(0.55 0.2 250);
+
+  /* active — brand red-orange, low opacity bg */
+  --status-active: rgb(230 48 0 / 0.10);
+  --status-active-fg: #b82600;
+  --status-active-dot: #e63000;
+
+  /* review — warning amber */
+  --status-review: oklch(0.75 0.18 85 / 0.14);
+  --status-review-fg: oklch(0.40 0.14 85);
+  --status-review-dot: oklch(0.65 0.18 85);
+
+  /* ontrack — success green */
+  --status-ontrack: oklch(0.55 0.2 145 / 0.12);
+  --status-ontrack-fg: oklch(0.32 0.16 145);
+  --status-ontrack-dot: oklch(0.55 0.2 145);
+
+  /* risk — warning, more saturated / shifted hue */
+  --status-risk: oklch(0.75 0.18 65 / 0.14);
+  --status-risk-fg: oklch(0.38 0.16 60);
+  --status-risk-dot: oklch(0.60 0.20 60);
+
+  /* blocked — destructive red */
+  --status-blocked: oklch(0.577 0.245 27.325 / 0.12);
+  --status-blocked-fg: oklch(0.40 0.20 27);
+  --status-blocked-dot: oklch(0.577 0.245 27.325);
+
+  /* done — success green, desaturated */
+  --status-done: oklch(0.55 0.12 145 / 0.10);
+  --status-done-fg: oklch(0.35 0.10 145);
+  --status-done-dot: oklch(0.55 0.12 145);
+
+  /* archived — fully muted */
+  --status-archived: rgb(26 26 26 / 0.05);
+  --status-archived-fg: #a8a89e;
+  --status-archived-dot: #b4b1a8;
+
+  /* ── Sidebar ── */
+  --sidebar: #f5f5f0;
+  --sidebar-foreground: #1a1a1a;
+  --sidebar-primary: #1a1a1a;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #ebebeb;
+  --sidebar-accent-foreground: #1a1a1a;
+  --sidebar-border: #d8d8d0;
+  --sidebar-ring: #e63000;
 }
 
 .dark {
-  --background: oklch(0.13 0.028 261.692);
-  --foreground: oklch(0.985 0.002 247.839);
-  --card: oklch(0.21 0.034 264.665);
-  --card-foreground: oklch(0.985 0.002 247.839);
-  --popover: oklch(0.21 0.034 264.665);
-  --popover-foreground: oklch(0.985 0.002 247.839);
-  --primary: oklch(0.70 0.12 183);
-  --primary-foreground: oklch(0.28 0.04 193);
-  --secondary: oklch(0.278 0.033 256.848);
-  --secondary-foreground: oklch(0.985 0.002 247.839);
-  --muted: oklch(0.278 0.033 256.848);
-  --muted-foreground: oklch(0.707 0.022 261.325);
-  --accent: oklch(0.278 0.033 256.848);
-  --accent-foreground: oklch(0.985 0.002 247.839);
+  /* ── Backgrounds ── */
+  --background: #141413;                  /* warm near-black */
+  --foreground: #f5f5f0;
+  --card: #1c1c1a;
+  --card-foreground: #f5f5f0;
+  --popover: #1c1c1a;
+  --popover-foreground: #f5f5f0;
+
+  /* ── Primary ── */
+  --primary: #f5f5f0;
+  --primary-foreground: #1a1a1a;
+
+  /* ── Secondary / muted ── */
+  --secondary: #262624;
+  --secondary-foreground: #f5f5f0;
+  --muted: #262624;
+  --muted-foreground: #a8a89e;
+  --accent: #262624;
+  --accent-foreground: #f5f5f0;
+
+  /* ── Semantic ── */
   --destructive: oklch(0.704 0.191 22.216);
   --destructive-foreground: oklch(0.637 0.237 25.331);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.551 0.027 264.364);
   --success: oklch(0.65 0.2 145);
   --success-foreground: oklch(0.15 0.05 145);
   --warning: oklch(0.7 0.15 85);
   --warning-foreground: oklch(0.15 0.05 85);
   --info: oklch(0.65 0.2 250);
   --info-foreground: oklch(0.15 0.05 250);
-  --chart-1: oklch(0.85 0.13 181);
-  --chart-2: oklch(0.78 0.13 182);
-  --chart-3: oklch(0.70 0.12 183);
-  --chart-4: oklch(0.60 0.10 185);
-  --chart-5: oklch(0.51 0.09 186);
-  --sidebar: oklch(0.21 0.034 264.665);
-  --sidebar-foreground: oklch(0.985 0.002 247.839);
-  --sidebar-primary: oklch(0.78 0.13 182);
-  --sidebar-primary-foreground: oklch(0.28 0.04 193);
-  --sidebar-accent: oklch(0.278 0.033 256.848);
-  --sidebar-accent-foreground: oklch(0.985 0.002 247.839);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.551 0.027 264.364);
+
+  /* ── Borders / inputs ── */
+  --border: rgba(255, 255, 255, 0.12);
+  --input: rgba(255, 255, 255, 0.12);
+  --ring: #ff6a3d;                        /* brand brightens in dark */
+
+  /* ── Brand tokens (dark) ── */
+  --brand: #ff6a3d;
+  --brand-foreground: #ffffff;
+  --brand-dim: rgba(255, 106, 61, 0.12);
+
+  /* ── Charts — brand / neutral ramp (dark) ── */
+  --chart-1: #ff6a3d;
+  --chart-2: #e63000;
+  --chart-3: #f5f5f0;
+  --chart-4: #a8a89e;
+  --chart-5: #636360;
+
+  /* ── Shadow scale — dark: deeper (less ambient light perception) ── */
+  --shadow-xs: 0 1px 1px 0 rgb(0 0 0 / 0.12);
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.18), 0 1px 2px -1px rgb(0 0 0 / 0.12);
+  --shadow-md: 0 4px 8px -2px rgb(0 0 0 / 0.24), 0 2px 4px -2px rgb(0 0 0 / 0.14);
+  --shadow-lg: 0 8px 24px -4px rgb(0 0 0 / 0.30), 0 4px 8px -4px rgb(0 0 0 / 0.16);
+  --shadow-xl: 0 20px 48px -8px rgb(0 0 0 / 0.38), 0 8px 16px -8px rgb(0 0 0 / 0.20);
+
+  /* Focus halo — brightened brand accent in dark */
+  --focus-halo: 0 0 0 6px rgb(255 106 61 / 0.14);
+
+  /* Elevated surface — one step lighter than --card (#1c1c1a) */
+  --elevated: #242422;
+  --elevated-foreground: #f5f5f0;
+
+  /* Status-pill overrides — increased opacity for legibility on dark surfaces */
+  --status-draft: rgb(245 245 240 / 0.08);
+  --status-draft-fg: #a8a89e;
+  --status-draft-dot: #888880;
+
+  --status-planned: oklch(0.65 0.2 250 / 0.15);
+  --status-planned-fg: oklch(0.75 0.18 250);
+  --status-planned-dot: oklch(0.65 0.2 250);
+
+  --status-active: rgb(255 106 61 / 0.15);
+  --status-active-fg: #ff6a3d;
+  --status-active-dot: #ff6a3d;
+
+  --status-review: oklch(0.70 0.15 85 / 0.16);
+  --status-review-fg: oklch(0.82 0.15 85);
+  --status-review-dot: oklch(0.70 0.15 85);
+
+  --status-ontrack: oklch(0.65 0.2 145 / 0.14);
+  --status-ontrack-fg: oklch(0.78 0.18 145);
+  --status-ontrack-dot: oklch(0.65 0.2 145);
+
+  --status-risk: oklch(0.60 0.20 60 / 0.16);
+  --status-risk-fg: oklch(0.80 0.18 60);
+  --status-risk-dot: oklch(0.60 0.20 60);
+
+  --status-blocked: oklch(0.704 0.191 22.216 / 0.16);
+  --status-blocked-fg: oklch(0.82 0.18 22);
+  --status-blocked-dot: oklch(0.704 0.191 22.216);
+
+  --status-done: oklch(0.65 0.12 145 / 0.12);
+  --status-done-fg: oklch(0.78 0.10 145);
+  --status-done-dot: oklch(0.65 0.12 145);
+
+  --status-archived: rgb(245 245 240 / 0.04);
+  --status-archived-fg: #636360;
+  --status-archived-dot: #636360;
+
+  /* ── Sidebar ── */
+  --sidebar: #1c1c1a;
+  --sidebar-foreground: #f5f5f0;
+  --sidebar-primary: #f5f5f0;
+  --sidebar-primary-foreground: #1a1a1a;
+  --sidebar-accent: #262624;
+  --sidebar-accent-foreground: #f5f5f0;
+  --sidebar-border: rgba(255, 255, 255, 0.12);
+  --sidebar-ring: #ff6a3d;
 }
 
 @theme inline {
@@ -117,9 +342,20 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
+  /* ── Brand utilities ── */
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-brand-dim: var(--brand-dim);
+  /* ── Display font (maps the font-display utility to the :root cascade var) ── */
+  --font-display: var(--font-display);
+  /* ── Mono font (maps the font-mono utility to the :root cascade var) ── */
+  --font-mono: var(--font-mono);
+  /* ── Brand easing — control-room spring curve ── */
+  --ease-control: cubic-bezier(0.16, 1, 0.3, 1);
+  /* ── Radius scale ── */
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 2px);
   --radius-xl: calc(var(--radius) + 4px);
   --duration-fast: 150ms;
   --duration-normal: 300ms;
@@ -132,6 +368,98 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  /* ── Named type scale — utilities: text-display / text-h1 … text-mono-kpi ── */
+  --text-display: var(--text-display-size);
+  --text-display--line-height: var(--text-display-lh);
+  --text-display--font-weight: var(--text-display-weight);
+  --text-display--letter-spacing: var(--text-display-ls);
+  --text-h1: var(--text-h1-size);
+  --text-h1--line-height: var(--text-h1-lh);
+  --text-h1--font-weight: var(--text-h1-weight);
+  --text-h1--letter-spacing: var(--text-h1-ls);
+  --text-h2: var(--text-h2-size);
+  --text-h2--line-height: var(--text-h2-lh);
+  --text-h2--font-weight: var(--text-h2-weight);
+  --text-h2--letter-spacing: var(--text-h2-ls);
+  --text-h3: var(--text-h3-size);
+  --text-h3--line-height: var(--text-h3-lh);
+  --text-h3--font-weight: var(--text-h3-weight);
+  --text-h3--letter-spacing: var(--text-h3-ls);
+  --text-h4: var(--text-h4-size);
+  --text-h4--line-height: var(--text-h4-lh);
+  --text-h4--font-weight: var(--text-h4-weight);
+  --text-h4--letter-spacing: var(--text-h4-ls);
+  --text-body: var(--text-body-size);
+  --text-body--line-height: var(--text-body-lh);
+  --text-body--font-weight: var(--text-body-weight);
+  --text-body--letter-spacing: var(--text-body-ls);
+  --text-body-sm: var(--text-body-sm-size);
+  --text-body-sm--line-height: var(--text-body-sm-lh);
+  --text-body-sm--font-weight: var(--text-body-sm-weight);
+  --text-body-sm--letter-spacing: var(--text-body-sm-ls);
+  --text-small: var(--text-small-size);
+  --text-small--line-height: var(--text-small-lh);
+  --text-small--font-weight: var(--text-small-weight);
+  --text-small--letter-spacing: var(--text-small-ls);
+  --text-caption: var(--text-caption-size);
+  --text-caption--line-height: var(--text-caption-lh);
+  --text-caption--font-weight: var(--text-caption-weight);
+  --text-caption--letter-spacing: var(--text-caption-ls);
+  --text-label: var(--text-label-size);
+  --text-label--line-height: var(--text-label-lh);
+  --text-label--font-weight: var(--text-label-weight);
+  --text-label--letter-spacing: var(--text-label-ls);
+  --text-mono-kpi: var(--text-mono-kpi-size);
+  --text-mono-kpi--line-height: var(--text-mono-kpi-lh);
+  --text-mono-kpi--font-weight: var(--text-mono-kpi-weight);
+  --text-mono-kpi--letter-spacing: var(--text-mono-kpi-ls);
+  /* ── Shadow / elevation utilities: shadow-xs … shadow-modal ──
+     Intentional self-reference: the utility resolves `var(--shadow-*)` against the
+     UNLAYERED :root / .dark declarations above (which win the cascade over this
+     layered @theme value), giving dark-mode-aware shadows. Do NOT "fix" to distinct
+     names — that breaks the dark-mode switch. Same pattern as --font-* above. */
+  --shadow-xs: var(--shadow-xs);
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+  --shadow-xl: var(--shadow-xl);
+  --shadow-card: var(--shadow-card);
+  --shadow-popover: var(--shadow-popover);
+  --shadow-elevated: var(--shadow-elevated);
+  --shadow-modal: var(--shadow-modal);
+  /* ── Focus halo utility: shadow-focus-halo ── */
+  --shadow-focus-halo: var(--focus-halo);
+  /* ── Elevated surface utilities: bg-elevated / text-elevated-foreground ── */
+  --color-elevated: var(--elevated);
+  --color-elevated-foreground: var(--elevated-foreground);
+  /* ── Status-pill utilities: bg-status-* / text-status-*-fg / bg-status-*-dot ── */
+  --color-status-draft: var(--status-draft);
+  --color-status-draft-fg: var(--status-draft-fg);
+  --color-status-draft-dot: var(--status-draft-dot);
+  --color-status-planned: var(--status-planned);
+  --color-status-planned-fg: var(--status-planned-fg);
+  --color-status-planned-dot: var(--status-planned-dot);
+  --color-status-active: var(--status-active);
+  --color-status-active-fg: var(--status-active-fg);
+  --color-status-active-dot: var(--status-active-dot);
+  --color-status-review: var(--status-review);
+  --color-status-review-fg: var(--status-review-fg);
+  --color-status-review-dot: var(--status-review-dot);
+  --color-status-ontrack: var(--status-ontrack);
+  --color-status-ontrack-fg: var(--status-ontrack-fg);
+  --color-status-ontrack-dot: var(--status-ontrack-dot);
+  --color-status-risk: var(--status-risk);
+  --color-status-risk-fg: var(--status-risk-fg);
+  --color-status-risk-dot: var(--status-risk-dot);
+  --color-status-blocked: var(--status-blocked);
+  --color-status-blocked-fg: var(--status-blocked-fg);
+  --color-status-blocked-dot: var(--status-blocked-dot);
+  --color-status-done: var(--status-done);
+  --color-status-done-fg: var(--status-done-fg);
+  --color-status-done-dot: var(--status-done-dot);
+  --color-status-archived: var(--status-archived);
+  --color-status-archived-fg: var(--status-archived-fg);
+  --color-status-archived-dot: var(--status-archived-dot);
 }
 
 @layer base {

@@ -88,6 +88,11 @@ const config = defineConfig(async ({ mode }) => {
   const envDir = '../..'
   const env = loadEnv(mode, envDir, '')
   process.env.VITE_APP_NAME ??= env.APP_NAME ?? 'App'
+  // env.server.ts reads process.env directly. loadEnv() above reads the root .env from
+  // disk regardless of launch context (turbo strict-mode filtering, or vite run directly
+  // from apps/web), so forward the server-only vars here too — same idea as VITE_* below.
+  process.env.API_URL ??= env.API_URL ?? `http://localhost:${env.API_PORT ?? 4000}`
+  if (env.APP_URL) process.env.APP_URL ??= env.APP_URL
   // VITE_APP_URL is baked into client JS (auth redirects) — a silent localhost
   // fallback in a production build would ship broken callbacks
   if (mode === 'production' && !(process.env.VITE_APP_URL ?? env.VITE_APP_URL ?? env.APP_URL)) {

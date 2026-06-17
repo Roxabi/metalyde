@@ -5,7 +5,7 @@ description: End-to-end canonical pattern for building a new full-stack feature 
 
 ## Overview
 
-This guide is the single reference for building a new full-stack feature in Roxabi. It walks through every layer — from shared types to backend module to frontend route — and links to the detailed standards docs for each pattern.
+This guide is the single reference for building a new full-stack feature in Metalyde. It walks through every layer — from shared types to backend module to frontend route — and links to the detailed standards docs for each pattern.
 
 Use this guide when you are:
 
@@ -83,8 +83,6 @@ Create a new package under `packages/` only when:
 For shared types alone, `@repo/types` is sufficient. Do not create a new package just for types.
 
 ## 3. Backend — Module Structure
-
-Full standards: [Backend Patterns](../standards/backend-patterns).
 
 ### 3.1 Scaffold the Module
 
@@ -346,8 +344,6 @@ export class AppModule {}
 
 ## 4. Frontend — Route and Components
 
-Full standards: [Frontend Patterns](../standards/frontend-patterns).
-
 ### 4.1 Route File Structure
 
 TanStack Start uses file-based routing. Create route files under `apps/web/src/routes/`:
@@ -594,9 +590,6 @@ Use this checklist when building a new feature:
 
 ## Related Documentation
 
-- [Backend Patterns](../standards/backend-patterns) — Module structure, design patterns, error handling, SOLID
-- [Frontend Patterns](../standards/frontend-patterns) — Component patterns, TanStack Query, SOLID
 - [Authentication](./authentication) — Auth guard, session management, decorators
 - [RBAC](./rbac) — Permission system, custom roles, testing
 - [Multi-tenant](./multi-tenant) — RLS, TenantService, tenant-scoped tables
-- [Testing](../standards/testing) — Test structure, coverage, mocking

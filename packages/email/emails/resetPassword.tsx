@@ -7,6 +7,8 @@ export default function Preview() {
       url="https://metalyde.roxabi.dev/reset?token=abc123"
       translations={en.reset}
       locale="en"
+      appName="Metalyde"
+      appUrl="https://metalyde.roxabi.dev"
     />
   )
 }

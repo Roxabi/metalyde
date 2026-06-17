@@ -1,11 +1,11 @@
 ---
 title: Security Guide
-description: Threat model, authentication, API key management, rate limiting, security headers, secrets, and CI security checks for Roxabi.
+description: Threat model, authentication, API key management, rate limiting, security headers, secrets, and CI security checks for Metalyde.
 ---
 
 ## Overview
 
-Roxabi is designed with a **layered defence** approach: authentication and authorisation are enforced at the NestJS guard layer, network-level protection is handled by Helmet and CORS, brute-force protection is enforced by rate limiting, and secrets are validated at startup before any traffic is served.
+Metalyde is designed with a **layered defence** approach: authentication and authorisation are enforced at the NestJS guard layer, network-level protection is handled by Helmet and CORS, brute-force protection is enforced by rate limiting, and secrets are validated at startup before any traffic is served.
 
 The guiding principles are:
 

@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:title" content="Metalyde Video Creative Brief">
+<meta property="og:description" content="Three videos for Metalyde — The OS for a marketing agency. Launch trailer, product demo, social clips. Swiss Control Room direction.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://forge.roxabi.dev/metalyde/metalyde-video-brief.html">
+<meta property="og:site_name" content="Roxabi Forge">
+<meta name="twitter:card" content="summary_large_image">
+<title>Metalyde — Video Creative Brief</title>
+<!-- diagram-meta:start -->
+<meta name="diagram:title" content="Metalyde Video Creative Brief">
+<meta name="diagram:date" content="2026-06-16">
+<meta name="diagram:category" content="brand">
+<meta name="diagram:cat-label" content="Brand">
+<meta name="diagram:color" content="orange">
+<meta name="diagram:badges" content="">
+<!-- diagram-meta:end -->
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  /* Direction A — Swiss Control Room */
+  --bg:#f5f5f0;        /* paper */
+  --surface:#ffffff;
+  --alt:#faf9f5;
+  --alt2:#f0ece4;
+  --bg5:#ebebeb;
+  --c1:#e63000;        /* signal */
+  --c1h:#ff4d1a;
+  --c1dim:#ffeee8;
+  --ink:#1a1a1a;
+  --muted:#888880;
+  --muted2:#6f6f66;
+  --faint:#b4b1a8;
+  --border:#d8d8d0;
+  --border2:#c7c4ba;
+  --grid:#ebebeb;
+  --font-h:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+  --font-b:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+  --font-m:'SF Mono','Fira Code','Cascadia Code',Consolas,'Courier New',monospace;
+  --radius:0px;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-b);font-size:14px;line-height:1.6;min-height:100vh;overflow-x:hidden}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border2)}
+.wrap{max-width:1140px;margin:0 auto;background:var(--bg);border-left:1px solid var(--border);border-right:1px solid var(--border)}
+
+/* ── HEADER ── */
+.header{padding:56px 32px 36px;border-bottom:1px solid var(--border);background:var(--surface)}
+.eyebrow{font-family:var(--font-m);font-size:11px;letter-spacing:0.22em;color:var(--c1);text-transform:uppercase;margin-bottom:20px;font-weight:700}
+.header h1{font-family:var(--font-h);font-size:clamp(28px,4vw,46px);font-weight:700;letter-spacing:-0.025em;line-height:1.08;margin-bottom:14px}
+.header h1 span{color:var(--c1)}
+.header-sub{color:var(--muted2);font-size:15px;max-width:580px;margin-bottom:30px;line-height:1.6}
+.header-meta{display:flex;gap:1px;flex-wrap:wrap;background:var(--border);border:1px solid var(--border)}
+.meta-badge{background:var(--surface);color:var(--muted2);font-family:var(--font-m);font-size:11px;padding:9px 14px;letter-spacing:0.04em;flex:1 1 auto}
+.meta-badge strong{color:var(--c1);display:block;font-size:9.5px;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:3px;font-weight:700}
+
+/* ── VIDEO TABS ── */
+.video-tabs{display:flex;gap:0;padding:0 16px;border-bottom:1px solid var(--border);background:var(--surface);flex-wrap:wrap}
+.vtab{background:none;border:none;color:var(--muted);font-family:var(--font-m);font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;padding:16px 20px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .15s,border-color .15s}
+.vtab:hover{color:var(--ink)}
+.vtab.active{color:var(--c1);border-bottom-color:var(--c1)}
+
+/* ── PANELS ── */
+.panel{display:none;padding:32px 32px 72px}
+.panel.active{display:block}
+
+/* ── SECTION HEADERS ── */
+.sec-label{font-family:var(--font-m);font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--c1);margin-bottom:8px;font-weight:700}
+.sec-title{font-family:var(--font-h);font-size:22px;font-weight:700;letter-spacing:-0.02em;margin-bottom:6px}
+.sec-sub{color:var(--muted);font-size:13px;margin-bottom:28px;font-family:var(--font-m);letter-spacing:0.02em}
+
+/* ── VIDEO META ── */
+.video-meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin-bottom:32px}
+.vm-cell{background:var(--surface);padding:14px 18px}
+.vm-label{font-family:var(--font-m);font-size:9.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;font-weight:700}
+.vm-value{font-size:13px;color:var(--ink);font-weight:600}
+.vm-value.sig{color:var(--c1)}
+
+/* ── TIMELINE ── */
+.timeline-wrap{margin-bottom:40px}
+.timeline-label{font-family:var(--font-m);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;font-weight:700}
+.timeline{display:flex;gap:1px;height:46px;border:1px solid var(--border);position:relative;background:var(--border)}
+.tl-seg{display:flex;align-items:center;justify-content:center;font-family:var(--font-m);font-size:10px;font-weight:600;letter-spacing:0.04em;position:relative;text-transform:uppercase}
+.tl-seg .tl-name{position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:9px;color:var(--muted);letter-spacing:0.04em;font-family:var(--font-m)}
+.timeline-spacer{height:24px}
+.tl-a{background:var(--c1);color:#fff}
+.tl-b{background:#cfccc2;color:var(--ink)}
+.tl-c{background:var(--ink);color:#fff}
+.tl-d{background:var(--muted);color:#fff}
+.tl-e{background:var(--alt2);color:var(--ink)}
+
+/* ── SCENE CARDS ── */
+.scenes{display:flex;flex-direction:column;gap:1px;margin-bottom:32px;background:var(--border);border:1px solid var(--border)}
+.scene-card{background:var(--surface)}
+.scene-header{display:flex;align-items:center;gap:14px;padding:15px 18px;cursor:pointer;user-select:none;transition:background .15s}
+.scene-header:hover{background:var(--alt)}
+.scene-num{font-family:var(--font-m);font-size:12px;color:var(--c1);font-weight:700;min-width:30px}
+.scene-title-wrap{flex:1}
+.scene-name{font-family:var(--font-h);font-size:15px;font-weight:700;color:var(--ink);margin-bottom:2px;letter-spacing:-0.01em}
+.scene-timing{font-family:var(--font-m);font-size:11px;color:var(--muted)}
+.scene-toggle{color:var(--muted);font-size:11px;transition:transform .2s}
+.scene-body{display:none;padding:0 18px 18px;border-top:1px solid var(--border)}
+.scene-body.open{display:block}
+.scene-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:16px}
+@media(max-width:700px){.scene-grid{grid-template-columns:1fr}}
+.sg-label{font-family:var(--font-m);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--c1);margin-bottom:6px;font-weight:700}
+.sg-text{font-size:13px;color:var(--muted2);line-height:1.58}
+.sg-text.vo{font-family:var(--font-m);font-size:12px;color:var(--ink);background:var(--alt2);border-left:2px solid var(--c1);padding:9px 13px;line-height:1.5}
+.component-pill{display:inline-block;background:var(--c1dim);border:1px solid #f6cdbe;color:var(--c1);font-family:var(--font-m);font-size:10px;padding:3px 9px;margin:2px 3px 0 0;letter-spacing:0.04em}
+.anim-tag{display:inline-block;background:var(--alt2);border:1px solid var(--border);color:var(--muted2);font-family:var(--font-m);font-size:10px;padding:3px 9px;margin:2px 3px 0 0;letter-spacing:0.02em}
+
+/* ── SPEC / MUSIC / THUMB ── */
+.spec-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;margin-bottom:32px;background:var(--border);border:1px solid var(--border)}
+@media(max-width:700px){.spec-grid{grid-template-columns:1fr}}
+.spec-card{background:var(--surface);padding:22px}
+.spec-card h4{font-family:var(--font-h);font-size:15px;font-weight:700;margin-bottom:14px;color:var(--ink)}
+.spec-card ul{list-style:none;display:flex;flex-direction:column;gap:7px}
+.spec-card li{font-size:13px;color:var(--muted2);display:flex;align-items:flex-start;gap:9px;line-height:1.5}
+.spec-card li::before{content:'—';color:var(--c1);flex-shrink:0;font-family:var(--font-m)}
+.music-box{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--c1);padding:18px 20px;margin-bottom:24px}
+.music-box h4{font-family:var(--font-h);font-size:14px;font-weight:700;color:var(--ink);margin-bottom:8px}
+.music-box p{font-size:13px;color:var(--muted2);line-height:1.55}
+.thumb-box{background:var(--surface);border:1px solid var(--border);padding:20px;margin-bottom:8px;display:flex;gap:22px;align-items:center}
+.thumb-preview{width:160px;height:90px;background:var(--bg);border:1px solid var(--border2);flex-shrink:0;display:flex;align-items:center;justify-content:center;text-align:center}
+.thumb-preview-text{font-family:var(--font-h);font-size:15px;font-weight:800;color:var(--ink);letter-spacing:-0.02em;line-height:1.1}
+.thumb-preview-text s{color:var(--c1);text-decoration-thickness:3px}
+.thumb-preview-text span{display:block;font-family:var(--font-m);font-size:8px;font-weight:700;letter-spacing:0.16em;color:var(--muted);margin-top:6px;text-decoration:none}
+.thumb-desc h4{font-family:var(--font-h);font-size:14px;font-weight:700;color:var(--ink);margin-bottom:6px}
+.thumb-desc p{font-size:13px;color:var(--muted2);line-height:1.5}
+
+/* ── SOCIAL CLIPS ── */
+.clips-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-bottom:32px;background:var(--border);border:1px solid var(--border)}
+@media(max-width:800px){.clips-grid{grid-template-columns:1fr}}
+.clip-card{background:var(--surface)}
+.clip-header{background:var(--alt2);border-bottom:1px solid var(--border);padding:13px 16px;display:flex;align-items:center;gap:11px}
+.clip-letter{width:28px;height:28px;background:var(--c1);display:flex;align-items:center;justify-content:center;font-family:var(--font-h);font-size:13px;font-weight:800;color:#fff;flex-shrink:0}
+.clip-label{font-family:var(--font-h);font-size:13px;font-weight:700;color:var(--ink)}
+.clip-body{padding:15px 16px;display:flex;flex-direction:column;gap:12px}
+.clip-row-label{font-family:var(--font-m);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--c1);margin-bottom:4px;font-weight:700}
+.clip-row-text{font-size:12px;color:var(--muted2);line-height:1.45}
+.clip-vo{font-family:var(--font-m);font-size:11px;color:var(--ink);background:var(--alt2);border-left:2px solid var(--c1);padding:7px 11px;line-height:1.5}
+
+/* ── PIPELINE ── */
+.pipeline{display:flex;flex-direction:column;gap:1px;margin-bottom:32px;background:var(--border);border:1px solid var(--border)}
+.pipe-step{display:flex;align-items:flex-start;gap:18px;background:var(--surface);padding:18px 20px}
+.pipe-num{font-family:var(--font-m);font-size:24px;font-weight:700;color:var(--c1);opacity:.35;min-width:30px;line-height:1}
+.pipe-title{font-family:var(--font-h);font-size:15px;font-weight:700;color:var(--ink);margin-bottom:5px}
+.pipe-text{font-size:13px;color:var(--muted2);line-height:1.55}
+.pipe-text strong{color:var(--ink)}
+.pipe-text code{font-family:var(--font-m);font-size:12px;background:var(--alt2);padding:1px 5px;color:var(--c1)}
+.pipe-code{font-family:var(--font-m);font-size:11px;color:var(--ink);background:var(--alt2);border:1px solid var(--border);padding:4px 10px;margin-top:8px;display:inline-block;letter-spacing:0.01em}
+
+/* ── TABLES ── */
+.comp-table,.dist-table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:32px;border:1px solid var(--border)}
+.comp-table th,.dist-table th{text-align:left;font-family:var(--font-m);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);padding:10px 14px;border-bottom:1px solid var(--border);background:var(--alt);font-weight:700}
+.comp-table td,.dist-table td{padding:11px 14px;border-bottom:1px solid var(--grid);vertical-align:top}
+.comp-table tr:last-child td,.dist-table tr:last-child td{border-bottom:none}
+.comp-table td:first-child{font-family:var(--font-m);font-size:12px;color:var(--c1);white-space:nowrap;font-weight:600}
+.comp-table td:nth-child(2){color:var(--muted2);font-family:var(--font-m);font-size:11px}
+.comp-table td:nth-child(3){color:var(--muted2)}
+.dist-table td:first-child{font-family:var(--font-h);font-weight:700;color:var(--ink)}
+.dist-table td{color:var(--muted2)}
+.comp-table tbody tr:hover td,.dist-table tbody tr:hover td{background:var(--alt)}
+
+/* ── FIDELITY BOX ── */
+.fidelity{background:var(--ink);color:var(--bg);padding:24px 26px;margin-bottom:8px;border:1px solid var(--ink)}
+.fidelity .sec-label{color:var(--c1h)}
+.fidelity ul{list-style:none;display:flex;flex-direction:column;gap:9px;margin-top:6px}
+.fidelity li{font-family:var(--font-m);font-size:12px;line-height:1.5;color:#d8d8d0;display:flex;gap:10px}
+.fidelity li b{color:#fff}
+.fidelity li::before{content:'✓';color:var(--c1h);font-weight:700}
+
+.divider{height:1px;background:var(--border);margin:36px 0}
+.note{font-family:var(--font-m);font-size:11px;color:var(--muted);letter-spacing:0.02em;margin:-18px 0 28px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ═══ HEADER ═══ -->
+  <div class="header">
+    <div class="eyebrow">Direction A — Swiss Control Room &nbsp;·&nbsp; Video Creative Brief</div>
+    <h1>Metalyde <span>Video Production</span></h1>
+    <p class="header-sub">Three videos. One operating system. Everything below is what gets built — scenes, narration, components, and the render pipeline.</p>
+    <div class="header-meta">
+      <span class="meta-badge"><strong>Category</strong> Profitability-led agency OS</span>
+      <span class="meta-badge"><strong>Lead line</strong> Know your margin before the invoice</span>
+      <span class="meta-badge"><strong>Primary</strong> Founder-operator · Lean Agency 2.0</span>
+      <span class="meta-badge"><strong>Palette</strong> Paper · Signal Red · Graphite</span>
+      <span class="meta-badge"><strong>Engine</strong> roxabi-production + voiceCLI</span>
+      <span class="meta-badge"><strong>Date</strong> 2026-06-16</span>
+    </div>
+  </div>
+
+  <!-- ═══ TABS ═══ -->
+  <nav class="video-tabs">
+    <button class="vtab active" onclick="switchTab('v1',this)">01 — Launch Trailer</button>
+    <button class="vtab" onclick="switchTab('v2',this)">02 — Product Demo</button>
+    <button class="vtab" onclick="switchTab('v3',this)">03 — Social Clips</button>
+    <button class="vtab" onclick="switchTab('pipeline',this)">04 — Pipeline</button>
+  </nav>
+
+  <!-- ═══════════ VIDEO 1 — LAUNCH TRAILER ═══════════ -->
+  <div class="panel active" id="v1">
+    <div style="margin-bottom:30px">
+      <div class="sec-label">Video 01</div>
+      <div class="sec-title">Launch Trailer</div>
+      <div class="sec-sub">First impression. Landing hero · X · LinkedIn. 45–60 seconds.</div>
+    </div>
+
+    <div class="video-meta">
+      <div class="vm-cell"><div class="vm-label">Duration</div><div class="vm-value sig">45–60 s</div></div>
+      <div class="vm-cell"><div class="vm-label">Aspect</div><div class="vm-value">16:9</div></div>
+      <div class="vm-cell"><div class="vm-label">Resolution</div><div class="vm-value">1920 × 1080</div></div>
+      <div class="vm-cell"><div class="vm-label">FPS</div><div class="vm-value">30</div></div>
+      <div class="vm-cell"><div class="vm-label">Format</div><div class="vm-value">MP4 H.264</div></div>
+      <div class="vm-cell"><div class="vm-label">Distribution</div><div class="vm-value">Landing · X · LinkedIn</div></div>
+      <div class="vm-cell"><div class="vm-label">Audience</div><div class="vm-value sig">Founder-operator</div></div>
+      <div class="vm-cell"><div class="vm-label">Tone</div><div class="vm-value">Calm · operator-to-operator</div></div>
+    </div>
+
+    <div class="timeline-wrap">
+      <div class="timeline-label">Visual Timeline (30 fps · ~54 s target)</div>
+      <div class="timeline">
+        <div class="tl-seg tl-a" style="flex:6" title="Hook">Hook<div class="tl-name">0–6s</div></div>
+        <div class="tl-seg tl-b" style="flex:12" title="Problem">Problem<div class="tl-name">6–18s</div></div>
+        <div class="tl-seg tl-c" style="flex:10" title="Reveal">Reveal<div class="tl-name">18–28s</div></div>
+        <div class="tl-seg tl-d" style="flex:12" title="Proof">Proof<div class="tl-name">28–40s</div></div>
+        <div class="tl-seg tl-e" style="flex:8" title="AI">AI<div class="tl-name">40–48s</div></div>
+        <div class="tl-seg tl-a" style="flex:6" title="Tagline">Tagline<div class="tl-name">48–54s</div></div>
+      </div>
+      <div class="timeline-spacer"></div>
+    </div>
+
+    <div class="sec-label" style="margin-bottom:12px">Scene Breakdown</div>
+    <div class="scenes">
+
+      <div class="scene-card">
+        <div class="scene-header" onclick="toggleScene(this)">
+          <span class="scene-num">S01</span>
+          <div class="scene-title-wrap"><div class="scene-name">Hook — The number that doesn't add up</div><div class="scene-timing">frames 0–180 · 0–6 s</div></div>
+          <span class="scene-toggle">▼</span>
+        </div>
+        <div class="scene-body">
+          <div class="scene-grid">
+            <div><div class="sg-label">Visual</div><div class="sg-text">Paper-white frame, faint hairline grid. One line of monospace types out center-frame: <em>“500 billable hours.  $0 profit.”</em> A signal-red rule wipes under “$0”. Maximum restraint — no motion but the type and the rule.</div></div>
+            <div><div class="sg-label">VO</div><div class="sg-text vo">You logged five hundred billable hours last month.<br>You still lost money.</div></div>
+            <div><div class="sg-label">Components</div><div><span class="component-pill">Typewriter</span><span class="component-pill">HairlineGrid</span><span class="component-pill">SignalRule</span><span class="component-pill">CountUp</span></div></div>
+            <div><div class="sg-label">Animation</div><div><span class="anim-tag">typewriter 64 cpm</span><span class="anim-tag">count-up 0→500 hrs</span><span class="anim-tag">red rule wipe f150</span></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="scene-card">
+        <div class="scene-header" onclick="toggleScene(this)">
+          <span class="scene-num">S02</span>
+          <div class="scene-title-wrap"><div class="scene-name">Problem — Four tools, four truths</div><div class="scene-timing">frames 180–540 · 6–18 s</div></div>
+          <span class="scene-toggle">▼</span>
+        </div>
+        <div class="scene-body">
+          <div class="scene-grid">
+            <div><div class="sg-label">Visual</div><div class="sg-text">Four bordered cards snap into a 2×2 grid: <strong>BRIEF · PRODUCTION · BILLING · REPORTING</strong>, each a different tool. Thin connector lines try to bridge them and flicker red. A mono counter ticks up: “4–6 hrs / week reconciling.”</div></div>
+            <div><div class="sg-label">VO</div><div class="sg-text vo">Brief. Production. Billing. Reporting.<br>Four tools. Four sources of truth.<br>Four to six hours a week just keeping them in sync.</div></div>
+            <div><div class="sg-label">Components</div><div><span class="component-pill">SeamCards</span><span class="component-pill">ConnectorLines</span><span class="component-pill">MonoCounter</span><span class="component-pill">HairlineGrid</span></div></div>
+            <div><div class="sg-label">Animation</div><div><span class="anim-tag">cards stagger-in</span><span class="anim-tag">connector flicker</span><span class="anim-tag">counter 0→6</span></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="scene-card">
+        <div class="scene-header" onclick="toggleScene(this)">
+          <span class="scene-num">S03</span>
+          <div class="scene-title-wrap"><div class="scene-name">Reveal — One surface</div><div class="scene-timing">frames 540–840 · 18–28 s</div></div>
+          <span class="scene-toggle">▼</span>
+        </div>
+        <div class="scene-body">
+          <div class="scene-grid">
+            <div><div class="sg-label">Visual</div><div class="sg-text">The four cards collapse inward and fuse into a single bordered Metalyde sheet. From the grid modules, the <strong>M-grid logo</strong> assembles — one module flips signal-red. A clean light-wipe crosses left-to-right.</div></div>
+            <div><div class="sg-label">VO</div><div class="sg-text vo">Metalyde puts the whole agency in one system —<br>and makes the one number you need the first thing you see.</div></div>
+            <div><div class="sg-label">Components</div><div><span class="component-pill">PanelAssemble</span><span class="component-pill">LogoGridBuild</span><span class="component-pill">LightWipe</span></div></div>
+            <div><div class="sg-label">Animation</div><div><span class="anim-tag">cards converge ease-in-out</span><span class="anim-tag">logo modules snap f720</span><span class="anim-tag">light wipe 400ms</span></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="scene-card">
+        <div class="scene-header" onclick="toggleScene(this)">
+          <span class="scene-num">S04</span>
+          <div class="scene-title-wrap"><div class="scene-name">Proof — The margin view</div><div class="scene-timing">frames 840–1200 · 28–40 s</div></div>
+          <span class="scene-toggle">▼</span>
+        </div>
+        <div class="scene-body">
+          <div class="scene-grid">
+            <div><div class="sg-label">Visual</div><div class="sg-text">The live <strong>client-margin panel</strong> renders row by row — Lumen +38%, Vega +29%, Northwind −4% (over), Okta −18% (burning). Margin bars grow; the negatives glow signal-red. A flag drops: <em>“⚠ $4,200 unbilled scope detected.”</em></div></div>
+            <div><div class="sg-label">VO</div><div class="sg-text vo">Which clients made money this week.<br>Which are burning. And exactly where the hours went —<br>before the invoice goes out.</div></div>
+            <div><div class="sg-label">Components</div><div><span class="component-pill">MarginPanel</span><span class="component-pill">RowReveal</span><span class="component-pill">MarginBar</span><span class="component-pill">ScopeFlag</span><span class="component-pill">CountUp</span></div></div>
+            <div><div class="sg-label">Animation</div><div><span class="anim-tag">rows stagger 90ms</span><span class="anim-tag">bars grow spring</span><span class="anim-tag">flag pop f1140</span></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="scene-card">
+        <div class="scene-header" onclick="toggleScene(this)">
+          <span class="scene-num">S05</span>
+          <div class="scene-title-wrap"><div class="scene-name">AI — Runs the admin, not the creative</div><div class="scene-timing">frames 1200–1440 · 40–48 s</div></div>
+          <span class="scene-toggle">▼</span>
+        </div>
+        <div class="scene-body">
+          <div class="scene-grid">
+            <div><div class="sg-label">Visual</div><div class="sg-text">A brief chip lands. In sequence, lines auto-write: project plan drafts, budget assigns, a scope change is flagged and priced, the client report assembles itself. Each step gets a mono <strong>AUTO</strong> tag. No human cursor — the system does the paperwork.</div></div>
+            <div><div class="sg-label">VO</div><div class="sg-text vo">AI runs the admin — scope capture, briefs,<br>the client report writes itself.<br>Your team does what agencies actually sell.</div></div>
+            <div><div class="sg-label">Components</div><div><span class="component-pill">BriefIntake</span><span class="component-pill">AutoDraft</span><span class="component-pill">ScopeFlag</span><span class="component-pill">ReportAssemble</span><span class="component-pill">MonoTag</span></div></div>
+            <div><div class="sg-label">Animation</div><div><span class="anim-tag">auto-draft typewriter</span><span class="anim-tag">AUTO tag pops</span><span class="anim-tag">no cursor</span></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="scene-card">
+        <div class="scene-header" onclick="toggleScene(this)">
+          <span class="scene-num">S06</span>
+          <div class="scene-title-wrap"><div class="scene-name">Tagline — The lockup</div><div class="scene-timing">frames 1440–1620 · 48–54 s</div></div>
+          <span class="scene-toggle">▼</span>
+        </div>
+        <div class="scene-body">
+          <div class="scene-grid">
+            <div><div class="sg-label">Visual</div><div class="sg-text">Centered M-grid logo + wordmark <strong>METALYDE</strong>. Headline “The OS for a marketing agency.” settles word-by-word. Sub-line in muted graphite; signal-red rule; CTA <strong>metalyde.roxabi.dev</strong>. Paper background, no glow — pure Swiss closing card.</div></div>
+            <div><div class="sg-label">VO</div><div class="sg-text vo">Metalyde.<br>The OS for a marketing agency.</div></div>
+            <div><div class="sg-label">Components</div><div><span class="component-pill">LogoLockup</span><span class="component-pill">StaggeredWords</span><span class="component-pill">SignalRule</span><span class="component-pill">SyncedCaptions</span></div></div>
+            <div><div class="sg-label">Animation</div><div><span class="anim-tag">logo settle</span><span class="anim-tag">words stagger 120ms</span><span class="anim-tag">CTA fade-in</span></div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="music-box">
+      <h4>Music &amp; Sound Design</h4>
+      <p>Minimal and precise — the sound of a control room, not a hype reel. A low steady pulse under the problem; a single clean tick as each margin row lands; one confident resolve on the tagline. No epic swell. The brand voice is <strong>calm under load</strong> — the audio must project control, not urgency. Reference: ambient-techno restraint (e.g. Jon Hopkins, low-mix).</p>
+    </div>
+
+    <div class="thumb-box">
+      <div class="thumb-preview"><div class="thumb-preview-text">500 hrs.<br><s>$0 profit</s><span>METALYDE</span></div></div>
+      <div class="thumb-desc">
+        <h4>Thumbnail Concept</h4>
+        <p>Static first frame = the hook frame: paper card, ink “500 billable hours. $0 profit.” with a signal-red strike, METALYDE wordmark bottom. It's the gut-punch the founder-operator can't scroll past. Design the X/LinkedIn card to pull this frame automatically.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ VIDEO 2 — PRODUCT DEMO ═══════════ -->
+  <div class="panel" id="v2">
+    <div style="margin-bottom:30px">
+      <div class="sec-label">Video 02</div>
+      <div class="sec-title">Product Demo</div>
+      <div class="sec-sub">Show, don't tell. Docs · onboarding · sales follow-up. 90–120 seconds. One unbroken flow: brief → invoice.</div>
+    </div>
+
+    <div class="video-meta">
+      <div class="vm-cell"><div class="vm-label">Duration</div><div class="vm-value sig">90–120 s</div></div>
+      <div class="vm-cell"><div class="vm-label">Aspect</div><div class="vm-value">16:9</div></div>
+      <div class="vm-cell"><div class="vm-label">Resolution</div><div class="vm-value">1920 × 1080</div></div>
+      <div class="vm-cell"><div class="vm-label">FPS</div><div class="vm-value">30</div></div>
+      <div class="vm-cell"><div class="vm-label">Format</div><div class="vm-value">MP4 H.264</div></div>
+      <div class="vm-cell"><div class="vm-label">Distribution</div><div class="vm-value">Docs · sales · demo page</div></div>
+      <div class="vm-cell"><div class="vm-label">Audience</div><div class="vm-value sig">Evaluating founder + ops lead</div></div>
+      <div class="vm-cell"><div class="vm-label">Tone</div><div class="vm-value">Plain · confident · zero hype</div></div>
+    </div>
+
+    <div class="timeline-wrap">
+      <div class="timeline-label">Visual Timeline — the Brief → Invoice loop (~100 s)</div>
+      <div class="timeline">
+        <div class="tl-seg tl-c" style="flex:14" title="Brief lands">Brief<div class="tl-name">D01</div></div>
+        <div class="tl-seg tl-b" style="flex:16" title="Auto plan + budget">Plan<div class="tl-name">D02</div></div>
+        <div class="tl-seg tl-d" style="flex:16" title="Time vs budget">Track<div class="tl-name">D03</div></div>
+        <div class="tl-seg tl-a" style="flex:18" title="Scope flagged + priced">Scope<div class="tl-name">D04</div></div>
+        <div class="tl-seg tl-e" style="flex:16" title="Client portal">Portal<div class="tl-name">D05</div></div>
+        <div class="tl-seg tl-a" style="flex:14" title="Invoice + margin">Close<div class="tl-name">D06</div></div>
+      </div>
+      <div class="timeline-spacer"></div>
+    </div>
+
+    <div class="sec-label" style="margin-bottom:12px">Scene Breakdown</div>
+    <div class="scenes">
+
+      <div class="scene-card">
+        <div class="scene-header" onclick="toggleScene(this)"><span class="scene-num">D01</span><div class="scene-title-wrap"><div class="scene-name">A brief lands</div><div class="scene-timing">0–14 s</div></div><span class="scene-toggle">▼</span></div>
+        <div class="scene-body"><div class="scene-grid">
+          <div><div class="sg-label">Visual</div><div class="sg-text">A client email / intake form glides in and resolves into a structured <strong>Brief</strong> object — scope, deliverables, due date, retainer line. Clean Swiss form, hairline fields.</div></div>
+          <div><div class="sg-label">VO</div><div class="sg-text vo">A brief comes in. Metalyde captures it as structured work — not a buried email thread.</div></div>
+          <div><div class="sg-label">Components</div><div><span class="component-pill">BriefIntake</span><span class="component-pill">FormResolve</span><span class="component-pill">HairlineGrid</span></div></div>
+          <div><div class="sg-label">Animation</div><div><span class="anim-tag">email→object morph</span><span class="anim-tag">fields fill</span></div></div>
+        </div></div>
+      </div>
+
+      <div class="scene-card">
+        <div class="scene-header" onclick="toggleScene(this)"><span class="scene-num">D02</span><div class="scene-title-wrap"><div class="scene-name">Auto project plan + budget</div><div class="scene-timing">14–30 s</div></div><span class="scene-toggle">▼</span></div>
+        <div class="scene-body"><div class="scene-grid">
+          <div><div class="sg-label">Visual</div><div class="sg-text">From the brief, a project plan auto-drafts — tasks appear in a list, an <strong>AUTO</strong> tag on each. A budget bar initializes; hours allocated against the retainer.</div></div>
+          <div><div class="sg-label">VO</div><div class="sg-text vo">A project plan drafts itself. Budget set against the retainer — before a single hour is logged.</div></div>
+          <div><div class="sg-label">Components</div><div><span class="component-pill">AutoDraft</span><span class="component-pill">BudgetBar</span><span class="component-pill">MonoTag</span></div></div>
+          <div><div class="sg-label">Animation</div><div><span class="anim-tag">tasks type-in</span><span class="anim-tag">budget bar init</span></div></div>
+        </div></div>
+      </div>
+
+      <div class="scene-card">
+        <div class="scene-header" onclick="toggleScene(this)"><span class="scene-num">D03</span><div class="scene-title-wrap"><div class="scene-name">Time counts against budget</div><div class="scene-timing">30–46 s</div></div><span class="scene-toggle">▼</span></div>
+        <div class="scene-body"><div class="scene-grid">
+          <div><div class="sg-label">Visual</div><div class="sg-text">Live utilization: the budget bar fills as hours log. A small margin readout updates in real time. The bar crosses 80% and the edge shades toward signal-red.</div></div>
+          <div><div class="sg-label">VO</div><div class="sg-text vo">As the work happens, hours count against budget — and your margin updates live. No month-end surprise.</div></div>
+          <div><div class="sg-label">Components</div><div><span class="component-pill">BudgetBar</span><span class="component-pill">MarginReadout</span><span class="component-pill">CountUp</span></div></div>
+          <div><div class="sg-label">Animation</div><div><span class="anim-tag">bar fill</span><span class="anim-tag">margin tick</span><span class="anim-tag">threshold shade</span></div></div>
+        </div></div>
+      </div>
+
+      <div class="scene-card">
+        <div class="scene-header" onclick="toggleScene(this)"><span class="scene-num">D04</span><div class="scene-title-wrap"><div class="scene-name">Scope flagged + priced — the money moment</div><div class="scene-timing">46–64 s</div></div><span class="scene-toggle">▼</span></div>
+        <div class="scene-body"><div class="scene-grid">
+          <div><div class="sg-label">Visual</div><div class="sg-text">A client message adds “one quick extra.” Metalyde flags it: <strong>OUT OF SCOPE</strong>, prices it, and drops a line into the invoice draft. The $4,200 that usually leaks — captured.</div></div>
+          <div><div class="sg-label">VO</div><div class="sg-text vo">A client adds scope mid-campaign. Metalyde flags it, prices it, and adds it to the invoice — the work you'd normally do for free.</div></div>
+          <div><div class="sg-label">Components</div><div><span class="component-pill">ScopeFlag</span><span class="component-pill">PriceChip</span><span class="component-pill">InvoiceDraft</span></div></div>
+          <div><div class="sg-label">Animation</div><div><span class="anim-tag">flag pop</span><span class="anim-tag">price stamp</span><span class="anim-tag">line drops to invoice</span></div></div>
+        </div></div>
+      </div>
+
+      <div class="scene-card">
+        <div class="scene-header" onclick="toggleScene(this)"><span class="scene-num">D05</span><div class="scene-title-wrap"><div class="scene-name">Client portal updates in real time</div><div class="scene-timing">64–80 s</div></div><span class="scene-toggle">▼</span></div>
+        <div class="scene-body"><div class="scene-grid">
+          <div><div class="sg-label">Visual</div><div class="sg-text">Split view: the agency side and a clean, branded <strong>client portal</strong>. As deliverables move, the client view updates live — a real-time dashboard, not a month-end PDF.</div></div>
+          <div><div class="sg-label">VO</div><div class="sg-text vo">Your client sees progress in real time — a branded portal, not another PDF they'll never open.</div></div>
+          <div><div class="sg-label">Components</div><div><span class="component-pill">SplitView</span><span class="component-pill">ClientPortal</span><span class="component-pill">LiveSync</span></div></div>
+          <div><div class="sg-label">Animation</div><div><span class="anim-tag">split slide</span><span class="anim-tag">portal live-update</span></div></div>
+        </div></div>
+      </div>
+
+      <div class="scene-card">
+        <div class="scene-header" onclick="toggleScene(this)"><span class="scene-num">D06</span><div class="scene-title-wrap"><div class="scene-name">Invoice closes — margin booked</div><div class="scene-timing">80–100 s</div></div><span class="scene-toggle">▼</span></div>
+        <div class="scene-body"><div class="scene-grid">
+          <div><div class="sg-label">Visual</div><div class="sg-text">The invoice closes itself from the data already in the system. The account snaps back into the <strong>margin view</strong> — now margin-positive, scope billed. Loop closed. Cut to the lockup.</div></div>
+          <div><div class="sg-label">VO</div><div class="sg-text vo">The invoice closes automatically. Your team did the work — Metalyde ran the paperwork. Brief to invoice, one system.</div></div>
+          <div><div class="sg-label">Components</div><div><span class="component-pill">InvoiceClose</span><span class="component-pill">MarginPanel</span><span class="component-pill">LogoLockup</span><span class="component-pill">SyncedCaptions</span></div></div>
+          <div><div class="sg-label">Animation</div><div><span class="anim-tag">invoice seal</span><span class="anim-tag">return to margin view</span><span class="anim-tag">lockup</span></div></div>
+        </div></div>
+      </div>
+
+    </div>
+
+    <div class="music-box">
+      <h4>Music &amp; Sound Design</h4>
+      <p>Functional and quiet — a single sustained pad with soft mechanical ticks marking each step of the loop. The demo should feel like watching a machine do its job well. One small lift at D04 (the money moment) and a clean close at D06. Diegetic UI sounds only; no music stings.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════ VIDEO 3 — SOCIAL CLIPS ═══════════ -->
+  <div class="panel" id="v3">
+    <div style="margin-bottom:30px">
+      <div class="sec-label">Video 03</div>
+      <div class="sec-title">Social Clips</div>
+      <div class="sec-sub">Three vertical-first cut-downs. One pillar each. 6–12 seconds. Muted-autoplay native, captions burned in.</div>
+    </div>
+
+    <div class="clips-grid">
+      <div class="clip-card">
+        <div class="clip-header"><div class="clip-letter">A</div><div class="clip-label">Profitability</div></div>
+        <div class="clip-body">
+          <div><div class="clip-row-label">Hook frame</div><div class="clip-row-text">Paper card: “$4,200 you almost didn't bill.” signal-red figure.</div></div>
+          <div><div class="clip-row-label">Beat</div><div class="clip-row-text">Margin panel renders; scope-creep flag drops; figure counts up.</div></div>
+          <div><div class="clip-vo">Most agencies find their margin when the invoice goes out. Too late. Here's the view we built instead.</div></div>
+          <div><div class="clip-row-label">Components</div><div><span class="component-pill">MarginPanel</span><span class="component-pill">ScopeFlag</span><span class="component-pill">CountUp</span><span class="component-pill">SyncedCaptions</span></div></div>
+          <div><div class="clip-row-label">Timing (30 fps · 300 f)</div><div class="clip-row-text">f0–60 hook · f60–210 panel + flag · f210–300 lockup.</div></div>
+        </div>
+      </div>
+      <div class="clip-card">
+        <div class="clip-header"><div class="clip-letter">B</div><div class="clip-label">One System</div></div>
+        <div class="clip-body">
+          <div><div class="clip-row-label">Hook frame</div><div class="clip-row-text">Four tool logos stitched with “Zapier prayers.”</div></div>
+          <div><div class="clip-row-label">Beat</div><div class="clip-row-text">Four seam cards collapse into the single Metalyde sheet; counter “4–6 hrs/week back.”</div></div>
+          <div><div class="clip-vo">Brief, production, billing, reporting. Four tools is not a system. It's a maintenance job.</div></div>
+          <div><div class="clip-row-label">Components</div><div><span class="component-pill">SeamCards</span><span class="component-pill">PanelAssemble</span><span class="component-pill">MonoCounter</span><span class="component-pill">SyncedCaptions</span></div></div>
+          <div><div class="clip-row-label">Timing (30 fps · 270 f)</div><div class="clip-row-text">f0–60 hook · f60–200 collapse · f200–270 lockup.</div></div>
+        </div>
+      </div>
+      <div class="clip-card">
+        <div class="clip-header"><div class="clip-letter">C</div><div class="clip-label">Autopilot</div></div>
+        <div class="clip-body">
+          <div><div class="clip-row-label">Hook frame</div><div class="clip-row-text">“The client report writes itself.” mono caret blinking.</div></div>
+          <div><div class="clip-row-label">Beat</div><div class="clip-row-text">Report auto-assembles from system data; AUTO tags pop; review → send.</div></div>
+          <div><div class="clip-vo">AI runs the admin, not the creative. Your team thinks and makes. The system does the paperwork.</div></div>
+          <div><div class="clip-row-label">Components</div><div><span class="component-pill">ReportAssemble</span><span class="component-pill">AutoDraft</span><span class="component-pill">MonoTag</span><span class="component-pill">SyncedCaptions</span></div></div>
+          <div><div class="clip-row-label">Timing (30 fps · 300 f)</div><div class="clip-row-text">f0–60 hook · f60–220 assemble · f220–300 lockup.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec-label" style="margin-bottom:8px">Notes for Social Format</div>
+    <div class="spec-grid">
+      <div class="spec-card">
+        <h4>Square 1:1 (X · LinkedIn feed)</h4>
+        <ul>
+          <li>1080 × 1080 — safe zone 900 centered</li>
+          <li>SyncedCaptions mandatory (muted autoplay)</li>
+          <li>Signal-red brand band top or bottom, 40px</li>
+          <li>System sans caption, min 30px for legibility</li>
+          <li>Export two versions — with / without burned captions</li>
+        </ul>
+      </div>
+      <div class="spec-card">
+        <h4>Vertical 9:16 (Reels / Stories / Shorts)</h4>
+        <ul>
+          <li>1080 × 1920 — content recentered for vertical</li>
+          <li>Panel / sheet takes ~60% height, centered</li>
+          <li>VO text as large captions, top 20%</li>
+          <li>METALYDE wordmark bottom-right, always visible</li>
+          <li>Render as separate composition from 1:1</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="thumb-box">
+      <div class="thumb-preview" style="width:90px;height:90px"><div class="thumb-preview-text" style="font-size:11px">MARGIN<span>A · B · C</span></div></div>
+      <div class="thumb-desc">
+        <h4>Preview Frame Concept (all 3 clips)</h4>
+        <p>Each clip's first frame is a bold paper card with the pillar word in heavy system sans — “MARGIN”, “ONE SYSTEM”, “AUTOPILOT” — ink on paper with a single signal-red accent. Clip letter (A / B / C) in mono bottom-right. Designed as the static autoplay-preview the feed pulls automatically.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ PIPELINE ═══════════ -->
+  <div class="panel" id="pipeline">
+    <div style="margin-bottom:30px">
+      <div class="sec-label">Production Workflow</div>
+      <div class="sec-title">Pipeline</div>
+      <div class="sec-sub">End-to-end, from VO script to platform-ready export. Engine: roxabi-production (frame-based, useCurrentFrame) + voiceCLI.</div>
+    </div>
+
+    <div class="pipeline">
+      <div class="pipe-step"><div class="pipe-num">1</div><div><div class="pipe-title">Write VO scripts</div><div class="pipe-text">Finalize narration line-by-line from this brief. Short sentences — operator register, no hype (the brand voice is <strong>calm under load</strong>). Target ~120 wpm. One segment per scene, 500 ms gap between segments; mark emotion hints inline as HTML comments.</div><span class="pipe-code">Output: vo-launch.md · vo-demo.md · vo-clips.md</span></div></div>
+      <div class="pipe-step"><div class="pipe-num">2</div><div><div class="pipe-title">Generate voice — voiceCLI (TTS)</div><div class="pipe-text">Engine <strong>qwen-fast</strong> (validated on M₂ RTX 5070Ti). Voice profile: calm, precise, low-affect — operator-to-operator, never salesy. Slight pause on the numbers ($4,200 · 57% · 500 hrs). Crossfade 80 ms. Output WAV for render, OGG/Opus for preview.</div><span class="pipe-code">voicecli tts --engine qwen-fast --voice &lt;operator&gt; --input vo-launch.md --out vo-launch.wav</span></div></div>
+      <div class="pipe-step"><div class="pipe-num">3</div><div><div class="pipe-title">Transcribe for word-level timestamps</div><div class="pipe-text">faster-whisper <code>large-v3-turbo</code> → word-level timestamp JSON consumed by <code>SyncedCaptions</code> for frame-accurate captions. Also validates VO timing against each scene's frame budget — trim the script if any segment runs long.</div><span class="pipe-code">voicecli stt --model large-v3-turbo --word-timestamps --input vo-launch.wav --out vo-launch.ts.json</span></div></div>
+      <div class="pipe-step"><div class="pipe-num">4</div><div><div class="pipe-title">Build roxabi-production compositions</div><div class="pipe-text">Three compositions: <strong>MetalydeLaunchTrailer</strong>, <strong>MetalydeDemo</strong>, <strong>MetalydeSocialClips</strong> (3 sub-comps: 1:1 + 9:16). Register in Root. Palette constants: <code>PAPER="#f5f5f0"</code> <code>INK="#1a1a1a"</code> <code>SIGNAL="#e63000"</code> <code>BORDER="#d8d8d0"</code>. Heading constant <code>HEADING_FONT</code> = system sans stack. All motion via <code>useCurrentFrame()</code> — zero CSS animation.</div><span class="pipe-code">src/showcase/MetalydeLaunchTrailer.tsx · MetalydeDemo.tsx · MetalydeSocialClips.tsx</span></div></div>
+      <div class="pipe-step"><div class="pipe-num">5</div><div><div class="pipe-title">kit-metalyde custom components</div><div class="pipe-text">Swiss-control-room variants in <code>src/kit-metalyde/</code> — <strong>ControlRoomFrame</strong> (paper sheet + hairline grid + top status bar), <strong>MarginPanel</strong> (the row-reveal client-margin table), <strong>SeamFlow</strong> (four-cards → one-sheet collapse), <strong>StatBlock</strong> (big signal-red figure + mono label), <strong>LogoGridBuild</strong> (M-grid mark assembly). These wrap base kits — styled compositions, no new animation primitives.</div><span class="pipe-code">src/kit-metalyde/ControlRoomFrame.tsx · MarginPanel.tsx · SeamFlow.tsx · StatBlock.tsx</span></div></div>
+      <div class="pipe-step"><div class="pipe-num">6</div><div><div class="pipe-title">Render — roxabi-production CLI</div><div class="pipe-text">Start the dev server on port 3001 (renderer hardcodes it). Render one composition at a time (saturates the machine); concurrency = CPU cores. Typecheck first to catch component errors before a long render. CRF 18 master, CRF 23 distribution copies. Verify frame count against the timing spec before committing.</div><span class="pipe-code">npm run render -- MetalydeLaunchTrailer out/metalyde-launch-v0.1.mp4</span></div></div>
+      <div class="pipe-step"><div class="pipe-num">7</div><div><div class="pipe-title">Post-production &amp; distribution</div><div class="pipe-text">Thumbnail: export the S01 hook frame ($0 profit) for landing/X/LinkedIn cards. Burn <code>SyncedCaptions</code> into the social clips. X/LinkedIn: encode ≤5 Mbps. Export a 1:1 square for feed autoplay and a 9:16 for Reels/Shorts. Verify all color profiles are sRGB before upload.</div><span class="pipe-code">ffmpeg -i out/metalyde-launch-v0.1.mp4 -b:v 4M -maxrate 5M out/metalyde-launch-x.mp4</span></div></div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="sec-label" style="margin-bottom:12px">Component Map (kit-metalyde + base)</div>
+    <table class="comp-table">
+      <thead><tr><th>Component</th><th>Used in</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr><td>ControlRoomFrame</td><td>all scenes</td><td>Paper sheet, hairline grid, top status bar — the world</td></tr>
+        <tr><td>Typewriter</td><td>S01 · S05 · D01 · Clip C</td><td>Mono text reveal, auto-draft, hook line</td></tr>
+        <tr><td>CountUp</td><td>S01 · S04 · D03 · Clip A</td><td>Hours, margin %, dollar figures (tabular)</td></tr>
+        <tr><td>SignalRule</td><td>S01 · S06</td><td>Red underline / closing rule</td></tr>
+        <tr><td>SeamCards</td><td>S02 · Clip B</td><td>Brief/Production/Billing/Reporting cards</td></tr>
+        <tr><td>ConnectorLines</td><td>S02</td><td>Flickering bridges between tools</td></tr>
+        <tr><td>SeamFlow / PanelAssemble</td><td>S03 · Clip B</td><td>Four cards collapse into one sheet</td></tr>
+        <tr><td>LogoGridBuild</td><td>S03 · S06</td><td>M-grid mark assembles from grid modules</td></tr>
+        <tr><td>MarginPanel</td><td>S04 · D06 · Clip A</td><td>Client-margin table, row-reveal, bars</td></tr>
+        <tr><td>MarginBar</td><td>S04 · D03</td><td>Per-account margin / budget fill</td></tr>
+        <tr><td>ScopeFlag</td><td>S04 · S05 · D04 · Clip A</td><td>“Out of scope” flag + price stamp</td></tr>
+        <tr><td>BriefIntake</td><td>S05 · D01</td><td>Email/form → structured Brief object</td></tr>
+        <tr><td>AutoDraft</td><td>S05 · D02 · Clip C</td><td>Self-writing plan / report lines</td></tr>
+        <tr><td>MonoTag</td><td>S05 · D02</td><td>“AUTO” tags on machine-run steps</td></tr>
+        <tr><td>BudgetBar</td><td>D02 · D03</td><td>Retainer budget allocation + burn</td></tr>
+        <tr><td>InvoiceDraft / InvoiceClose</td><td>D04 · D06</td><td>Scope line drops in; invoice seals</td></tr>
+        <tr><td>ClientPortal / SplitView</td><td>D05</td><td>Branded real-time client view</td></tr>
+        <tr><td>StatBlock</td><td>S01 · Clip A</td><td>Big signal-red figure + mono label</td></tr>
+        <tr><td>LogoLockup</td><td>S06 · D06</td><td>Logo + wordmark + tagline closing card</td></tr>
+        <tr><td>HairlineGrid</td><td>all scenes</td><td>Background texture — Swiss control room</td></tr>
+        <tr><td>SyncedCaptions</td><td>S06 · D06 · all clips</td><td>Word-level captions from Whisper timestamps</td></tr>
+      </tbody>
+    </table>
+
+    <div class="sec-label" style="margin-bottom:12px">Distribution</div>
+    <table class="dist-table">
+      <thead><tr><th>Asset</th><th>Channels</th><th>Spec</th><th>CTA</th></tr></thead>
+      <tbody>
+        <tr><td>Launch Trailer</td><td>Landing hero · X · LinkedIn</td><td>16:9 · 45–60s · MP4 H.264</td><td>metalyde.roxabi.dev</td></tr>
+        <tr><td>Product Demo</td><td>Docs · onboarding · sales follow-up</td><td>16:9 · 90–120s · CRF 18 master</td><td>Request access</td></tr>
+        <tr><td>Clip A — Margin</td><td>X · LinkedIn · Reels · Shorts</td><td>1:1 + 9:16 · ≤12s · captions burned</td><td>See the margin view</td></tr>
+        <tr><td>Clip B — One System</td><td>X · LinkedIn · Reels</td><td>1:1 + 9:16 · ≤10s · captions burned</td><td>Replace your stack</td></tr>
+        <tr><td>Clip C — Autopilot</td><td>X · LinkedIn · Shorts</td><td>1:1 + 9:16 · ≤12s · captions burned</td><td>Meet the AI ops layer</td></tr>
+      </tbody>
+    </table>
+
+    <div class="fidelity">
+      <div class="sec-label">Brand fidelity — lock before render</div>
+      <ul>
+        <li><b>Fonts:</b> system sans stack only (no web fonts). Centralize as a <code>HEADING_FONT</code> constant — font drift is the #1 video brand risk.</li>
+        <li><b>Palette:</b> every hex cross-checked to Direction A — PAPER #f5f5f0 · INK #1a1a1a · SIGNAL #e63000 · BORDER #d8d8d0. No glow, no gradients.</li>
+        <li><b>No Lyra carry-over:</b> the forge orange #e85d04 and dark obsidian are a different brand — never appear here. Metalyde signal is #e63000 on paper.</li>
+        <li><b>Logo:</b> the M-grid mark must match the wordmark SVG exactly (module geometry), not a reinterpretation.</li>
+        <li><b>Closing card:</b> centered logo + wordmark + “The OS for a marketing agency.” + sub + CTA — never a small watermark.</li>
+        <li><b>Numbers are sourced:</b> 57% / $1–5K (Ignition 2025) · ~60% utilization (SoDA 2024) · $4,200 scope/week — keep them accurate on screen.</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function switchTab(id, btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.vtab').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function toggleScene(header){
+  const body=header.nextElementSibling;
+  const toggle=header.querySelector('.scene-toggle');
+  const isOpen=body.classList.contains('open');
+  body.classList.toggle('open',!isOpen);
+  toggle.textContent=isOpen?'▼':'▲';
+}
+document.addEventListener('DOMContentLoaded',()=>{
+  const first=document.querySelector('#v1 .scene-header');
+  if(first) toggleScene(first);
+});
+</script>
+</body>
+</html>

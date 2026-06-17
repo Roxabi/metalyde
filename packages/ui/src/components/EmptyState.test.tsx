@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
-import { EmptyState, emptyStateVariants } from './EmptyState'
+import { EmptyState } from './EmptyState'
 
 describe('EmptyState variants', () => {
   it('should have data-slot attribute when rendered', () => {
@@ -131,7 +131,7 @@ describe('EmptyState props', () => {
 describe('EmptyState composed', () => {
   it('should render without error when all props are provided', () => {
     // Arrange & Act
-    const { container } = render(
+    render(
       <EmptyState
         icon={<span>icon</span>}
         title="No organizations"
@@ -141,8 +141,9 @@ describe('EmptyState composed', () => {
       />
     )
 
-    // Assert
-    expect(container.querySelector('[data-slot="empty-state"]')).toBeInTheDocument()
+    // Assert — heading and action button are both present
+    expect(screen.getByRole('heading', { name: 'No organizations' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Create organization' })).toBeInTheDocument()
   })
 
   it('should render without error when only required props are provided', () => {
@@ -156,29 +157,75 @@ describe('EmptyState composed', () => {
   })
 })
 
-describe('emptyStateVariants', () => {
-  it('should return default variant classes', () => {
+describe('EmptyState hint prop', () => {
+  it('should not render hint element when hint is not provided', () => {
     // Arrange & Act
-    const result = emptyStateVariants({ variant: 'default' })
+    const { container } = render(
+      <EmptyState icon={<span>icon</span>} description="No items found." />
+    )
 
     // Assert
-    expect(result).toContain('border-dashed')
+    expect(container.querySelector('[data-slot="empty-state-hint"]')).not.toBeInTheDocument()
   })
 
-  it('should return error variant classes', () => {
+  it('should render hint text when hint is provided', () => {
     // Arrange & Act
-    const result = emptyStateVariants({ variant: 'error' })
+    render(
+      <EmptyState
+        icon={<span>icon</span>}
+        description="No items found."
+        hint="Try adjusting your filters."
+      />
+    )
 
     // Assert
-    expect(result).toContain('border-destructive/50')
+    expect(screen.getByText('Try adjusting your filters.')).toBeInTheDocument()
   })
 
-  it('should return search variant classes without border', () => {
+  it('should render hint with data-slot attribute when hint is provided', () => {
     // Arrange & Act
-    const result = emptyStateVariants({ variant: 'search' })
+    const { container } = render(
+      <EmptyState
+        icon={<span>icon</span>}
+        description="No items found."
+        hint="Try adjusting your filters."
+      />
+    )
 
     // Assert
-    expect(result).not.toContain('border-dashed')
-    expect(result).not.toContain('border-destructive')
+    expect(container.querySelector('[data-slot="empty-state-hint"]')).toBeInTheDocument()
+  })
+
+  it('should render hint after description in document order', () => {
+    // Arrange & Act
+    const { container } = render(
+      <EmptyState
+        icon={<span>icon</span>}
+        description="Primary description."
+        hint="Secondary hint."
+      />
+    )
+
+    // Assert — hint element follows description in the DOM
+    const emptyState = container.querySelector('[data-slot="empty-state"]')
+    const paragraphs = emptyState?.querySelectorAll('p')
+    expect(paragraphs?.[0]).toHaveTextContent('Primary description.')
+    expect(paragraphs?.[1]).toHaveTextContent('Secondary hint.')
+  })
+
+  it('should render hint alongside action when both are provided', () => {
+    // Arrange & Act
+    render(
+      <EmptyState
+        icon={<span>icon</span>}
+        description="No items found."
+        hint="Create one to get started."
+        action={<button type="button">Create item</button>}
+      />
+    )
+
+    // Assert
+    expect(screen.getByText('Create one to get started.')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Create item' })).toBeInTheDocument()
   })
 })

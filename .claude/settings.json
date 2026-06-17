@@ -8,7 +8,8 @@
     "dev-core@roxabi-marketplace": true,
     "1b1@roxabi-marketplace": true,
     "compress@roxabi-marketplace": true,
-    "typescript-lsp@claude-plugins-official": true
+    "typescript-lsp@claude-plugins-official": true,
+    "taste-skill@taste-skill": true
   },
   "extraKnownMarketplaces": {
     "roxabi-marketplace": {
