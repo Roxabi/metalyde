@@ -21,21 +21,25 @@ const emptyStateVariants = cva(
   }
 )
 
-function EmptyState({
-  icon,
-  title,
-  description,
-  action,
-  variant = 'default',
-  className,
-  ...props
-}: React.ComponentProps<'div'> &
+export type EmptyStateProps = React.ComponentProps<'div'> &
   VariantProps<typeof emptyStateVariants> & {
     icon: React.ReactNode
     title?: string
     description: string
+    hint?: string
     action?: React.ReactNode
-  }) {
+  }
+
+function EmptyState({
+  icon,
+  title,
+  description,
+  hint,
+  action,
+  variant = 'default',
+  className,
+  ...props
+}: EmptyStateProps) {
   return (
     <div
       data-slot="empty-state"
@@ -48,6 +52,11 @@ function EmptyState({
       </div>
       {title && <h3 className="text-lg font-semibold">{title}</h3>}
       <p className="text-sm text-muted-foreground">{description}</p>
+      {hint && (
+        <p data-slot="empty-state-hint" className="text-xs text-muted-foreground/70">
+          {hint}
+        </p>
+      )}
       {action && <div className="mt-2">{action}</div>}
     </div>
   )

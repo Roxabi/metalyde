@@ -3,6 +3,7 @@ import { Slot } from 'radix-ui'
 import type * as React from 'react'
 
 import { cn } from '@/lib/utils'
+import type { Status } from './StatusBadge'
 
 const badgeVariants = cva(
   'inline-flex items-center justify-center rounded-md border px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-[color,box-shadow] overflow-hidden',
@@ -24,15 +25,58 @@ const badgeVariants = cva(
   }
 )
 
+/**
+ * The 9 workflow status tones mapped to the --status-* token family.
+ * When `tone` is set the CVA variant is bypassed and token-driven inline
+ * styles are applied instead, keeping the variant API fully intact.
+ *
+ * Alias of `Status` from StatusBadge — single source of truth.
+ */
+export type StatusTone = Status
+
 function Badge({
   className,
   variant,
+  tone,
   asChild = false,
+  style,
   ...props
-}: React.ComponentProps<'span'> & VariantProps<typeof badgeVariants> & { asChild?: boolean }) {
+}: React.ComponentProps<'span'> &
+  VariantProps<typeof badgeVariants> & {
+    asChild?: boolean
+    /** When set, bypasses the CVA variant and applies --status-{tone} token colours. */
+    tone?: StatusTone
+  }) {
   const Comp = asChild ? Slot.Root : 'span'
 
-  return <Comp data-slot="badge" className={cn(badgeVariants({ variant }), className)} {...props} />
+  if (tone) {
+    return (
+      <Comp
+        data-slot="badge"
+        data-tone={tone}
+        className={cn(
+          'inline-flex items-center justify-center rounded-md border border-transparent px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 gap-1 transition-[color,box-shadow] overflow-hidden',
+          className
+        )}
+        style={{
+          backgroundColor: `var(--status-${tone})`,
+          color: `var(--status-${tone}-fg)`,
+          ...style,
+        }}
+        {...props}
+      />
+    )
+  }
+
+  return (
+    <Comp
+      data-slot="badge"
+      data-variant={variant ?? 'default'}
+      className={cn(badgeVariants({ variant }), className)}
+      style={style}
+      {...props}
+    />
+  )
 }
 
 export { Badge, badgeVariants }
