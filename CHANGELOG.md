@@ -7,6 +7,54 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Entries are generated automatically by `/promote` and committed to staging before the promotion PR.
 
+## [v0.1.0] - 2026-06-17
+
+First Metalyde release. Rebrands the product from roxabi-boilerplate, redesigns the
+landing page and global theme, and lays a design-system foundation (tokens, primitives,
+SVG charts). Earlier `v0.9.0` entry below is inherited boilerplate history.
+
+### Added
+- Redesign landing page + global theme to the Metalyde brand (#16)
+- Elevate landing-page craft and remove AI-slop tells (#21)
+- Set the Metalyde logo as favicon and app icons across web + docs (#22)
+- Design tokens — type scale, elevation, status pills, numeric formatting (#24)
+- Design-system primitives — status badge, KPI card, SVG charts, skeletons (#24)
+
+### Changed
+- Complete the Metalyde rebrand across infra, web, api, and docs
+- Default app name Roxabi→Metalyde via migration `0018` (#17)
+- Rename the Postgres role/db/container roxabi→metalyde and `APP_SLUG`
+- Finish residual roxabi leftovers after the staging sweep (#19)
+- Disable Vercel preview deploys to stop hitting the Hobby quota (#23)
+- Update landing e2e to the redesigned control-room sections
+- Format `apps/web/vercel.json` to satisfy the Biome lint gate
+
+### Fixed
+- Pass `API_URL`/`APP_URL` through Turbo strict env mode to the dev server (#20)
+- Resolve landing a11y contrast regressions and review findings (#21)
+- Address code-review findings on the landing redesign
+- Apply chart code-review findings — keyframes, type/union dedup, test hardening (#24)
+- Resolve `chartUtils` via relative path in chart components
+- Repair introduction start-here links and embed the launch video (#22)
+- Match footer copyright text rather than the brand name in e2e
+
+### Documentation
+- Restructure the docs site as a Metalyde showcase
+- Rewrite issue-management to an issues-only model (drop the ProjectV2 board)
+- Add design-system doctrine and upgrade plan
+- Align the CLAUDE.md hooks section with `lefthook.yml`
+- Correct staging-preview deploy claims (docs is main-only)
+- Repoint the CLAUDE.md product reference to `product/index`
+
+### CI / Chore
+- Add a TruffleHog secret scan to the pre-push hook
+- Set `APP_NAME` to Metalyde in CI env blocks
+- Publish Metalyde brand research and ignore local worktrees
+- Exclude `brand/` and `.claude/worktrees` from the Biome scan
+- Gitignore `.claude/stack.yml` and point `dev-core.yml` at `Roxabi/metalyde`
+- Enable the taste-skill plugin in Claude settings
+- Sync `next-env.d.ts` to the Next dev types path
+
 ## [v0.9.0] - 2026-03-27
 
 ### Added
